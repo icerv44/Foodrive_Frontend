@@ -4,7 +4,7 @@ import { makeStyles } from "@mui/styles";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 
-function Buttontest() {
+function ButtonCreateAccount() {
   return (
     <>
       <Button
@@ -25,4 +25,4 @@ function Buttontest() {
   );
 }
 
-export default Buttontest;
+export default ButtonCreateAccount;
