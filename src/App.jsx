@@ -1,15 +1,33 @@
-import { useState } from "react";
+import { createTheme, ThemeProvider, colors } from "@mui/material";
+import Router from "./route/Router";
 
-import "./App.css";
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: colors.blue[500],
+    },
+  },
+  components: {
+    MuiTypography: {
+      defaultProps: {
+        fontFamily: "IBM Plex Sans",
+      },
+    },
+    MuiButtonBase: {
+      defaultProps: {
+        style: {
+          fontSize: "30px",
+        },
+      },
+    },
+  },
+});
 
-import Buttontest from "./Buttontest";
 function App() {
-  // const [count, setCount] = useState(0);
-
   return (
-    <div className="App">
-      <Buttontest />
-    </div>
+    <ThemeProvider theme={theme}>
+      <Router />
+    </ThemeProvider>
   );
 }
 
