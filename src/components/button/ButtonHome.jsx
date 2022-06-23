@@ -1,6 +1,6 @@
 import Button from "@mui/material/Button";
 
-function ButtonAddToCart() {
+function ButtonHome({ title, marginTop, marginBottom }) {
   return (
     <Button
       variant="contained"
@@ -9,13 +9,15 @@ function ButtonAddToCart() {
           "linear-gradient(98.81deg, #53E88B -0.82%, #15BE77 101.53%)",
         color: "white",
         height: "57px",
-        width: "326px",
+        width: "200px",
         borderRadius: "15px",
+        marginTop: { marginTop },
+        marginBottom: { marginBottom },
       }}
     >
-      Add to Cart
+      {title}
     </Button>
   );
 }
 
-export default ButtonAddToCart;
+export default ButtonHome;
