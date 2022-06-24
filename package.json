@@ -11,6 +11,7 @@
     "@emotion/react": "^11.9.3",
     "@emotion/styled": "^11.9.3",
     "@mui/icons-material": "^5.8.4",
+    "@mui/joy": "^5.0.0-alpha.33",
     "@mui/material": "^5.8.5",
     "@mui/styled-engine-sc": "^5.8.0",
     "@mui/styles": "^5.8.4",
@@ -30,5 +31,11 @@
     "postcss": "^8.4.14",
     "tailwindcss": "^3.1.4",
     "vite": "^2.9.9"
+  },
+  "overrides": {
+    "react-material-ui-carousel": {
+      "react": "^18.0.0",
+      "react-dom": "^18.0.0"
+    }
   }
 }

@@ -1,5 +1,6 @@
 import { createTheme, ThemeProvider, colors } from "@mui/material";
 import Router from "./route/Router";
+import { CssVarsProvider } from "@mui/joy/styles";
 
 const theme = createTheme({
   // palette: {

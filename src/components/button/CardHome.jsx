@@ -5,11 +5,76 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
+import AspectRatio from "@mui/joy/AspectRatio";
+import Box from "@mui/joy/Box";
+import CardOverflow from "@mui/joy/CardOverflow";
 
-function CardHome({ Name, Time, Distance }) {
+function CardHome({ name, time, distance, item }) {
   return (
-    <>
+    <Box>
       <Card
+        row
+        key={item.title}
+        variant="outlined"
+        sx={{
+          width: "147px",
+          background: " #FFFFFF",
+          boxShadow: "0 3px 10px rgba(90, 108, 234, 0.1)",
+          borderRadius: "22px",
+          height: "184px",
+          gap: 2,
+          "--Card-padding": (theme) => theme.spacing(2),
+        }}
+      >
+        <AspectRatio
+          ratio="1.5"
+          sx={{
+            borderRadius: "22px 22px 0px 0px",
+          }}
+        >
+          <img
+            src={`${item.src}?h=120&fit=crop&auto=format`}
+            srcSet={`${item.src}?h=120&fit=crop&auto=format&dpr=2 2x`}
+            alt={item.title}
+          />
+        </AspectRatio>
+        <CardOverflow>
+          <Box>
+            <Box sx={{ whiteSpace: "nowrap" }}>
+              <Typography
+                fontWeight="md"
+                level="h2"
+                // gutterBottom
+                // component="div"
+                sx={{
+                  width: "122px",
+                  height: "13px",
+                  mt: 2,
+                  fontWeight: "700",
+                  lineHeight: "13px",
+                  textAlign: "left",
+                  color: "#000000",
+                  fontSize: "14x",
+                }}
+              >
+                {item.title}
+              </Typography>
+              <Typography
+                level="body2"
+                sx={{
+                  fontSize: "10px",
+                  mt: 1,
+                  mb: 2,
+                }}
+              >
+                {item.description}
+              </Typography>
+            </Box>
+          </Box>
+        </CardOverflow>
+      </Card>
+
+      {/* <Card
         sx={{
           width: "147px",
           background: " #FFFFFF",
@@ -43,7 +108,7 @@ function CardHome({ Name, Time, Distance }) {
               color: "#000000",
             }}
           >
-            {Name}
+            {name}
           </Typography>
           <Typography
             sx={{
@@ -54,15 +119,11 @@ function CardHome({ Name, Time, Distance }) {
               fontSize: "8px",
             }}
           >
-            {Time} นาที {Distance} กม.
+            {time} นาที {distance} กม.
           </Typography>
         </CardContent>
-        {/* <CardActions>
-          <Button size="small">Share</Button>
-          <Button size="small">Learn More</Button>
-        </CardActions> */}
-      </Card>
-    </>
+      </Card> */}
+    </Box>
   );
 }
 
