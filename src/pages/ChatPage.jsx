@@ -1,9 +1,9 @@
 import { Container, Box } from "@mui/material";
 import ButtonBack from "../components/button/ButtonBack";
-import DriverChat from "../components/privatechat/DriverChat";
-import InputChat from "../components/privatechat/InputChat";
-import UserCard from "../components/privatechat/UserCard";
-import UserChat from "../components/privatechat/UserChat";
+import DriverChat from "../role/main/privatechat/DriverChat";
+import InputChat from "../role/main/privatechat/InputChat";
+import UserCard from "../role/main/privatechat/UserCard";
+import UserChat from "../role/main/privatechat/UserChat";
 
 function ChatPage() {
   return (

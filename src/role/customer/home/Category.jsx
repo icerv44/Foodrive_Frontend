@@ -1,6 +1,6 @@
 import { Box, Typography } from "@mui/material";
 import React from "react";
-import CardHome from "../button/CardHome";
+import CardHome from "../../../components/card/CardHome";
 
 function Category() {
   const data = [

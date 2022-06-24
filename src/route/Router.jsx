@@ -1,9 +1,9 @@
 import { Route, Routes } from "react-router-dom";
-import AddressSelectPage from "../pages/AddressSelectPage";
+import AddressSelectPage from "../pages/customer/AddressSelectPage";
 import LoginPage from "../pages/LoginPage";
-import PaymentPage from "../pages/PaymentPage";
+import PaymentPage from "../pages/customer/PaymentPage";
 import RegisterPage from "../pages/RegisterPage";
-import HomePage from "../pages/HomePage";
+import HomePage from "../pages/customer/HomePage";
 import ChatPage from "../pages/ChatPage";
 
 function Router() {
