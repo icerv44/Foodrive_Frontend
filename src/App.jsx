@@ -1,15 +1,29 @@
-import { useState } from "react";
+import { createTheme, ThemeProvider, colors } from "@mui/material";
+import Router from "./route/Router";
+import { CssVarsProvider } from "@mui/joy/styles";
 
-import "./App.css";
+const theme = createTheme({
+  // palette: {
+  //   primary: {
+  //     main: colors.blue[500],
+  //   },
+  // },
+  components: {
+    MuiContainer: {
+      defaultProps: {
+        style: {
+          width: "375px",
+        },
+      },
+    },
+  },
+});
 
-import Buttontest from "./Buttontest";
 function App() {
-  // const [count, setCount] = useState(0);
-
   return (
-    <div className="App">
-      <Buttontest />
-    </div>
+    <ThemeProvider theme={theme}>
+      <Router />
+    </ThemeProvider>
   );
 }
 
