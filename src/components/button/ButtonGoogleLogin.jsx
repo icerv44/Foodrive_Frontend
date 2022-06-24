@@ -1,6 +1,4 @@
-import * as React from "react";
 import Button from "@mui/material/Button";
-import GoogleIcon from "@mui/icons-material/Google";
 import { FcGoogle } from "react-icons/fc";
 
 function ButtonGoogleLogin() {
@@ -19,7 +17,7 @@ function ButtonGoogleLogin() {
           width: "152px",
         }}
       >
-        Delete
+        Google
       </Button>
     </>
   );

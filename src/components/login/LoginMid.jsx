@@ -1,19 +1,19 @@
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import InputLogin from "../input/InputLogin";
 
-function SignupMid() {
+function LoginMid() {
   return (
     <>
       <div className="text-center pb-[60px] text-[25px] font-bold">
-        Sign Up For Free
+        Sign In Your Account
       </div>
       <Box className="flex flex-col gap-3">
         <InputLogin placeholder="Email" />
         <InputLogin placeholder="Password" />
-        <InputLogin placeholder="Confirm Password" />
       </Box>
+      <Typography className="text-center py-5">Or Continue With</Typography>
     </>
   );
 }
 
-export default SignupMid;
+export default LoginMid;
