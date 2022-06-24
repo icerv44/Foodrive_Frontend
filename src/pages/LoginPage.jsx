@@ -1,7 +1,7 @@
 import { Container } from "@mui/material";
-import LoginBot from "../components/login/LoginBot";
-import LoginMid from "../components/login/LoginMid";
-import LoginTop from "../components/login/LoginTop";
+import LoginBot from "../role/main/login/LoginBot";
+import LoginMid from "../role/main/login/LoginMid";
+import LoginTop from "../role/main/login/LoginTop";
 
 function LoginPage() {
   return (

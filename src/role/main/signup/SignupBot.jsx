@@ -1,5 +1,5 @@
 import { Typography } from "@mui/material";
-import ButtonHome from "../button/ButtonHome";
+import ButtonHome from "../../../components/button/ButtonHome";
 
 function SignupBot() {
   return (

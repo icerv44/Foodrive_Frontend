@@ -1,5 +1,5 @@
 import { Box, Typography } from "@mui/material";
-import InputLogin from "../input/InputLogin";
+import InputLogin from "../../../components/input/InputLogin";
 
 function LoginMid() {
   return (
