@@ -2,8 +2,8 @@ import { BsPlus } from "react-icons/bs";
 
 function ButtonPlus({ onClick }) {
   return (
-    <button onClick={onClick} className="bg-[#F9A84D] opacity-[0.25] rounded">
-      <BsPlus className="text-4xl opacity-[1]" />
+    <button onClick={onClick} className="bg-light-brown rounded">
+      <BsPlus className="text-4xl text-[#F9A84D]" />
     </button>
   );
 }
