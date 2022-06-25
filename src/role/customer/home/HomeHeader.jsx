@@ -2,8 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { FaBeer } from "react-icons/fa";
 import { MdLocationOn } from "react-icons/md";
-import { BsSuitHeartFill } from "react-icons/bs";
 import { Box } from "@mui/material";
+import ButtonFavorite from "../button/ButtonFavorite";
 
 function HomeHeader() {
   return (
@@ -20,11 +20,7 @@ function HomeHeader() {
         </div>
       </Link>
 
-      <Link to="/myFavorite">
-        <div className="rounded-full bg-light-red w-7 h-7 flex items-center justify-center">
-          <BsSuitHeartFill className=" text-heart " />
-        </div>
-      </Link>
+      <ButtonFavorite />
     </Box>
   );
 }
