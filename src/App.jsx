@@ -3,6 +3,12 @@ import Router from "./route/Router";
 import { CssVarsProvider } from "@mui/joy/styles";
 
 const theme = createTheme({
+  breakpoints: {
+    values: {
+      mobile: 0,
+      desktop: 375,
+    },
+  },
   palette: {
     green: "#15BE77",
     gray: "#858786",

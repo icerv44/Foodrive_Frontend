@@ -12,6 +12,9 @@ import DriverLocatePage from "../pages/customer/DriverLocatePage";
 import ShopMenuPage from "../pages/customer/ShopMenuPage";
 import ToastError from "../components/ui/ToastError";
 import HomePageDriver from "../pages/driver/HomePageDriver";
+import DriverIncome from "../role/driver/home/DriverIncome";
+import DriverContainer from "../role/driver/home/DriverContainer";
+import HomeContainerDriver from "../role/driver/home/HomeContainerDriver";
 
 function Router() {
   return (
@@ -29,14 +32,14 @@ function Router() {
         <Route path="/detail/:id" element={<DetailMenuPage />} />"
         <Route path="/order" element={<OrderPage />} />"
         <Route path="/driverstatus" element={<DriverLocatePage />} />"
-        <Route path="/shop/:id" element={<ShopMenuPage />} />"
-      </Routes>
-
-      {/* DRIVER */}
-      <Routes>
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/register" element={<RegisterPage />} />
-        <Route path="/driver" element={<HomePageDriver />} />
+        <Route path="/shop/:id" element={<ShopMenuPage />} />
+        {/* DRIVER */}
+        <Route path="/driver/login" element={<LoginPage />} />
+        <Route path="/driver/register" element={<RegisterPage />} />
+        <Route path="/driver" element={<HomeContainerDriver />}>
+          <Route path="" element={<HomePageDriver />} />
+          <Route path="income" element={<DriverIncome />} />
+        </Route>
       </Routes>
     </>
   );
