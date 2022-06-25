@@ -1,8 +1,9 @@
 import Button from "@mui/material/Button";
 
-function ButtonHome({ title, marginTop, marginBottom }) {
+function ButtonHome({ title, marginTop, marginBottom, onClick }) {
   return (
     <Button
+      onClick={onClick}
       variant="contained"
       sx={{
         background:
