@@ -1,4 +1,4 @@
-import { HiLocationMarker } from "react-icons/hi";
+import ButtonLocation from "../../../components/button/ButtonLocation";
 
 function OtherAddress() {
   return (
@@ -7,7 +7,7 @@ function OtherAddress() {
         Select Address
       </h6>
       <div className="flex gap-3 items-center">
-        <HiLocationMarker />
+        <ButtonLocation />
         <h6 className="font-semibold">Mint Tower 123</h6>
       </div>
       <h6 className="pt-7 pl-7 font-semibold text-[#53E88B]">set location</h6>
