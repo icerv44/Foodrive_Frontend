@@ -1,11 +1,11 @@
-import { Box, Typography } from "@mui/material";
 import { MdHomeFilled, MdAccountCircle } from "react-icons/md";
 import { BsFillCartDashFill } from "react-icons/bs";
 import { AiFillMessage } from "react-icons/ai";
+import { Box, Typography } from "@mui/joy";
 
 export default function Footer() {
   return (
-    <>
+    <Box className="flex justify-center items-end">
       <Box
         sx={{
           width: 355,
@@ -71,6 +71,6 @@ export default function Footer() {
           <Typography>message</Typography>
         </Box>
       </Box>
-    </>
+    </Box>
   );
 }
