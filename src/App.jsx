@@ -4,7 +4,6 @@ import { CssVarsProvider } from "@mui/joy/styles";
 
 const theme = createTheme({
   palette: {
-    green: "#15BE77",
     gray: "#e0e0e0",
     heart: "#FF1D1D",
     lightRed: "#fcd7d4",
