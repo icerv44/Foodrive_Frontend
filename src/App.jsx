@@ -5,7 +5,8 @@ import { CssVarsProvider } from "@mui/joy/styles";
 const theme = createTheme({
   palette: {
     green: "#15BE77",
-    gray: "#e0e0e0",
+    gray: "#858786",
+    lightGray: "#fafdff",
     heart: "#FF1D1D",
     lightRed: "#fcd7d4",
     green: "#15BE77",
@@ -13,6 +14,7 @@ const theme = createTheme({
     brown: "#DA6317",
     lightBrown: "#fbf4ec",
   },
+  // typography: {},
   components: {
     MuiContainer: {
       defaultProps: {
