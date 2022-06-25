@@ -1,5 +1,11 @@
+import HeaderHome from "../../role/customer/order/HeaderHome";
+
 function OrderPage() {
-  return <div>OrderPage</div>;
+  return (
+    <>
+      <HeaderHome />
+    </>
+  );
 }
 
 export default OrderPage;
