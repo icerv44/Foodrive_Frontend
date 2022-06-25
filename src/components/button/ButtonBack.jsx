@@ -6,9 +6,9 @@ function ButtonBack({ onClick }) {
     <Box sx={{ zIndex: 5 }}>
       <button
         onClick={onClick}
-        className="rounded absolute h-11 w-11 bg-[#F9A84D] opacity-[0.2] text-[#DA6317] top-[5%] left-[9%]"
+        className="rounded absolute h-11 w-11 bg-light-brown top-[5%] left-[9%]"
       ></button>
-      <BiChevronLeft className="absolute text-3xl top-[5.85%] left-[10.6%]" />
+      <BiChevronLeft className="absolute text-[#F9A84D] text-3xl top-[5.85%] left-[10.6%]" />
     </Box>
   );
 }

@@ -18,7 +18,6 @@ const theme = createTheme({
       defaultProps: {
         style: {
           width: "375px",
-          height: "812px",
         },
       },
     },

@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
-import ButtonHome from "../button/ButtonHome";
-import ButtonGoogleLogin from "../button/ButtonGoogleLogin";
+import ButtonHome from "../../../components/button/ButtonHome";
+import ButtonGoogleLogin from "../../../components/button/ButtonGoogleLogin";
 
 function LoginBot() {
   return (

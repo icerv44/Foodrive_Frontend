@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import ButtonPlus from "../button/ButtonPlus";
+import ButtonPlus from "../../../components/button/ButtonPlus";
 
 function AddPayment() {
   return (
