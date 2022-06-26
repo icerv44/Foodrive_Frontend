@@ -41,12 +41,22 @@ function CardOrder({ src, price, foodName, foodDetail }) {
         </Typography>
       </Box>
       <Box className="flex justify-center items-center gap-3">
-        <IconButton onClick={handleClickDecreaseAmount}>
+        <IconButton
+          sx={{ bgcolor: "#f9a94d22", color: "green" }}
+          onClick={handleClickDecreaseAmount}
+        >
           <AiOutlineMinus />
         </IconButton>
         <Box className="font-semibold">{count}</Box>
-        <IconButton onClick={handleClickIncreaseAmount}>
-          <AiOutlinePlus />
+        <IconButton
+          sx={{
+            background:
+              "linear-gradient(98.81deg, #53E88B -0.82%, #15BE77 101.53%)",
+            color: "white",
+          }}
+          onClick={handleClickIncreaseAmount}
+        >
+          <AiOutlinePlus className="font-semibold text-lg" />
         </IconButton>
       </Box>
     </Box>
