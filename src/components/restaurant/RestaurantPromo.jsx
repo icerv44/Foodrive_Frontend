@@ -1,7 +1,7 @@
 import { Box, Typography } from "@mui/material";
 import React from "react";
 
-function RestautantPromo() {
+function RestaurantPromo() {
   return (
     <Box>
       <Typography
@@ -18,4 +18,4 @@ function RestautantPromo() {
   );
 }
 
-export default RestautantPromo;
+export default RestaurantPromo;

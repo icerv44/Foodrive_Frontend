@@ -34,11 +34,11 @@ const theme = createTheme({
 
 function App() {
   return (
-    <CssVarsProvider>
-      <ThemeProvider theme={theme}>
+    <ThemeProvider theme={theme}>
+      <CssVarsProvider>
         <Router />
-      </ThemeProvider>
-    </CssVarsProvider>
+      </CssVarsProvider>
+    </ThemeProvider>
   );
 }
 

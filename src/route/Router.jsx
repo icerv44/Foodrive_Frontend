@@ -17,13 +17,16 @@ import DriverContainer from "../role/driver/home/DriverContainer";
 import HomeContainerDriver from "../role/driver/home/HomeContainerDriver";
 import Footer from "../components/footer/Footer";
 import CustomerPage from "../pages/CustomerPage";
+import OrderRequestPage from "../pages/driver/OrderRequestPage";
+import Spinner from "../components/ui/Spinner";
+import Modal from "../components/ui/Modal";
 
 function Router() {
   return (
     <>
       {/* CUSTOMER */}
       <Routes>
-        <Route path="/test" element={<ToastError />} />
+        <Route path="/test" element={<Modal />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="" element={<HomePage />} />
@@ -47,9 +50,9 @@ function Router() {
         <Route path="/driver/register" element={<RegisterPage />} />
         <Route path="/driver" element={<HomeContainerDriver />}>
           <Route path="" element={<HomePageDriver />} />
-          <Route path="test" element={<HomePage />} />
-          <Route path="income" element={<DriverIncome />} />
         </Route>
+        <Route path="income" element={<DriverIncome />} />
+        <Route path="orderRequest" element={<OrderRequestPage />} />
         {/* RESTAURANT */}
       </Routes>
     </>
