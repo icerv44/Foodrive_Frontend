@@ -21,14 +21,14 @@ function LoginBot() {
         <ButtonGoogleLogin />
         <Box className="underline text-green-500">Forgot Your Password?</Box>
       </Box>
-      <div className="flex justify-center items-center">
+      {/* <div className="flex justify-center items-center">
         <ButtonHome
           marginTop="36px"
           marginBottom="20px"
           title="Login"
           onClick={onClick}
         />
-      </div>
+      </div> */}
     </>
   );
 }

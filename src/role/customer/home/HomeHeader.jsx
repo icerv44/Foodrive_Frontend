@@ -3,7 +3,8 @@ import { Link } from "react-router-dom";
 import { FaBeer } from "react-icons/fa";
 import { MdLocationOn } from "react-icons/md";
 import { Box } from "@mui/material";
-import ButtonFavorite from "../button/ButtonFavorite";
+import ButtonFavorite from "../../../components/button/ButtonFavorite";
+// import ButtonFavorite from "../button/ButtonFavorite";
 
 function HomeHeader() {
   return (
