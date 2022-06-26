@@ -17,6 +17,7 @@ export default function Footer() {
           borderRadius: "22px",
           mx: "auto",
           boxShadow: "0px 0px 50px rgba(90, 108, 234, 0.1)",
+          zIndex: 20,
         }}
       >
         <Box

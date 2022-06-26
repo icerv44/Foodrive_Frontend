@@ -12,6 +12,7 @@ function ButtonGreenGradiant({ title, px, onClick }) {
         color: "white",
         fontSize: "18px",
         fontWeight: "700",
+        boxShadow: "11px 28px 50px rgba(20, 78, 90, 0.2)",
         px: `${px}`,
       }}
     >
