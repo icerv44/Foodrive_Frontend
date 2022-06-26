@@ -1,17 +1,16 @@
 import { Typography } from "@mui/material";
-import ButtonHome from "../../../components/button/ButtonHome";
+import ButtonGreenGradiant from "../../../components/button/ButtonGreenGradiant";
 
 function SignupBot() {
   return (
     <>
-      <div className="flex justify-center items-center">
-        <ButtonHome
-          marginTop="85px"
-          marginBottom="20px"
-          title="Create Account"
-        />
+      <div className="flex justify-center items-center mt-20">
+        <ButtonGreenGradiant title="Create Account" />
       </div>
-      <Typography className="text-center underline text-green-500">
+      <Typography
+        sx={{ marginTop: "20px" }}
+        className="text-center underline text-green"
+      >
         already have an account?
       </Typography>
     </>

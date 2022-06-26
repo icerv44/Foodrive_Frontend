@@ -14,11 +14,13 @@ export default function Footer() {
           justifyContent: "space-between",
           alignItems: "center",
           padding: "0px 45px",
-          borderRadius: "16px",
-          backgroundColor: "pink",
+          borderRadius: "22px",
+          mx: "auto",
+          boxShadow: "0px 0px 50px rgba(90, 108, 234, 0.1)",
         }}
       >
         <Box
+          role="button"
           sx={{
             display: "flex",
             flexDirection: "column",
@@ -32,6 +34,7 @@ export default function Footer() {
           <Typography>home</Typography>
         </Box>
         <Box
+          role="button"
           sx={{
             display: "flex",
             flexDirection: "column",
@@ -45,6 +48,7 @@ export default function Footer() {
           <Typography>account</Typography>
         </Box>
         <Box
+          role="button"
           sx={{
             display: "flex",
             flexDirection: "column",
@@ -58,6 +62,7 @@ export default function Footer() {
           <Typography>cart</Typography>
         </Box>
         <Box
+          role="button"
           sx={{
             display: "flex",
             flexDirection: "column",

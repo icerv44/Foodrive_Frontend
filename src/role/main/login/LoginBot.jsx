@@ -1,6 +1,5 @@
-import { Box } from "@mui/material";
-import ButtonHome from "../../../components/button/ButtonHome";
-import ButtonGoogleLogin from "../../../components/button/ButtonGoogleLogin";
+import ButtonGoogle from "../../../components/button/ButtonGoogle";
+import ButtonGreenGradiant from "../../../components/button/ButtonGreenGradiant";
 import { useDispatch } from "react-redux";
 import { loginCustomer } from "../../../slices/loginSlice";
 import { useNavigate } from "react-router-dom";
@@ -16,20 +15,15 @@ function LoginBot() {
   };
 
   return (
-    <>
-      <Box className="flex flex-col justify-center items-center gap-5">
-        <ButtonGoogleLogin />
-        <Box className="underline text-green-500">Forgot Your Password?</Box>
-      </Box>
-      {/* <div className="flex justify-center items-center">
-        <ButtonHome
-          marginTop="36px"
-          marginBottom="20px"
-          title="Login"
-          onClick={onClick}
-        />
-      </div> */}
-    </>
+    <div>
+      <div className="flex flex-col justify-center items-center gap-5">
+        <ButtonGoogle />
+        <div className="underline text-green">Forgot Your Password?</div>
+      </div>
+      <div className="flex justify-center items-center mt-5">
+        <ButtonGreenGradiant title="Login" px="30px" />
+      </div>
+    </div>
   );
 }
 
