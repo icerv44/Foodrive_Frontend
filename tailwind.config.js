@@ -9,6 +9,9 @@ module.exports = {
         "light-green": "#dcf5eb",
         brown: "#DA6317",
         "light-brown": "#fbf4ec",
+        // gray: "#e0e0e0",
+        gray: "#858786",
+        "light-gray": "#e6e9eb",
       },
       borderRadius: {
         "2lg": "20px",

@@ -6,7 +6,7 @@ import RestaurantTop from "./RestaurantTop";
 function RestaurantContainer() {
   return (
     <div>
-      <ButtonBack />
+      {/* <ButtonBack /> */}
       <RestaurantTop />
       <RestaurantDetail />
     </div>

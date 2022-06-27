@@ -4,9 +4,12 @@ import React from "react";
 import ButtonFavorite from "../button/ButtonFavorite";
 import { MdOutlineLocationOn } from "react-icons/md";
 import { BsStarHalf } from "react-icons/bs";
-import RestautantPromo from "./RestautantPromo";
+import RestaurantPromo from "./RestaurantPromo";
 
 function RestaurantDetail() {
+  const category = "อาหารยุโรป";
+  const restaurantName = "KFC มีนบุรี - ประเทศไทย";
+
   return (
     <Box
       sx={{
@@ -21,7 +24,7 @@ function RestaurantDetail() {
       <div className="flex justify-between mb-4">
         <div className="flex items-center text-green text-20 font-bold align-middle">
           <div className="rounded-2xl bg-light-green h-7 p-4 items-center flex">
-            <span className="text-sm font-light ">อาหารยุโรป</span>
+            <span className="text-sm font-light ">{category}</span>
           </div>
         </div>
         <ButtonFavorite />
@@ -36,7 +39,7 @@ function RestaurantDetail() {
             marginY: 2,
           }}
         >
-          KFC มีนบุรี - ประเทศไทย
+          {restaurantName}
         </Typography>
       </Box>
 
@@ -59,7 +62,7 @@ function RestaurantDetail() {
         </Typography>
       </Box>
 
-      <RestautantPromo />
+      <RestaurantPromo />
     </Box>
   );
 }
