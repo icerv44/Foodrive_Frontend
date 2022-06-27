@@ -14,6 +14,7 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { getAccessToken } from "../services/localstorage";
 import { fetchUser } from "../slices/userSlice";
+import DetailFoodPage from "../pages/customer/DetailFoodPage";
 
 function Router() {
   const dispatch = useDispatch();
@@ -38,6 +39,7 @@ function Router() {
       <Route path="/order" element={<OrderPage />} />"
       <Route path="/driverstatus" element={<DriverLocatePage />} />"
       <Route path="/shop/:id" element={<ShopMenuPage />} />"
+      <Route path="/shop/:id/:foodId" element={<DetailFoodPage />} />"
     </Routes>
   );
 }

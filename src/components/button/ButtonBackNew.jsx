@@ -4,7 +4,7 @@ import IconButton from "@mui/joy/IconButton";
 function ButtonBackNew({ onClick }) {
   return (
     <>
-      <IconButton onClick={onClick} sx={{ bgcolor: "#F9A84D", opacity: "0.2" }}>
+      <IconButton onClick={onClick} sx={{ bgcolor: "#f9a94d22" }}>
         <BiChevronLeft className="text-[#DA6317] text-3xl " />
       </IconButton>
     </>
