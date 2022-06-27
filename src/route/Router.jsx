@@ -10,9 +10,22 @@ import DetailMenuPage from "../pages/customer/DetailMenuPage";
 import OrderPage from "../pages/customer/OrderPage";
 import DriverLocatePage from "../pages/customer/DriverLocatePage";
 import ShopMenuPage from "../pages/customer/ShopMenuPage";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { getAccessToken } from "../services/localstorage";
+import { fetchUser } from "../slices/userSlice";
 import DetailFoodPage from "../pages/customer/DetailFoodPage";
 
 function Router() {
+  const dispatch = useDispatch();
+  const token = getAccessToken();
+
+  useEffect(() => {
+    if (token) {
+      dispatch(fetchUser({ role: "customer" }));
+    }
+  }, [token]);
+
   return (
     <Routes>
       <Route path="/" element={<HomePage />} />

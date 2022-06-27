@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import { setAccessToken } from "../services/localstorage";
 
 const loginCustomer = createAsyncThunk(
   "customer/login",
@@ -18,7 +19,9 @@ const loginCustomer = createAsyncThunk(
       );
 
       const token = res.data.token;
-      return token;
+      setAccessToken(token);
+
+      return thunkApi.fulfillWithValue(null); // or just return normally
     } catch (err) {
       console.log(err);
       return thunkApi.rejectWithValue(
@@ -51,7 +54,6 @@ const loginSlice = createSlice({
         state.error = "";
       })
       .addCase(loginCustomer.fulfilled, (state, action) => {
-        localStorage.setItem("token", action.payload);
         state.isLoading = false;
         state.error = "";
       })
