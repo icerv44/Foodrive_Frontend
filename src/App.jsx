@@ -21,6 +21,8 @@ const theme = createTheme({
     lightBrown: "#fbf4ec",
   },
   components: {
+    MuiModal: { styleOverrides: { root: { zIndex: 100 } } },
+
     MuiContainer: {
       defaultProps: {
         style: {

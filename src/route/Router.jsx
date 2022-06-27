@@ -12,14 +12,11 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { getAccessToken } from "../services/localstorage";
 import { fetchUser } from "../slices/userSlice";
-import DetailFoodPage from "../pages/customer/DetailFoodPage";
-import ToastError from "../components/ui/ToastError";
 import HomePageDriver from "../pages/driver/HomePageDriver";
 import DriverIncome from "../role/driver/home/DriverIncome";
 import HomeContainerDriver from "../role/driver/home/HomeContainerDriver";
 import CustomerPage from "../pages/CustomerContainer";
 import OrderRequestPage from "../pages/driver/OrderRequestPage";
-import Modal from "../components/ui/Modal";
 import DeliveryPage from "../pages/driver/DeliveryPage";
 import ConfirmOrderPage from "../pages/driver/ConfirmOrderPage";
 import OrderSummary from "../pages/driver/OrderSummary";
@@ -42,7 +39,6 @@ function Router() {
     <>
       {/* CUSTOMER */}
       <Routes>
-        <Route path="/test" element={<Modal />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="" element={<HomePage />} />
