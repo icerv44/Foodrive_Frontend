@@ -1,10 +1,16 @@
 import { createTheme, ThemeProvider, colors } from "@mui/material";
 import Router from "./route/Router";
 import { CssVarsProvider } from "@mui/joy/styles";
+import { DeliveryContextProvider } from "./contexts/DeliveryContext";
 
 const theme = createTheme({
+  breakpoints: {
+    values: {
+      mobile: 0,
+      desktop: 375,
+    },
+  },
   palette: {
-    green: "#15BE77",
     gray: "#858786",
     lightGray: "#fafdff",
     heart: "#FF1D1D",
@@ -14,7 +20,6 @@ const theme = createTheme({
     brown: "#DA6317",
     lightBrown: "#fbf4ec",
   },
-  // typography: {},
   components: {
     MuiContainer: {
       defaultProps: {
@@ -28,11 +33,13 @@ const theme = createTheme({
 
 function App() {
   return (
-    <CssVarsProvider>
-      <ThemeProvider theme={theme}>
-        <Router />
-      </ThemeProvider>
-    </CssVarsProvider>
+    <ThemeProvider theme={theme}>
+      <CssVarsProvider>
+        <DeliveryContextProvider>
+          <Router />
+        </DeliveryContextProvider>
+      </CssVarsProvider>
+    </ThemeProvider>
   );
 }
 

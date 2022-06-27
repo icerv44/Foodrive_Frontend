@@ -8,7 +8,6 @@ import ChatPage from "../pages/ChatPage";
 import RestaurantPage from "../pages/RestaurantPage";
 import DetailMenuPage from "../pages/customer/DetailMenuPage";
 import OrderPage from "../pages/customer/OrderPage";
-import DriverLocatePage from "../pages/customer/DriverLocatePage";
 import ShopMenuPage from "../pages/customer/ShopMenuPage";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
@@ -17,6 +16,16 @@ import { fetchUser } from "../slices/userSlice";
 import DetailFoodPage from "../pages/customer/DetailFoodPage";
 import ToastError from "../components/ui/ToastError";
 import HomePageDriver from "../pages/driver/HomePageDriver";
+import DriverIncome from "../role/driver/home/DriverIncome";
+import HomeContainerDriver from "../role/driver/home/HomeContainerDriver";
+import CustomerPage from "../pages/CustomerContainer";
+import OrderRequestPage from "../pages/driver/OrderRequestPage";
+import Modal from "../components/ui/Modal";
+import DeliveryPage from "../pages/driver/DeliveryPage";
+import ConfirmOrderPage from "../pages/driver/ConfirmOrderPage";
+import OrderSummary from "../pages/driver/OrderSummary";
+import DeliveryCompleted from "../pages/driver/DeliveryCompleted";
+import DeliveryContainer from "../role/driver/delivery/DeliveryContainer";
 
 function Router() {
   const dispatch = useDispatch();
@@ -32,26 +41,38 @@ function Router() {
     <>
       {/* CUSTOMER */}
       <Routes>
-        <Route path="/test" element={<ToastError />} />
-        <Route path="/" element={<HomePage />} />
-        <Route path="/resgister" element={<RegisterPage />} />
-        <Route path="/login" element={<LoginPage />} />"
-        <Route path="/restaurant" element={<RestaurantPage />} />
-        <Route path="/payment" element={<PaymentPage />} />"
-        <Route path="/address" element={<AddressSelectPage />} />"
-        <Route path="/chat" element={<ChatPage />} />"
-        <Route path="/detail/:id" element={<DetailMenuPage />} />"
-        <Route path="/order" element={<OrderPage />} />"
-        <Route path="/driverstatus" element={<DriverLocatePage />} />"
-        <Route path="/shop/:id" element={<ShopMenuPage />} />"
-        <Route path="/shop/:id/:foodId" element={<DetailFoodPage />} />"
-      </Routes>
-
-      {/* DRIVER */}
-      <Routes>
+        <Route path="/test" element={<Modal />} />
+        <Route path="/register" element={<RegisterPage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="" element={<HomePage />} />
+        <Route path="/customer" element={<CustomerPage />}>
+          <Route path="" element={<HomePage />} />
+          <Route path="restaurant" element={<RestaurantPage />} />
+          <Route path="shop/:id" element={<ShopMenuPage />} />
+          <Route path="detail/:id" element={<DetailMenuPage />} />
+          <Route path="order" element={<OrderPage />} />
+          <Route path="payment" element={<PaymentPage />} />
+          <Route path="address" element={<AddressSelectPage />} />
+        </Route>
+        <Route path="chat" element={<ChatPage />} />
+        {/* DRIVER */}
         <Route path="/driver/login" element={<LoginPage />} />
         <Route path="/driver/register" element={<RegisterPage />} />
-        <Route path="/driver" element={<HomePageDriver />} />
+        <Route path="/driver" element={<HomeContainerDriver />}>
+          <Route path="" element={<HomePageDriver />} />
+        </Route>
+        <Route path="/driver/income" element={<DriverIncome />} />
+        <Route path="/driver/orderRequest" element={<OrderRequestPage />} />
+
+        {/*   DRIVER - delivery */}
+        <Route path="/driver/delivery" element={<DeliveryContainer />}>
+          <Route path="direction" element={<DeliveryPage />} />
+          <Route path="confirmOrder" element={<ConfirmOrderPage />} />
+        </Route>
+        <Route path="/driver/orderSummary" element={<OrderSummary />} />
+        <Route path="/driver/completed" element={<DeliveryCompleted />} />
+
+        {/* RESTAURANT */}
       </Routes>
     </>
   );

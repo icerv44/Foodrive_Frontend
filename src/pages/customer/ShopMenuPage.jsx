@@ -1,5 +1,4 @@
 import { Box } from "@mui/material";
-import Footer from "../../components/footer/Footer";
 import FoodList from "../../role/customer/menulist/FoodList";
 import HeaderMenuList from "../../role/customer/menulist/HeaderMenuList";
 
@@ -12,7 +11,6 @@ function ShopMenuPage() {
         <FoodList title="Promotion" />
         <FoodList title="Promotion" />
       </Box>
-      <Footer />
     </>
   );
 }

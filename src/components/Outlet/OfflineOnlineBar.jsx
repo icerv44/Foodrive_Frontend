@@ -2,7 +2,7 @@ import { Box } from "@mui/material";
 import React from "react";
 import ButtonShutdown from "../button/ButtonShutdown";
 
-function OfflineOnline() {
+function OfflineOnlineBar() {
   const status = "OFFLINE";
 
   return (
@@ -22,4 +22,4 @@ function OfflineOnline() {
   );
 }
 
-export default OfflineOnline;
+export default OfflineOnlineBar;

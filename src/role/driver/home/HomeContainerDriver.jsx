@@ -1,14 +1,17 @@
+import { Box } from "@mui/joy";
 import React from "react";
+import { Outlet } from "react-router-dom";
 import DriverContainer from "./DriverContainer";
 
 function HomeContainerDriver() {
   return (
     <>
-      <div className="flex justify-center">
-        <div className="absolute bottom-5">
+      <Box className="">
+        <Outlet />
+        <Box className="">
           <DriverContainer />
-        </div>
-      </div>
+        </Box>
+      </Box>
     </>
   );
 }
