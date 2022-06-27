@@ -20,14 +20,19 @@ const userSlice = createSlice({
       name: "",
       firstName: "",
       lastName: "",
-      latitude: "",
-      longitude: "",
+      latitude: null,
+      longitude: null,
       role: "",
     },
     isLoading: "",
     error: "",
   },
-  reducers: {},
+  reducers: {
+    setPosition: (state, action) => {
+      state.info.latitude = action.payload.latitude;
+      state.info.longitude = action.payload.longitude;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchUser.pending, (state, action) => {
@@ -36,8 +41,9 @@ const userSlice = createSlice({
         state.error = "";
       })
       .addCase(fetchUser.fulfilled, (state, action) => {
-        state = { ...action.payload, isLoading: false, error: "" };
-        return state;
+        state.info = { ...state.info, ...action.payload };
+        state.isLoading = false;
+        state.error = false;
       })
       .addCase(fetchUser.rejected, (state, action) => {
         state.error = action.payload;
@@ -47,5 +53,7 @@ const userSlice = createSlice({
 });
 
 export { fetchUser };
+
+export const { setPosition } = userSlice.actions;
 
 export default userSlice.reducer;

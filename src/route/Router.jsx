@@ -19,11 +19,11 @@ function Router() {
   const dispatch = useDispatch();
   const token = getAccessToken();
 
-  // useEffect(() => {
-  //   if (token) {
-  //     dispatch(fetchUser({ role: "customer" }));
-  //   }
-  // }, [token]);
+  useEffect(() => {
+    if (token) {
+      dispatch(fetchUser({ role: "customer" }));
+    }
+  }, [token]);
 
   return (
     <Routes>
