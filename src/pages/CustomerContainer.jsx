@@ -5,14 +5,14 @@ import Footer from "../components/Outlet/Footer";
 
 function CustomerContainer() {
   return (
-    <>
+    <Box>
       <Outlet />
       <Box className="flex justify-center items-end">
         <Box className="fixed bottom-5">
           <Footer />
         </Box>
       </Box>
-    </>
+    </Box>
   );
 }
 
