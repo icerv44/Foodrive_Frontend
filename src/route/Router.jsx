@@ -10,6 +10,7 @@ import DetailMenuPage from "../pages/customer/DetailMenuPage";
 import OrderPage from "../pages/customer/OrderPage";
 import DriverLocatePage from "../pages/customer/DriverLocatePage";
 import ShopMenuPage from "../pages/customer/ShopMenuPage";
+import DetailFoodPage from "../pages/customer/DetailFoodPage";
 
 function Router() {
   return (
@@ -25,6 +26,7 @@ function Router() {
       <Route path="/order" element={<OrderPage />} />"
       <Route path="/driverstatus" element={<DriverLocatePage />} />"
       <Route path="/shop/:id" element={<ShopMenuPage />} />"
+      <Route path="/shop/:id/:foodId" element={<DetailFoodPage />} />"
     </Routes>
   );
 }
