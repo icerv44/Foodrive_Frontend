@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
 import React from "react";
-import OfflineOnline from "../../../components/ui/OfflineOnline";
+import OfflineOnline from "../../../components/Outlet/OfflineOnlineBar";
 import AspectRatio from "@mui/joy/AspectRatio";
 import Link from "@mui/joy/Link";
 import Card from "@mui/joy/Card";

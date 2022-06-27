@@ -1,5 +1,5 @@
 import * as React from "react";
-import Button from "@mui/material/Button";
+import { Button } from "@mui/joy";
 import Typography from "@mui/material/Typography";
 function ButtonLogin({ height, width, borderRadius, background, color, text }) {
   return (

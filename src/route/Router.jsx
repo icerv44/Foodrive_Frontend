@@ -15,11 +15,19 @@ import HomePageDriver from "../pages/driver/HomePageDriver";
 import DriverIncome from "../role/driver/home/DriverIncome";
 import DriverContainer from "../role/driver/home/DriverContainer";
 import HomeContainerDriver from "../role/driver/home/HomeContainerDriver";
-import Footer from "../components/footer/Footer";
-import CustomerPage from "../pages/CustomerPage";
+import Footer from "../components/Outlet/Footer";
+import CustomerPage from "../pages/CustomerContainer";
 import OrderRequestPage from "../pages/driver/OrderRequestPage";
 import Spinner from "../components/ui/Spinner";
 import Modal from "../components/ui/Modal";
+import DirectionPage from "../pages/driver/DirectionPage";
+import DeliveryPage from "../pages/driver/DeliveryPage";
+import ConfirmDeliveryPage from "../pages/driver/OrderSummary";
+import ConfirmOrderPage from "../pages/driver/ConfirmOrderPage";
+import OrderSummary from "../pages/driver/OrderSummary";
+import DeliveryCompleted from "../pages/driver/DeliveryCompleted";
+import DeliveryBar from "../components/Outlet/DeliveryBar";
+import DeliveryContainer from "../role/driver/delivery/DeliveryContainer";
 
 function Router() {
   return (
@@ -51,8 +59,17 @@ function Router() {
         <Route path="/driver" element={<HomeContainerDriver />}>
           <Route path="" element={<HomePageDriver />} />
         </Route>
-        <Route path="income" element={<DriverIncome />} />
-        <Route path="orderRequest" element={<OrderRequestPage />} />
+        <Route path="/driver/income" element={<DriverIncome />} />
+        <Route path="/driver/orderRequest" element={<OrderRequestPage />} />
+
+        {/*   DRIVER - delivery */}
+        <Route path="/driver/delivery" element={<DeliveryContainer />}>
+          <Route path="direction" element={<DeliveryPage />} />
+          <Route path="confirmOrder" element={<ConfirmOrderPage />} />
+        </Route>
+        <Route path="/driver/orderSummary" element={<OrderSummary />} />
+        <Route path="/driver/completed" element={<DeliveryCompleted />} />
+
         {/* RESTAURANT */}
       </Routes>
     </>

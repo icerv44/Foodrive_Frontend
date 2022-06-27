@@ -1,11 +1,13 @@
 import { BiChevronLeft } from "react-icons/bi";
-import { Button } from "@mui/material";
+import IconButton from "@mui/joy/IconButton";
 
 function ButtonBackNew({ onClick }) {
   return (
-    <Button onClick={onClick} className="rounded-lg bg-light-brown">
-      <BiChevronLeft className="text-[#DA6317] text-3xl" />
-    </Button>
+    <>
+      <IconButton onClick={onClick} sx={{ bgcolor: "#F9A84D", opacity: "0.2" }}>
+        <BiChevronLeft className="text-[#DA6317] text-3xl " />
+      </IconButton>
+    </>
   );
 }
 

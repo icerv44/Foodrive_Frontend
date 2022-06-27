@@ -1,9 +1,9 @@
 import { Box } from "@mui/joy";
 import React from "react";
 import { Outlet } from "react-router-dom";
-import Footer from "../components/footer/Footer";
+import Footer from "../components/Outlet/Footer";
 
-function CustomerPage() {
+function CustomerContainer() {
   return (
     <>
       <Outlet />
@@ -16,4 +16,4 @@ function CustomerPage() {
   );
 }
 
-export default CustomerPage;
+export default CustomerContainer;
