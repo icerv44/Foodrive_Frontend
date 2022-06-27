@@ -6,7 +6,6 @@ import RegisterPage from "../pages/RegisterPage";
 import HomePage from "../pages/customer/HomePage";
 import ChatPage from "../pages/ChatPage";
 import RestaurantPage from "../pages/RestaurantPage";
-import DetailMenuPage from "../pages/customer/DetailMenuPage";
 import OrderPage from "../pages/customer/OrderPage";
 import ShopMenuPage from "../pages/customer/ShopMenuPage";
 import { useEffect } from "react";
@@ -26,6 +25,8 @@ import ConfirmOrderPage from "../pages/driver/ConfirmOrderPage";
 import OrderSummary from "../pages/driver/OrderSummary";
 import DeliveryCompleted from "../pages/driver/DeliveryCompleted";
 import DeliveryContainer from "../role/driver/delivery/DeliveryContainer";
+import CreateCategory from "../pages/restaurant/CreateCategory";
+import RestaurantContainer from "../role/restaurant/container/RestaurantContainer";
 
 function Router() {
   const dispatch = useDispatch();
@@ -49,7 +50,7 @@ function Router() {
           <Route path="" element={<HomePage />} />
           <Route path="restaurant" element={<RestaurantPage />} />
           <Route path="shop/:id" element={<ShopMenuPage />} />
-          <Route path="detail/:id" element={<DetailMenuPage />} />
+          <Route path="detail/:id" element={<DetailFoodPage />} />
           <Route path="order" element={<OrderPage />} />
           <Route path="payment" element={<PaymentPage />} />
           <Route path="address" element={<AddressSelectPage />} />
@@ -73,6 +74,9 @@ function Router() {
         <Route path="/driver/completed" element={<DeliveryCompleted />} />
 
         {/* RESTAURANT */}
+        <Route path="/restaurant" element={<RestaurantContainer />}>
+          <Route path="category" element={<CreateCategory />} />
+        </Route>
       </Routes>
     </>
   );

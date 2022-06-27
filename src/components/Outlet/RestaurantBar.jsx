@@ -1,9 +1,8 @@
-import { MdHomeFilled, MdAccountCircle } from "react-icons/md";
-import { BsFillCartDashFill } from "react-icons/bs";
-import { AiFillMessage } from "react-icons/ai";
 import { Box, Typography } from "@mui/joy";
+import { AiOutlineFileText } from "react-icons/ai";
+import { BsFillChatDotsFill, BsCartDashFill } from "react-icons/bs";
 
-export default function Footer() {
+function RestaurantBar() {
   return (
     <Box
       sx={{
@@ -37,8 +36,8 @@ export default function Footer() {
             fontSize: "26px",
           }}
         >
-          <MdHomeFilled />
-          <Typography>home</Typography>
+          <AiOutlineFileText />
+          <Typography>delivery</Typography>
         </Box>
         <Box
           role="button"
@@ -51,38 +50,26 @@ export default function Footer() {
             fontSize: "26px",
           }}
         >
-          <MdAccountCircle />
-          <Typography>account</Typography>
-        </Box>
-        <Box
-          role="button"
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            color: "#3B3B3B",
-            fontSize: "26px",
-          }}
-        >
-          <BsFillCartDashFill />
-          <Typography>cart</Typography>
-        </Box>
-        <Box
-          role="button"
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            color: "#3B3B3B",
-            fontSize: "26px",
-          }}
-        >
-          <AiFillMessage />
+          <BsFillChatDotsFill />
           <Typography>message</Typography>
+        </Box>
+        <Box
+          role="button"
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            color: "#3B3B3B",
+            fontSize: "26px",
+          }}
+        >
+          <BsCartDashFill />
+          <Typography>order</Typography>
         </Box>
       </Box>
     </Box>
   );
 }
+
+export default RestaurantBar;
