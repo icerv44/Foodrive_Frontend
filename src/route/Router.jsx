@@ -15,6 +15,8 @@ import { useDispatch } from "react-redux";
 import { getAccessToken } from "../services/localstorage";
 import { fetchUser } from "../slices/userSlice";
 import DetailFoodPage from "../pages/customer/DetailFoodPage";
+import ToastError from "../components/ui/ToastError";
+import HomePageDriver from "../pages/driver/HomePageDriver";
 
 function Router() {
   const dispatch = useDispatch();
@@ -27,20 +29,31 @@ function Router() {
   }, [token]);
 
   return (
-    <Routes>
-      <Route path="/" element={<HomePage />} />
-      <Route path="/register" element={<RegisterPage />} />
-      <Route path="/login" element={<LoginPage />} />"
-      <Route path="/restaurant" element={<RestaurantPage />} />"
-      <Route path="/payment" element={<PaymentPage />} />"
-      <Route path="/address" element={<AddressSelectPage />} />"
-      <Route path="/chat" element={<ChatPage />} />"
-      <Route path="/detail/:id" element={<DetailMenuPage />} />"
-      <Route path="/order" element={<OrderPage />} />"
-      <Route path="/driverstatus" element={<DriverLocatePage />} />"
-      <Route path="/shop/:id" element={<ShopMenuPage />} />"
-      <Route path="/shop/:id/:foodId" element={<DetailFoodPage />} />"
-    </Routes>
+    <>
+      {/* CUSTOMER */}
+      <Routes>
+        <Route path="/test" element={<ToastError />} />
+        <Route path="/" element={<HomePage />} />
+        <Route path="/resgister" element={<RegisterPage />} />
+        <Route path="/login" element={<LoginPage />} />"
+        <Route path="/restaurant" element={<RestaurantPage />} />
+        <Route path="/payment" element={<PaymentPage />} />"
+        <Route path="/address" element={<AddressSelectPage />} />"
+        <Route path="/chat" element={<ChatPage />} />"
+        <Route path="/detail/:id" element={<DetailMenuPage />} />"
+        <Route path="/order" element={<OrderPage />} />"
+        <Route path="/driverstatus" element={<DriverLocatePage />} />"
+        <Route path="/shop/:id" element={<ShopMenuPage />} />"
+        <Route path="/shop/:id/:foodId" element={<DetailFoodPage />} />"
+      </Routes>
+
+      {/* DRIVER */}
+      <Routes>
+        <Route path="/driver/login" element={<LoginPage />} />
+        <Route path="/driver/register" element={<RegisterPage />} />
+        <Route path="/driver" element={<HomePageDriver />} />
+      </Routes>
+    </>
   );
 }
 
