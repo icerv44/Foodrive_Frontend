@@ -9,9 +9,10 @@ import store from "./store";
 ReactDOM.createRoot(document.getElementById("root")).render(
   <Provider store={store}>
     <BrowserRouter>
-      <React.StrictMode>
-        <App />
-      </React.StrictMode>
+      {/* เอาstrict mode ออกไม่งั้นไม่เห็น marker */}
+      {/* <React.StrictMode> */}
+      <App />
+      {/* </React.StrictMode> */}
     </BrowserRouter>
   </Provider>
 );
