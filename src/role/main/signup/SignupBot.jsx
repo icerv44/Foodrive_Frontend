@@ -1,6 +1,6 @@
 import { Typography } from "@mui/material";
 import { useDispatch } from "react-redux";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import ButtonGreenGradiant from "../../../components/button/ButtonGreenGradiant";
 import { register } from "../../../slices/registerSlice";
 import { fetchUser } from "../../../slices/userSlice";
@@ -24,12 +24,14 @@ function SignupBot() {
       <div className="flex justify-center items-center mt-20">
         <ButtonGreenGradiant title="Create Account" onClick={handleRegister} />
       </div>
-      <Typography
-        sx={{ marginTop: "20px" }}
-        className="text-center underline text-green"
-      >
-        already have an account?
-      </Typography>
+      <Link to={`/${role}/login`}>
+        <Typography
+          sx={{ marginY: "20px" }}
+          className="text-center underline text-green"
+        >
+          already have an account?
+        </Typography>
+      </Link>
     </>
   );
 }
