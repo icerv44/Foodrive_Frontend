@@ -23,13 +23,13 @@ function HomePage() {
     setMenus(res.data.menus);
   };
 
-  useEffect(() => {
-    getCurrentPosition().then((res) => {
-      dispatch(
-        setPosition({ latitude: res.latitude, longitude: res.longitude })
-      );
-    });
-  }, []);
+  // useEffect(() => {
+  //   getCurrentPosition().then((res) => {
+  //     dispatch(
+  //       setPosition({ latitude: res.latitude, longitude: res.longitude })
+  //     );
+  //   });
+  // }, []);
 
   useEffect(() => {
     const perform = async () => {

@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import AddressSelectPage from "../pages/customer/AddressSelectPage";
 import LoginPage from "../pages/LoginPage";
 import PaymentPage from "../pages/customer/PaymentPage";
@@ -12,7 +12,7 @@ import ShopMenuPage from "../pages/customer/ShopMenuPage";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { getAccessToken } from "../services/localstorage";
-import { fetchUser } from "../slices/userSlice";
+import { fetchUser, setPosition } from "../slices/userSlice";
 import HomePageDriver from "../pages/driver/HomePageDriver";
 import DriverIncome from "../role/driver/home/DriverIncome";
 import HomeContainerDriver from "../role/driver/home/HomeContainerDriver";
@@ -23,16 +23,28 @@ import ConfirmOrderPage from "../pages/driver/ConfirmOrderPage";
 import OrderSummary from "../pages/driver/OrderSummary";
 import DeliveryCompleted from "../pages/driver/DeliveryCompleted";
 import DeliveryContainer from "../role/driver/delivery/DeliveryContainer";
+import { getCurrentPosition } from "../services/geolocation";
 
 function Router() {
   const dispatch = useDispatch();
   const token = getAccessToken();
+
+  const { pathname } = useLocation();
 
   useEffect(() => {
     if (token) {
       dispatch(fetchUser({ role: "customer" }));
     }
   }, [token]);
+
+  useEffect(() => {
+    getCurrentPosition().then((res) => {
+      console.log(res);
+      dispatch(
+        setPosition({ latitude: res.latitude, longitude: res.longitude })
+      );
+    });
+  }, [pathname]);
 
   return (
     <>
