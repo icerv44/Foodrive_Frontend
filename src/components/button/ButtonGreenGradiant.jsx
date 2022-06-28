@@ -1,8 +1,9 @@
 import { Button } from "@mui/joy";
 
-function ButtonGreenGradiant({ title, px, onClick }) {
+function ButtonGreenGradiant({ title, px, onClick, type }) {
   return (
     <Button
+      type={type}
       onClick={onClick}
       sx={{
         height: "57px",
