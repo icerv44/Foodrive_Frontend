@@ -18,6 +18,7 @@ function SignupBot() {
       dispatch(fetchUser({ role }));
     }
   };
+
   return (
     <>
       <div className="flex justify-center items-center mt-20">
