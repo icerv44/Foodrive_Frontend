@@ -1,6 +1,5 @@
 import { Box, Typography } from "@mui/material";
 import ButtonBackNew from "../../components/button/ButtonBackNew";
-import RestaurantBar from "../../components/Outlet/RestaurantBar";
 import AddOrEditMenu from "../../role/restaurant/createcategory/AddOrEditMenu";
 
 function CreateCategory() {
@@ -34,7 +33,10 @@ function CreateCategory() {
           Main Menu
         </Box>
       </Box>
-      <AddOrEditMenu />
+      <AddOrEditMenu
+        title="Add more Category"
+        subTitle="add or edit category"
+      />
     </Box>
   );
 }
