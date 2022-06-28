@@ -2,6 +2,8 @@ import { createTheme, ThemeProvider } from "@mui/material";
 import Router from "./route/Router";
 import { CssVarsProvider } from "@mui/joy/styles";
 import { DeliveryContextProvider } from "./contexts/DeliveryContext";
+import { CustomerContextProvider } from "./contexts/CustomerContext";
+import { LoadingContextProvider } from "./contexts/LoadingContext";
 
 function App() {
   const theme = createTheme({
@@ -37,9 +39,13 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssVarsProvider>
-        <DeliveryContextProvider>
-          <Router />
-        </DeliveryContextProvider>
+        <LoadingContextProvider>
+          <CustomerContextProvider>
+            <DeliveryContextProvider>
+              <Router />
+            </DeliveryContextProvider>
+          </CustomerContextProvider>
+        </LoadingContextProvider>
       </CssVarsProvider>
     </ThemeProvider>
   );

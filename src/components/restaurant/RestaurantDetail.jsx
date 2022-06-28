@@ -5,10 +5,14 @@ import ButtonFavorite from "../button/ButtonFavorite";
 import { MdOutlineLocationOn } from "react-icons/md";
 import { BsStarHalf } from "react-icons/bs";
 import RestaurantPromo from "./RestaurantPromo";
+import { useCustomer } from "../../contexts/CustomerContext";
 
 function RestaurantDetail() {
+  const { restaurant } = useCustomer();
   const category = "อาหารยุโรป";
   const restaurantName = "KFC มีนบุรี - ประเทศไทย";
+
+  console.log("restaurant detail", restaurant);
 
   return (
     <Box
@@ -24,7 +28,7 @@ function RestaurantDetail() {
       <div className="flex justify-between mb-4">
         <div className="flex items-center text-green text-20 font-bold align-middle">
           <div className="rounded-2xl bg-light-green h-7 p-4 items-center flex">
-            <span className="text-sm font-light ">{category}</span>
+            <span className="text-sm font-light ">{restaurant?.status}</span>
           </div>
         </div>
         <ButtonFavorite />
@@ -39,7 +43,7 @@ function RestaurantDetail() {
             marginY: 2,
           }}
         >
-          {restaurantName}
+          {restaurant?.name}
         </Typography>
       </Box>
 
@@ -62,7 +66,7 @@ function RestaurantDetail() {
         </Typography>
       </Box>
 
-      <RestaurantPromo />
+      {/* <RestaurantPromo /> */}
     </Box>
   );
 }

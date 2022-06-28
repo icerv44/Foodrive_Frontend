@@ -27,10 +27,13 @@ import CreateCategory from "../pages/restaurant/CreateCategory";
 import RestaurantContainer from "../role/restaurant/container/RestaurantContainer";
 import CreateFood from "../pages/restaurant/CreateFood";
 import DetailFoodPage from "../pages/customer/DetailFoodPage";
+import { useLoading } from "../contexts/LoadingContext";
+import Spinner from "../components/ui/Spinner";
 
 function Router() {
   const dispatch = useDispatch();
   const token = getAccessToken();
+  const { loading } = useLoading();
 
   const { pathname } = useLocation();
   const role = pathname.split("/")[1];
@@ -52,13 +55,15 @@ function Router() {
 
   return (
     <>
+      {loading && <Spinner />}
+
       {/* CUSTOMER */}
       <Routes>
         <Route path="/customer/register" element={<RegisterPage />} />
         <Route path="/customer/login" element={<LoginPage />} />
         <Route path="/customer" element={<CustomerPage />}>
           <Route path="" element={<HomePage />} />
-          <Route path="restaurant" element={<RestaurantPage />} />
+          <Route path="restaurant/:restaurantId" element={<RestaurantPage />} />
           <Route path="shop/:id" element={<ShopMenuPage />} />
           <Route path="detail/:id" element={<DetailFoodPage />} />
           <Route path="order" element={<OrderPage />} />

@@ -5,22 +5,32 @@ import { getCurrentPosition } from "../../services/geolocation";
 import { getAccessToken } from "../../services/localstorage";
 import { setPosition } from "../../slices/userSlice";
 import axios from "../../config/axios";
+import { useLoading } from "../../contexts/LoadingContext";
 // import HomeHeader from "../../components/home/HomeHeader";
 
 function HomePage() {
+  const { setLoading } = useLoading();
   const dispatch = useDispatch();
   const userInfo = useSelector((state) => state.user.info);
   const { latitude, longitude } = userInfo;
 
   const [menus, setMenus] = useState([]);
   //อยากทำเป็นslice มั้ยหรือจะ hard code อย่างงี้
-  const [loading, setLoading] = useState(false);
 
   const fetchMenus = async () => {
-    console.log(latitude, longitude);
-    const res = await axios.post("customer/getMenus", { latitude, longitude });
-    console.log(res.data.menus);
-    setMenus(res.data.menus);
+    try {
+      console.log(latitude, longitude);
+      setLoading(true);
+      const res = await axios.post("customer/getMenus", {
+        latitude,
+        longitude,
+      });
+      console.log(res.data.menus);
+      setMenus(res.data.menus);
+    } catch (err) {
+    } finally {
+      setLoading(false);
+    }
   };
 
   // useEffect(() => {
