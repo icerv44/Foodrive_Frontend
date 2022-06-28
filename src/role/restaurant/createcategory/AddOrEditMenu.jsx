@@ -1,8 +1,9 @@
 import IconButton from "@mui/joy/IconButton";
 import { Box, Typography } from "@mui/material";
 import { AiOutlinePlus } from "react-icons/ai";
+import { BsChevronRight } from "react-icons/bs";
 
-function AddOrEditMenu() {
+function AddOrEditMenu({ title, subTitle }) {
   return (
     <Box
       sx={{
@@ -26,9 +27,12 @@ function AddOrEditMenu() {
       </Box>
       <Box sx={{ flexGrow: 1 }}>
         <Typography sx={{ fontWeight: 700, fontSize: "18px" }}>
-          Add more Category
+          {title}
         </Typography>
-        <Typography sx={{ color: "grey" }}>add or edit category</Typography>
+        <Typography sx={{ color: "grey" }}>{subTitle}</Typography>
+      </Box>
+      <Box className="text-[#DA6317] text-xl">
+        <BsChevronRight />
       </Box>
     </Box>
   );

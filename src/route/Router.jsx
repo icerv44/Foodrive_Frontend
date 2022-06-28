@@ -25,6 +25,7 @@ import DeliveryContainer from "../role/driver/delivery/DeliveryContainer";
 import { getCurrentPosition } from "../services/geolocation";
 import CreateCategory from "../pages/restaurant/CreateCategory";
 import RestaurantContainer from "../role/restaurant/container/RestaurantContainer";
+import CreateFood from "../pages/restaurant/CreateFood";
 import DetailFoodPage from "../pages/customer/DetailFoodPage";
 
 function Router() {
@@ -87,6 +88,7 @@ function Router() {
         <Route path="/restaurant" element={<RestaurantContainer />}>
           <Route path="category" element={<CreateCategory />} />
         </Route>
+        <Route path="restaurant/food" element={<CreateFood />} />
       </Routes>
     </>
   );
