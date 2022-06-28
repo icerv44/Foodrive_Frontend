@@ -24,6 +24,7 @@ import DeliveryCompleted from "../pages/driver/DeliveryCompleted";
 import DeliveryContainer from "../role/driver/delivery/DeliveryContainer";
 import CreateCategory from "../pages/restaurant/CreateCategory";
 import RestaurantContainer from "../role/restaurant/container/RestaurantContainer";
+import DetailFoodPage from "../pages/customer/DetailFoodPage";
 
 function Router() {
   const dispatch = useDispatch();
