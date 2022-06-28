@@ -6,7 +6,6 @@ import RegisterPage from "../pages/RegisterPage";
 import HomePage from "../pages/customer/HomePage";
 import ChatPage from "../pages/ChatPage";
 import RestaurantPage from "../pages/RestaurantPage";
-import DetailMenuPage from "../pages/customer/DetailMenuPage";
 import OrderPage from "../pages/customer/OrderPage";
 import ShopMenuPage from "../pages/customer/ShopMenuPage";
 import { useEffect } from "react";
@@ -24,6 +23,9 @@ import OrderSummary from "../pages/driver/OrderSummary";
 import DeliveryCompleted from "../pages/driver/DeliveryCompleted";
 import DeliveryContainer from "../role/driver/delivery/DeliveryContainer";
 import { getCurrentPosition } from "../services/geolocation";
+import CreateCategory from "../pages/restaurant/CreateCategory";
+import RestaurantContainer from "../role/restaurant/container/RestaurantContainer";
+import DetailFoodPage from "../pages/customer/DetailFoodPage";
 
 function Router() {
   const dispatch = useDispatch();
@@ -55,12 +57,12 @@ function Router() {
         <Route path="/customer/login" element={<LoginPage />} />
         <Route path="/customer" element={<CustomerPage />}>
           <Route path="" element={<HomePage />} />
-          <Route path="/customer/restaurant" element={<RestaurantPage />} />
-          <Route path="/customer/shop/:id" element={<ShopMenuPage />} />
-          <Route path="/customer/detail/:id" element={<DetailMenuPage />} />
-          <Route path="/customer/order" element={<OrderPage />} />
-          <Route path="/customer/payment" element={<PaymentPage />} />
-          <Route path="/customer/address" element={<AddressSelectPage />} />
+          <Route path="restaurant" element={<RestaurantPage />} />
+          <Route path="shop/:id" element={<ShopMenuPage />} />
+          <Route path="detail/:id" element={<DetailFoodPage />} />
+          <Route path="order" element={<OrderPage />} />
+          <Route path="payment" element={<PaymentPage />} />
+          <Route path="address" element={<AddressSelectPage />} />
         </Route>
         <Route path="/customer/chat" element={<ChatPage />} />
 
@@ -82,6 +84,9 @@ function Router() {
         <Route path="/driver/completed" element={<DeliveryCompleted />} />
 
         {/* RESTAURANT */}
+        <Route path="/restaurant" element={<RestaurantContainer />}>
+          <Route path="category" element={<CreateCategory />} />
+        </Route>
       </Routes>
     </>
   );
