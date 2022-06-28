@@ -1,19 +1,22 @@
 import ButtonGoogle from "../../../components/button/ButtonGoogle";
 import ButtonGreenGradiant from "../../../components/button/ButtonGreenGradiant";
 import { useDispatch } from "react-redux";
-import { loginCustomer } from "../../../slices/loginSlice";
-import { useNavigate } from "react-router-dom";
+import { login } from "../../../slices/loginSlice";
+import { useLocation, useNavigate } from "react-router-dom";
 import { fetchUser } from "../../../slices/userSlice";
 
 function LoginBot() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { pathname } = useLocation();
+  const role = pathname.split("/")[1];
+
   const onClick = async () => {
-    const res = await dispatch(loginCustomer());
+    const res = await dispatch(login({ role }));
     console.log(res);
     if (res?.error?.message !== "Rejected") {
-      navigate("/");
-      dispatch(fetchUser({ role: "customer" }));
+      navigate("/" + role);
+      dispatch(fetchUser({ role }));
     }
   };
 

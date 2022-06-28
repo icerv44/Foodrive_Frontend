@@ -2,34 +2,26 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { setAccessToken } from "../services/localstorage";
 
-const loginCustomer = createAsyncThunk(
-  "customer/login",
-  async (payload, thunkApi) => {
-    try {
-      console.log(thunkApi.getState());
-      const email = thunkApi.getState().login.email;
-      const password = thunkApi.getState().login.password;
+const login = createAsyncThunk("customer/login", async (payload, thunkApi) => {
+  try {
+    console.log(thunkApi.getState());
+    const email = thunkApi.getState().login.email;
+    const password = thunkApi.getState().login.password;
 
-      const res = await axios.post(
-        "http://localhost:5000/auth/login/customer",
-        {
-          email,
-          password,
-        }
-      );
+    const res = await axios.post("http://localhost:5000/auth/login/customer", {
+      email,
+      password,
+    });
 
-      const token = res.data.token;
-      setAccessToken(token);
+    const token = res.data.token;
+    setAccessToken(token);
 
-      return thunkApi.fulfillWithValue(null); // or just return normally
-    } catch (err) {
-      console.log(err);
-      return thunkApi.rejectWithValue(
-        err?.message || err.response?.data.message
-      );
-    }
+    return thunkApi.fulfillWithValue(null); // or just return normally
+  } catch (err) {
+    console.log(err);
+    return thunkApi.rejectWithValue(err?.message || err.response?.data.message);
   }
-);
+});
 
 const loginSlice = createSlice({
   name: "login",
@@ -49,15 +41,15 @@ const loginSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(loginCustomer.pending, (state, action) => {
+      .addCase(login.pending, (state, action) => {
         state.isLoading = true;
         state.error = "";
       })
-      .addCase(loginCustomer.fulfilled, (state, action) => {
+      .addCase(login.fulfilled, (state, action) => {
         state.isLoading = false;
         state.error = "";
       })
-      .addCase(loginCustomer.rejected, (state, action) => {
+      .addCase(login.rejected, (state, action) => {
         state.error = action.payload;
         state.isLoading = false;
       });
@@ -69,7 +61,7 @@ const loginSlice = createSlice({
 // const changePassword = loginSlice.actions.changePassword;
 
 export const { changeEmail, changePassword } = loginSlice.actions;
-export { loginCustomer };
+export { login };
 const loginReducer = loginSlice.reducer;
 
 export default loginReducer;

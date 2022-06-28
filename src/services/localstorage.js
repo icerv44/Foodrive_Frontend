@@ -4,4 +4,6 @@ const setAccessToken = (token) => {
 
 const getAccessToken = () => localStorage.getItem("token");
 
-export { setAccessToken, getAccessToken };
+const removeToken = () => localStorage.removeItem("token");
+
+export { setAccessToken, getAccessToken, removeToken };

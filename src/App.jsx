@@ -11,16 +11,19 @@ const theme = createTheme({
     },
   },
   palette: {
-    gray: "#858786",
+    gray: { main: "#858786" },
     lightGray: "#fafdff",
+    red: {
+      main: "#FF1D1D",
+      light: "#fcd7d4",
+    },
     heart: "#FF1D1D",
-    lightRed: "#fcd7d4",
-    green: "#15BE77",
-    lightGreen: "#dcf5eb",
-    brown: "#DA6317",
-    lightBrown: "#fbf4ec",
+    green: { main: "#15BE77", light: "#dcf5eb" },
+    brown: { main: "#DA6317", light: "#fbf4ec" },
   },
   components: {
+    MuiModal: { styleOverrides: { root: { zIndex: 100 } } },
+
     MuiContainer: {
       defaultProps: {
         style: {

@@ -5,19 +5,39 @@ import { MdOutlineLocationOn, MdCall } from "react-icons/md";
 import { BsFillChatDotsFill, BsFillCartFill } from "react-icons/bs";
 import Card from "@mui/joy/Card";
 import { useDelivery } from "../../contexts/DeliveryContext";
+import { useLocation } from "react-router-dom";
 // import { IoIosCall } from "react-icons/io";
 
 const listMenu = [
-  { icon: <MdCall />, label: "Call" },
+  {
+    icon: <MdCall />,
+    label: "Call",
+    to: "/driver/delivery/direction",
+  },
   { icon: <BsFillChatDotsFill />, label: "Chat" },
-  { icon: <BsFillCartFill />, label: "Cart" },
-  { icon: <MdOutlineLocationOn />, label: "Location" },
+  {
+    icon: <BsFillCartFill />,
+    label: "Cart",
+    to: "/driver/delivery/confirmOrder",
+  },
+  {
+    icon: <MdOutlineLocationOn />,
+    label: "destination",
+    to: "/driver/delivery/direction",
+  },
 ];
 
 function DeliveryBar() {
   const { setPlace, btnTitle } = useDelivery();
+  const { pathname } = useLocation();
+  const path = pathname.split("/")[3] === "direction";
 
   const title = "ถึงร้านแล้ว";
+
+  const handleBar = () => {
+    if (path) {
+    }
+  };
 
   const handleBtn = () => {
     setPlace("customerLocation");
@@ -39,6 +59,7 @@ function DeliveryBar() {
           {listMenu.map((item) => (
             <ListItem
               key={item.label}
+              onClick={handleBar}
               sx={{
                 display: "flex",
                 flexDirection: "column",

@@ -14,13 +14,13 @@ function ButtonLogin({ height, width, borderRadius, background, color, text }) {
             "linear-gradient(98.81deg, #53E88B -0.82%, #15BE77 101.53%)",
           color: "white",
         }}
-        sx={{
-          height,
-          width,
-          borderRadius,
-          background,
-          color,
-        }}
+        // sx={{
+        //   height,
+        //   width,
+        //   borderRadius,
+        //   background,
+        //   color,
+        // }}
       >
         <Typography
           variant="button"

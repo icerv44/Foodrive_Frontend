@@ -12,11 +12,6 @@ function CardDelivery() {
   const cutLetter = 18;
   const location = "225/945 ม.7 ต.นาเกลือ อ.เมือง จ.เชียงราย 11250";
 
-  //   const [place, setPlace] = useState("test");
-
-  //   console.log(place);
-  //   console.log(textColor);
-
   const cutRestaurantName = (name) => {
     if (name.length > cutLetter) {
       const cutName = name.substring(0, cutLetter) + "...";
