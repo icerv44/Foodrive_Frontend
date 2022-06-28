@@ -85,6 +85,8 @@ function Router() {
         <Route path="/driver/completed" element={<DeliveryCompleted />} />
 
         {/* RESTAURANT */}
+        <Route path="/restaurant/register" element={<RegisterPage />} />
+        <Route path="/restaurant/login" element={<LoginPage />} />
         <Route path="/restaurant" element={<RestaurantContainer />}>
           <Route path="category" element={<CreateCategory />} />
         </Route>

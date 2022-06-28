@@ -6,7 +6,7 @@ import { Box } from "@mui/joy";
 
 function HomeContainer() {
   return (
-    <Box>
+    <Box className="mb-24">
       <HomeHeader />
       <SearchHome />
       <Categories />
