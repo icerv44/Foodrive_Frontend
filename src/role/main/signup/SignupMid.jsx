@@ -12,6 +12,7 @@ import {
 
 function SignupMid() {
   const dispatch = useDispatch();
+
   const firstName = useSelector((state) => state.register.firstName);
   const lastName = useSelector((state) => state.register.lastName);
   const phoneNumber = useSelector((state) => state.register.phoneNumber);

@@ -30,10 +30,11 @@ function Router() {
   const token = getAccessToken();
 
   const { pathname } = useLocation();
+  const role = pathname.split("/")[1];
 
   useEffect(() => {
     if (token) {
-      dispatch(fetchUser({ role: "customer" }));
+      dispatch(fetchUser({ role }));
     }
   }, [token]);
 
@@ -50,19 +51,19 @@ function Router() {
     <>
       {/* CUSTOMER */}
       <Routes>
-        <Route path="/register" element={<RegisterPage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="" element={<HomePage />} />
+        <Route path="/customer/register" element={<RegisterPage />} />
+        <Route path="/customer/login" element={<LoginPage />} />
         <Route path="/customer" element={<CustomerPage />}>
           <Route path="" element={<HomePage />} />
-          <Route path="restaurant" element={<RestaurantPage />} />
-          <Route path="shop/:id" element={<ShopMenuPage />} />
-          <Route path="detail/:id" element={<DetailMenuPage />} />
-          <Route path="order" element={<OrderPage />} />
-          <Route path="payment" element={<PaymentPage />} />
-          <Route path="address" element={<AddressSelectPage />} />
+          <Route path="/customer/restaurant" element={<RestaurantPage />} />
+          <Route path="/customer/shop/:id" element={<ShopMenuPage />} />
+          <Route path="/customer/detail/:id" element={<DetailMenuPage />} />
+          <Route path="/customer/order" element={<OrderPage />} />
+          <Route path="/customer/payment" element={<PaymentPage />} />
+          <Route path="/customer/address" element={<AddressSelectPage />} />
         </Route>
-        <Route path="chat" element={<ChatPage />} />
+        <Route path="/customer/chat" element={<ChatPage />} />
+
         {/* DRIVER */}
         <Route path="/driver/login" element={<LoginPage />} />
         <Route path="/driver/register" element={<RegisterPage />} />
