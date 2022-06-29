@@ -2,6 +2,7 @@ import { MdHomeFilled, MdAccountCircle } from "react-icons/md";
 import { BsFillCartDashFill } from "react-icons/bs";
 import { AiFillMessage } from "react-icons/ai";
 import { Box, Typography } from "@mui/joy";
+import { Link } from "react-router-dom";
 
 export default function Footer() {
   return (
@@ -26,20 +27,23 @@ export default function Footer() {
           zIndex: 20,
         }}
       >
-        <Box
-          role="button"
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            color: "#3B3B3B",
-            fontSize: "26px",
-          }}
-        >
-          <MdHomeFilled />
-          <Typography>home</Typography>
-        </Box>
+        <Link to={"/customer"}>
+          <Box
+            role="button"
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              color: "#3B3B3B",
+              fontSize: "26px",
+            }}
+          >
+            <MdHomeFilled />
+            <Typography>home</Typography>
+          </Box>
+        </Link>
+
         <Box
           role="button"
           sx={{

@@ -26,8 +26,23 @@ function RestaurantDetail() {
       }}
     >
       <div className="flex justify-between mb-4">
-        <div className="flex items-center text-green text-20 font-bold align-middle">
-          <div className="rounded-2xl bg-light-green h-7 p-4 items-center flex">
+        <div
+          className={
+            "flex items-center text-green text-20 font-bold align-middle" +
+              restaurant?.status ===
+            "open"
+              ? " text-green "
+              : " text-brown "
+          }
+        >
+          <div
+            className={
+              "rounded-2xl h-7 p-4 items-center flex" + restaurant?.status ===
+              "open"
+                ? " bg-light-green "
+                : " bg-light-brown "
+            }
+          >
             <span className="text-sm font-light ">{restaurant?.status}</span>
           </div>
         </div>

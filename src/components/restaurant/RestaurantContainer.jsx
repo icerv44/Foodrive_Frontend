@@ -10,7 +10,7 @@ function RestaurantContainer() {
   const { setLoading } = useLoading();
   const { getRestaurantById, restaurant } = useCustomer();
   const { restaurantId } = useParams();
-  const idTest = 1;
+  console.log("restaurantId", restaurantId);
 
   useEffect(() => {
     try {

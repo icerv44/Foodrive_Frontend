@@ -64,8 +64,8 @@ function Router() {
         <Route path="/customer" element={<CustomerPage />}>
           <Route path="" element={<HomePage />} />
           <Route path="restaurant/:restaurantId" element={<RestaurantPage />} />
-          <Route path="shop/:id" element={<ShopMenuPage />} />
-          <Route path="detail/:id" element={<DetailFoodPage />} />
+          <Route path="shop/:restaurantId" element={<ShopMenuPage />} />
+          <Route path="menuDetail/:menuId" element={<DetailFoodPage />} />
           <Route path="order" element={<OrderPage />} />
           <Route path="payment" element={<PaymentPage />} />
           <Route path="address" element={<AddressSelectPage />} />
