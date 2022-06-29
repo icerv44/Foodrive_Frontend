@@ -1,16 +1,11 @@
 import * as React from "react";
 import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
-import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import AspectRatio from "@mui/joy/AspectRatio";
 import Box from "@mui/joy/Box";
 import CardOverflow from "@mui/joy/CardOverflow";
 import { useCustomer } from "../../contexts/CustomerContext";
-import Spinner from "../ui/Spinner";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function CardHome({}) {
   const { menus } = useCustomer();
@@ -27,9 +22,10 @@ function CardHome({}) {
     <>
       {menus ? (
         menus?.map((el) => (
-          <Link to={"/customer/menuDetail/" + menus?.id}>
+          <Link to={"/customer/menuDetail/" + el?.id} key={el?.name}>
             <Box key={el?.name}>
               <Card
+                // onClick={() => navigateToMenu(el?.id)}
                 row
                 variant="outlined"
                 sx={{
@@ -71,7 +67,6 @@ function CardHome({}) {
                           fontSize: "14x",
                         }}
                       >
-                        {/* {el?.name} */}
                         {cutLetter(el?.name, 10)}
                       </Typography>
 

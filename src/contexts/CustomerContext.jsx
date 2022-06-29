@@ -7,8 +7,10 @@ export const CustomerContext = createContext();
 
 export function CustomerContextProvider({ children }) {
   const { setLoading } = useLoading();
+  const [search, setSearch] = useState("");
   const [restaurant, setRestaurant] = useState("");
   const [menus, setMenus] = useState("");
+  const [menu, setMenu] = useState("");
 
   const getRestaurantById = async (restaurantId) => {
     try {
@@ -22,14 +24,31 @@ export function CustomerContextProvider({ children }) {
     }
   };
 
-  const getMenus = async (latitude, longitude, tag, keyword) => {
+  const getMenus = async (latitude, longitude) => {
     try {
       setLoading(true);
       const res = await axios.post("/customer/searchMenus", {
         latitude,
         longitude,
+        tag: search || "",
+        keyword: search || "",
       });
       setMenus(res.data.menus);
+      console.log(search);
+      console.log(menus);
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const getMenuById = async (menuId) => {
+    try {
+      setLoading(true);
+      const res = await axios.get("/customer/getMenu/" + Number(menuId));
+      setMenu(res.data.menu);
+      console.log("customerContext", res?.data.menu);
     } catch (err) {
       console.log(err);
     } finally {
@@ -39,7 +58,16 @@ export function CustomerContextProvider({ children }) {
 
   return (
     <CustomerContext.Provider
-      value={{ restaurant, menus, getRestaurantById, getMenus }}
+      value={{
+        search,
+        setSearch,
+        restaurant,
+        menus,
+        menu,
+        getRestaurantById,
+        getMenus,
+        getMenuById,
+      }}
     >
       {children}
     </CustomerContext.Provider>

@@ -1,11 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 // import { FaBeer } from "react-icons/fa";
 import { MdLocationOn } from "react-icons/md";
 import { Box } from "@mui/material";
 import ButtonFavorite from "../../../components/button/ButtonFavorite";
+import { useCustomer } from "../../../contexts/CustomerContext";
 
 function HomeHeader() {
+  const { getMenuById } = useCustomer();
+
+  useEffect(() => {
+    const searchMenus = async () => {};
+  }, []);
+
   return (
     <Box
       className="flex justify-between items-center h-16  px-5 rounded-2lg "
