@@ -7,6 +7,7 @@ import GoogleMapDriver from "./GoogleMapDriver";
 console.log(GOOGLE_MAP_KEY);
 
 function GoogleMapDriverLoader() {
+  console.log("google map driver loading");
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: GOOGLE_MAP_KEY,
   });

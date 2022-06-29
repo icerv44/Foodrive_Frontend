@@ -27,6 +27,7 @@ import CreateCategory from "../pages/restaurant/CreateCategory";
 import RestaurantContainer from "../role/restaurant/container/RestaurantContainer";
 import CreateFood from "../pages/restaurant/CreateFood";
 import DetailFoodPage from "../pages/customer/DetailFoodPage";
+import GoogleMapTestPage from "../components/GoogleMapTestPage";
 
 function Router() {
   const dispatch = useDispatch();
@@ -66,6 +67,11 @@ function Router() {
           <Route path="address" element={<AddressSelectPage />} />
         </Route>
         <Route path="/customer/chat" element={<ChatPage />} />
+        {/*TESTING EXAMPLE FOR GOOGLE MAP*/}
+        <Route
+          path="/customer/google-map-example"
+          element={<GoogleMapTestPage />}
+        />
 
         {/* DRIVER */}
         <Route path="/driver/login" element={<LoginPage />} />

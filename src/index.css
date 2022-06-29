@@ -14,13 +14,3 @@ body {
   padding: 0;
   box-sizing: border-box;
 }
-
-.driver-map-container {
-  width: 100%;
-  height: 80vh;
-}
-
-.driver-map {
-  width: 100%;
-  height: 80vh;
-}
