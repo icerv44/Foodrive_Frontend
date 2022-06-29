@@ -10,7 +10,6 @@ function RestaurantContainer() {
   const { setLoading } = useLoading();
   const { getRestaurantById, restaurant } = useCustomer();
   const { restaurantId } = useParams();
-  console.log("restaurantId", restaurantId);
 
   useEffect(() => {
     try {
@@ -26,8 +25,6 @@ function RestaurantContainer() {
       setLoading(false);
     }
   }, [restaurantId]);
-
-  console.log("restaurant container", restaurant);
 
   return (
     <div>

@@ -21,11 +21,11 @@ function HomePage() {
   useEffect(() => {
     try {
       const fetchMenus = async () => {
-        await getMenus(latitude, longitude, search);
+        await getMenus(latitude, longitude, "");
       };
       return fetchMenus;
     } catch (err) {}
-  }, [pathname, search]);
+  }, [pathname]);
 
   return <HomeContainer latitude={latitude} longitude={longitude} />;
 }
