@@ -6,6 +6,8 @@ import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import store from "./store";
 import { RestaurantContextProvider } from "./contexts/RestaurantContext";
+// COMMENT THE FOLLOWING IMPORT IF THE APP IS BROKEN DUE TO NOT HAVING PRIVATE KEYS
+import firebaseApp from "./config/firebaseConfig";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <Provider store={store}>
