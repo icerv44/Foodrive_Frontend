@@ -33,6 +33,7 @@ import GoogleMapTestPage from "../components/GoogleMapTestPage";
 import CartPage from "../pages/customer/CartPage";
 import CartContainer from "../role/customer/order/CartContainer";
 import CustomerProfilePage from "../pages/customer/CustomerProfilePage";
+import CreateFoodOption from "../pages/restaurant/CreateFoodOption";
 
 function Router() {
   const dispatch = useDispatch();
@@ -109,6 +110,7 @@ function Router() {
           <Route path="category" element={<CreateCategory />} />
         </Route>
         <Route path="restaurant/food" element={<CreateFood />} />
+        <Route path="restaurant/food/option" element={<CreateFoodOption />} />
       </Routes>
     </>
   );

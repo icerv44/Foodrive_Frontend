@@ -44,7 +44,6 @@ function CreateCategory() {
           subTitle="add or edit food"
         />
         <AddCategory
-          // onClick={() => createCategoryRef.current.click()}
           title="Add more Category"
           subTitle="add or edit category"
         />

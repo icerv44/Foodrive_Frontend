@@ -4,8 +4,11 @@ import ButtonGreenGradiant from "../../../components/button/ButtonGreenGradiant"
 import ButtonWhite from "../../../components/button/ButtonWhite";
 import { useRef } from "react";
 import { useRestaurant } from "../../../contexts/RestaurantContext";
+import { useNavigate } from "react-router-dom";
 
 function CreateFoodInput() {
+  const navigate = useNavigate();
+
   const {
     foodImage,
     setFoodImage,
@@ -104,7 +107,11 @@ function CreateFoodInput() {
         </Box>
       </Box>
       <Box className="flex flex-col gap-4">
-        <ButtonWhite title="Create Option" px="103px" />
+        <ButtonWhite
+          onClick={() => navigate("/restaurant/food/option")}
+          title="Create Option"
+          px="103px"
+        />
         <ButtonGreenGradiant type="submit" title="Create Food" px="112px" />
       </Box>
     </form>

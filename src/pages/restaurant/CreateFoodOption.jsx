@@ -2,8 +2,9 @@ import { Box, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import ButtonBackNew from "../../components/button/ButtonBackNew";
 import CreateFoodInput from "../../role/restaurant/createfood/CreateFoodInput";
+import CreateOptionInput from "../../role/restaurant/createfoodoption/CreateOptionInput";
 
-function CreateFood() {
+function CreateFoodOption() {
   const navigate = useNavigate();
 
   return (
@@ -17,15 +18,15 @@ function CreateFood() {
       }}
     >
       <Box>
-        <ButtonBackNew onClick={() => navigate("/restaurant/category")} />
+        <ButtonBackNew onClick={() => navigate("/restaurant/food")} />
       </Box>
       <Typography sx={{ fontWeight: 700, fontSize: "25px" }}>
-        Menulist
+        Create Option
       </Typography>
       {/* Form */}
-      <CreateFoodInput />
+      <CreateOptionInput />
     </Box>
   );
 }
 
-export default CreateFood;
+export default CreateFoodOption;

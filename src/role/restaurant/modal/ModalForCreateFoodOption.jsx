@@ -1,12 +1,12 @@
 import { useState } from "react";
 import Modal from "react-modal";
-import { AiOutlinePlus, AiOutlineClose } from "react-icons/ai";
+import { AiOutlineClose } from "react-icons/ai";
 import ButtonGreenGradient from "../../../components/button/ButtonGreenGradiant";
 
 // Modal.setAppElement("#ใส่ไอดีของโมดัลอันนี้ในหน้าที่เอาไปใช้");
 // Import Modal ไปในไฟล์ที่จะใช้ด้วย
 
-function ModalForCreate({ ref }) {
+function ModalForCreateFoodOption({ ref }) {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleSubmit = (e) => {
@@ -15,9 +15,19 @@ function ModalForCreate({ ref }) {
 
   return (
     <>
-      <button className="" ref={ref} onClick={() => setIsOpen(true)}>
-        <AiOutlinePlus className="font-semibold text-xl" />
-      </button>
+      <div
+        style={{
+          boxShadow: "12px 26px 50px rgba(90, 108, 234, 0.07)",
+          border: "1px solid #F4F4F4",
+          borderRadius: "15px",
+          padding: "12px",
+          color: "#37C989",
+        }}
+        ref={ref}
+        onClick={() => setIsOpen(true)}
+      >
+        Add mini option
+      </div>
       <Modal
         style={{
           overlay: { backgroundColor: "rgba(0,0,0,0.5)" },
@@ -69,4 +79,4 @@ function ModalForCreate({ ref }) {
   );
 }
 
-export default ModalForCreate;
+export default ModalForCreateFoodOption;
