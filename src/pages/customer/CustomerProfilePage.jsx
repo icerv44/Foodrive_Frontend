@@ -12,7 +12,6 @@ function CustomerProfilePage() {
 
   const handleLogout = () => {
     removeToken();
-    console.log("first");
     navigate("/customer/login");
   };
 

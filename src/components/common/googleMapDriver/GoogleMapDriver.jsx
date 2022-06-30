@@ -50,7 +50,7 @@ function GoogleMapDriver() {
   }, [latitude, longitude]);
 
   useEffect(() => {
-    console.log(driverPosition, center);
+    // console.log(driverPosition, center);
   });
 
   return (

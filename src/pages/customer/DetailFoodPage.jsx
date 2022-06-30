@@ -8,15 +8,16 @@ function DetailFoodPage() {
   const { menuId } = useParams();
   const { getMenuById, menu } = useCustomer();
 
-  console.log(menu);
+  console.log(menuId);
 
   useEffect(() => {
     try {
+      console.log("fetch");
       const fetchMenu = async () => {
         await getMenuById(menuId);
-      };
 
-      return fetchMenu;
+        return fetchMenu;
+      };
     } catch (err) {
       console.log(err);
     }
@@ -24,8 +25,12 @@ function DetailFoodPage() {
 
   return (
     <>
-      <FoodPic />
-      <FoodDetail />
+      {menu && (
+        <>
+          <FoodPic />
+          <FoodDetail />
+        </>
+      )}
     </>
   );
 }
