@@ -4,9 +4,11 @@ import ButtonBackNew from "../../../components/button/ButtonBackNew";
 import ButtonLocation from "../../../components/button/ButtonLocation";
 import { BsSearch } from "react-icons/bs";
 import { useState } from "react";
+import { useCustomer } from "../../../contexts/CustomerContext";
 
 function HeaderMenuList() {
   const [onFocus, setOnFocus] = useState(false);
+  const { restaurant } = useCustomer();
 
   return (
     <Box
@@ -18,7 +20,7 @@ function HeaderMenuList() {
       <Box className="w-full h-[76px] px-5 flex justify-between items-center">
         <ButtonBackNew />
         <Box className="text-[#53E88B] text-lg font-semibold">
-          Mint Tower 100
+          {restaurant?.name}
         </Box>
         <ButtonLocation />
       </Box>

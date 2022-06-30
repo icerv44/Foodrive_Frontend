@@ -1,4 +1,5 @@
 import { Box } from "@mui/joy";
+import { Typography } from "@mui/material";
 import React from "react";
 import GoogleMapDriver from "../../components/common/googleMapDriver/GoogleMapDriver";
 import GoogleMapDriverLoader from "../../components/common/googleMapDriver/GoogleMapDriverLoader";

@@ -5,16 +5,23 @@ import Box from "@mui/joy/Box";
 import Card from "@mui/joy/Card";
 import CardOverflow from "@mui/joy/CardOverflow";
 import Typography from "@mui/joy/Typography";
+import { useCustomer } from "../../contexts/CustomerContext";
+import { Button } from "@mui/joy";
 
 function RestaurantTop() {
+  const { restaurant } = useCustomer();
+
   return (
     <Box>
-      {/* <ButtonBack /> */}
-
       <CardOverflow sx={{}}>
+        <ButtonBack />
+
         <AspectRatio ratio="1.2">
           <img
-            src="https://images.unsplash.com/photo-1532614338840-ab30cf10ed36?crop=entropy&auto=format&fit=crop&w=3270"
+            src={
+              restaurant?.image ||
+              "https://images.unsplash.com/photo-1532614338840-ab30cf10ed36?crop=entropy&auto=format&fit=crop&w=3270"
+            }
             alt=""
           />
         </AspectRatio>

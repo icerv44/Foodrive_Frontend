@@ -4,11 +4,13 @@ import { setAccessToken } from "../services/localstorage";
 
 const login = createAsyncThunk("customer/login", async (payload, thunkApi) => {
   try {
+    const role = payload.role;
+
     console.log(thunkApi.getState());
     const email = thunkApi.getState().login.email;
     const password = thunkApi.getState().login.password;
 
-    const res = await axios.post("http://localhost:5000/auth/login/customer", {
+    const res = await axios.post("/auth/login/" + role, {
       email,
       password,
     });
