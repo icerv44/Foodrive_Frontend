@@ -50,7 +50,6 @@ function Router() {
 
   useEffect(() => {
     getCurrentPosition().then((res) => {
-      console.log(res);
       dispatch(
         setPosition({ latitude: res.latitude, longitude: res.longitude })
       );
