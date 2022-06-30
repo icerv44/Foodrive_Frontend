@@ -8,10 +8,12 @@ module.exports = {
         green: "#15BE77",
         "light-green": "#dcf5eb",
         brown: "#DA6317",
+        cream: "#f5d8b8",
         "light-brown": "#fbf4ec",
         // gray: "#e0e0e0",
         gray: "#858786",
         "light-gray": "#e6e9eb",
+        yellow: "#FEAD1D",
       },
       borderRadius: {
         "2lg": "20px",

@@ -5,10 +5,14 @@ import ButtonFavorite from "../button/ButtonFavorite";
 import { MdOutlineLocationOn } from "react-icons/md";
 import { BsStarHalf } from "react-icons/bs";
 import RestaurantPromo from "./RestaurantPromo";
+import { useCustomer } from "../../contexts/CustomerContext";
+import ButtonGreenGradiant from "../button/ButtonGreenGradiant";
+import { Link } from "react-router-dom";
 
 function RestaurantDetail() {
-  const category = "อาหารยุโรป";
-  const restaurantName = "KFC มีนบุรี - ประเทศไทย";
+  const { restaurant } = useCustomer();
+
+  const restaurantId = restaurant?.id;
 
   return (
     <Box
@@ -19,50 +23,74 @@ function RestaurantDetail() {
         zIndex: 2,
         top: 200,
         padding: 5,
+        width: "100%",
       }}
+      className="flex flex-col gap-8"
     >
-      <div className="flex justify-between mb-4">
-        <div className="flex items-center text-green text-20 font-bold align-middle">
-          <div className="rounded-2xl bg-light-green h-7 p-4 items-center flex">
-            <span className="text-sm font-light ">{category}</span>
+      <Box>
+        <div className="flex justify-between mb-4">
+          <div
+            className={
+              "flex items-center text-green text-20 font-bold align-middle" +
+                restaurant?.status ===
+              "open"
+                ? " text-green "
+                : " text-brown "
+            }
+          >
+            <div
+              className={
+                "rounded-2xl h-7 p-4 items-center flex" + restaurant?.status ===
+                "open"
+                  ? " bg-light-green "
+                  : " bg-light-brown "
+              }
+            >
+              <span className="text-sm font-light ">{restaurant?.status}</span>
+            </div>
           </div>
+          <ButtonFavorite />
         </div>
-        <ButtonFavorite />
-      </div>
 
-      <Box>
-        <Typography
-          sx={{
-            fontWeight: 700,
-            fontSize: "1.45rem",
-            lineHeight: "2.25rem",
-            marginY: 2,
-          }}
-        >
-          {restaurantName}
-        </Typography>
-      </Box>
-
-      <Box sx={{ display: "flex" }} color="gray">
-        <Box sx={{ display: "flex", marginRight: 3, alignItems: "center" }}>
-          <MdOutlineLocationOn className="text-green mr-1" />
-          <Typography>19 km.</Typography>
+        <Box>
+          <Typography
+            sx={{
+              fontWeight: 700,
+              fontSize: "1.45rem",
+              lineHeight: "2.25rem",
+              marginY: 2,
+            }}
+          >
+            {restaurant?.name}
+          </Typography>
         </Box>
-        <Box sx={{ display: "flex", alignItems: "center" }}>
-          <BsStarHalf className="text-green mr-1" />
-          <Typography>4.8 rating</Typography>
+
+        <Box sx={{ display: "flex" }} color="gray">
+          <Box sx={{ display: "flex", marginRight: 3, alignItems: "center" }}>
+            <MdOutlineLocationOn className="text-green mr-1" />
+            <Typography>19 km.</Typography>
+          </Box>
+          <Box sx={{ display: "flex", alignItems: "center" }}>
+            <BsStarHalf className="text-green mr-1" />
+            <Typography>4.8 rating</Typography>
+          </Box>
+        </Box>
+
+        <Box>
+          <Typography sx={{ marginY: 2 }}>
+            {/* ใหม่! เคเอฟซี ซิงเกอร์ แม็กซ์เบอร์เกอร์พร้อมให้ทุกคนจัดเต็มได้อีก!!
+            กับความอร่อยฟินล้นทุกชั้น เริ่มต้นเพียง 99.- รีบจัดเลยที่ KFC
+            ทุกสาขาใกล้บ้านคุณ โทร 1150 หรือสั่งผ่านทาง application KFC
+            Thailand, */}
+          </Typography>
         </Box>
       </Box>
 
-      <Box>
-        <Typography sx={{ marginY: 2 }}>
-          ใหม่! เคเอฟซี ซิงเกอร์ แม็กซ์เบอร์เกอร์พร้อมให้ทุกคนจัดเต็มได้อีก!!
-          กับความอร่อยฟินล้นทุกชั้น เริ่มต้นเพียง 99.- รีบจัดเลยที่ KFC
-          ทุกสาขาใกล้บ้านคุณ โทร 1150 หรือสั่งผ่านทาง application KFC Thailand,
-        </Typography>
-      </Box>
-
-      <RestaurantPromo />
+      <Link to={"/customer/shop/" + restaurantId}>
+        <Box className="flex justify-center">
+          <ButtonGreenGradiant title={"Menus"} />
+        </Box>
+      </Link>
     </Box>
   );
 }

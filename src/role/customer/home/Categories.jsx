@@ -1,14 +1,12 @@
 import React from "react";
+import { useCustomer } from "../../../contexts/CustomerContext";
 import Category from "./Category";
 
 function Categories() {
-  // const data = [{ title: "อาหารยุโรป", menu: {} }];
+  const { menus } = useCustomer();
 
   return (
     <div>
-      {/* {data.map((el) => {})} */}
-      <Category />
-      <Category />
       <Category />
     </div>
   );

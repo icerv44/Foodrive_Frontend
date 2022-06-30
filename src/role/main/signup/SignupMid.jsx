@@ -1,18 +1,23 @@
 import { Box } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
 import InputLogin from "../../../components/input/InputLogin";
 import {
   changeConfirmPassword,
   changeEmail,
   changeFirstName,
   changeLastName,
+  changeName,
   changePassword,
   changePhoneNumber,
 } from "../../../slices/registerSlice";
 
 function SignupMid() {
   const dispatch = useDispatch();
+  const { pathname } = useLocation();
+  const isRestaurant = pathname.split("/")[1] === "restaurant";
 
+  const name = useSelector((state) => state.register.name);
   const firstName = useSelector((state) => state.register.firstName);
   const lastName = useSelector((state) => state.register.lastName);
   const phoneNumber = useSelector((state) => state.register.phoneNumber);
@@ -22,6 +27,9 @@ function SignupMid() {
     (state) => state.register.confirmPassword
   );
 
+  const handleNameChange = (e) => {
+    dispatch(changeName(e.target.value));
+  };
   const handleFirstNameChange = (e) => {
     dispatch(changeFirstName(e.target.value));
   };
@@ -47,16 +55,28 @@ function SignupMid() {
         Sign Up For Free
       </div>
       <Box className="flex flex-col gap-3">
-        <InputLogin
-          placeholder="First Name"
-          onChange={handleFirstNameChange}
-          value={firstName}
-        />
-        <InputLogin
-          placeholder="Last Name"
-          onChange={handleLastNameChange}
-          value={lastName}
-        />
+        {isRestaurant ? (
+          <>
+            <InputLogin
+              placeholder="Restaurant Name"
+              onChange={handleNameChange}
+              value={name}
+            />
+          </>
+        ) : (
+          <>
+            <InputLogin
+              placeholder="First Name"
+              onChange={handleFirstNameChange}
+              value={firstName}
+            />
+            <InputLogin
+              placeholder="Last Name"
+              onChange={handleLastNameChange}
+              value={lastName}
+            />
+          </>
+        )}
         <InputLogin
           placeholder="Phone Number"
           onChange={handlePhoneNumberChange}

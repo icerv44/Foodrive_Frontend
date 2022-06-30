@@ -9,6 +9,7 @@ const register = createAsyncThunk("/register", async (payload, thunkApi) => {
 
     console.log(role);
 
+    const name = thunkApi.getState().register.name;
     const firstName = thunkApi.getState().register.firstName;
     const lastName = thunkApi.getState().register.lastName;
     const email = thunkApi.getState().register.email;
@@ -17,6 +18,7 @@ const register = createAsyncThunk("/register", async (payload, thunkApi) => {
     const confirmPassword = thunkApi.getState().register.confirmPassword;
 
     const res = await axios.post("/auth/register/" + role, {
+      name,
       firstName,
       lastName,
       email,
@@ -40,6 +42,7 @@ const register = createAsyncThunk("/register", async (payload, thunkApi) => {
 const registerSlice = createSlice({
   name: "register",
   initialState: {
+    name: "",
     firstName: "",
     lastName: "",
     email: "",
@@ -50,6 +53,9 @@ const registerSlice = createSlice({
     isLoading: false,
   },
   reducers: {
+    changeName: (state, action) => {
+      state.name = action.payload;
+    },
     changeFirstName: (state, action) => {
       state.firstName = action.payload;
     },
@@ -89,6 +95,7 @@ const registerSlice = createSlice({
 
 export { register };
 export const {
+  changeName,
   changeFirstName,
   changeLastName,
   changeEmail,
@@ -99,9 +106,3 @@ export const {
 const registerReducer = registerSlice.reducer;
 
 export default registerReducer;
-
-//register
-//const {pathname} = useLocation()
-//role = pathname.split('/')[1]
-//dispatch(register({role: role}))
-// dispatch();

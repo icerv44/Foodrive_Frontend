@@ -5,13 +5,19 @@ import "./index.css";
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import store from "./store";
+import { RestaurantContextProvider } from "./contexts/RestaurantContext";
+// COMMENT THE FOLLOWING IMPORT IF THE APP IS BROKEN DUE TO NOT HAVING PRIVATE KEYS
+import firebaseApp from "./config/firebaseConfig";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <Provider store={store}>
-    <BrowserRouter>
-      <React.StrictMode>
+    <RestaurantContextProvider>
+      <BrowserRouter>
+        {/* เอาstrict mode ออกไม่งั้นไม่เห็น marker */}
+        {/* <React.StrictMode> */}
         <App />
-      </React.StrictMode>
-    </BrowserRouter>
+        {/* </React.StrictMode> */}
+      </BrowserRouter>
+    </RestaurantContextProvider>
   </Provider>
 );

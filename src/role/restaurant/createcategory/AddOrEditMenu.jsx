@@ -1,9 +1,16 @@
 import IconButton from "@mui/joy/IconButton";
 import { Box, Typography } from "@mui/material";
+import { useState } from "react";
 import { AiOutlinePlus } from "react-icons/ai";
-import { BsChevronRight } from "react-icons/bs";
+import { BsChevronRight, BsChevronDown } from "react-icons/bs";
 
-function AddOrEditMenu({ title, subTitle }) {
+function AddOrEditMenu({ title, subTitle, onClick }) {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleClickOpenMenu = () => {
+    setIsOpen(!isOpen);
+  };
+
   return (
     <Box
       sx={{
@@ -17,6 +24,7 @@ function AddOrEditMenu({ title, subTitle }) {
     >
       <Box>
         <IconButton
+          onClick={onClick}
           sx={{
             bgcolor: "#f9a94d22",
             color: "green",
@@ -31,8 +39,8 @@ function AddOrEditMenu({ title, subTitle }) {
         </Typography>
         <Typography sx={{ color: "grey" }}>{subTitle}</Typography>
       </Box>
-      <Box className="text-[#DA6317] text-xl">
-        <BsChevronRight />
+      <Box onClick={handleClickOpenMenu} className="text-[#DA6317] text-xl">
+        {isOpen === true ? <BsChevronDown /> : <BsChevronRight />}
       </Box>
     </Box>
   );

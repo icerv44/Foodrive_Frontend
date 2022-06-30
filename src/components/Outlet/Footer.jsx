@@ -2,6 +2,13 @@ import { MdHomeFilled, MdAccountCircle } from "react-icons/md";
 import { BsFillCartDashFill } from "react-icons/bs";
 import { AiFillMessage } from "react-icons/ai";
 import { Box, Typography } from "@mui/joy";
+import { Link } from "react-router-dom";
+
+const customerFooterBar = [
+  {
+    to: "",
+  },
+];
 
 export default function Footer() {
   return (
@@ -26,62 +33,73 @@ export default function Footer() {
           zIndex: 20,
         }}
       >
-        <Box
-          role="button"
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            color: "#3B3B3B",
-            fontSize: "26px",
-          }}
-        >
-          <MdHomeFilled />
-          <Typography>home</Typography>
-        </Box>
-        <Box
-          role="button"
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            color: "#3B3B3B",
-            fontSize: "26px",
-          }}
-        >
-          <MdAccountCircle />
-          <Typography>account</Typography>
-        </Box>
-        <Box
-          role="button"
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            color: "#3B3B3B",
-            fontSize: "26px",
-          }}
-        >
-          <BsFillCartDashFill />
-          <Typography>cart</Typography>
-        </Box>
-        <Box
-          role="button"
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            color: "#3B3B3B",
-            fontSize: "26px",
-          }}
-        >
-          <AiFillMessage />
-          <Typography>message</Typography>
-        </Box>
+        <Link to={"/customer"}>
+          <Box
+            role="button"
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              color: "#3B3B3B",
+              fontSize: "26px",
+            }}
+          >
+            <MdHomeFilled />
+            <Typography>home</Typography>
+          </Box>
+        </Link>
+
+        <Link to="/customer/profile">
+          <Box
+            role="button"
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              color: "#3B3B3B",
+              fontSize: "26px",
+            }}
+          >
+            <MdAccountCircle />
+            <Typography>account</Typography>
+          </Box>
+        </Link>
+
+        <Link to="/customer/cart">
+          <Box
+            role="button"
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              color: "#3B3B3B",
+              fontSize: "26px",
+            }}
+          >
+            <BsFillCartDashFill />
+            <Typography>cart</Typography>
+          </Box>
+        </Link>
+
+        <Link to="/customer/chat">
+          <Box
+            role="button"
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              color: "#3B3B3B",
+              fontSize: "26px",
+            }}
+          >
+            <AiFillMessage />
+            <Typography>message</Typography>
+          </Box>
+        </Link>
       </Box>
     </Box>
   );
