@@ -6,9 +6,7 @@ import Modal from "react-modal";
 function Modal({ children, ...props }) {
   return (
     <>
-      <button className="" ref={ref} onClick={() => setIsOpen(true)}>
-        <AiOutlinePlus className="font-semibold text-xl" />
-      </button>
+      <button onClick={() => setIsOpen(true)}>Modal</button>
       <Modal
         {...props}
         style={{
