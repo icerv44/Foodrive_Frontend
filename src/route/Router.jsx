@@ -30,6 +30,9 @@ import DetailFoodPage from "../pages/customer/DetailFoodPage";
 import { useLoading } from "../contexts/LoadingContext";
 import Spinner from "../components/ui/Spinner";
 import GoogleMapTestPage from "../components/GoogleMapTestPage";
+import CartPage from "../pages/customer/CartPage";
+import CartContainer from "../role/customer/order/CartContainer";
+import CustomerProfilePage from "../pages/customer/CustomerProfilePage";
 
 function Router() {
   const dispatch = useDispatch();
@@ -67,10 +70,14 @@ function Router() {
           <Route path="restaurant/:restaurantId" element={<RestaurantPage />} />
           <Route path="shop/:restaurantId" element={<ShopMenuPage />} />
           <Route path="menuDetail/:menuId" element={<DetailFoodPage />} />
-          <Route path="order" element={<OrderPage />} />
+          <Route path="cart" element={<CartContainer />}>
+            <Route path="" element={<CartPage />} />
+            <Route path=":cartId" element={<OrderPage />} />
+          </Route>
           <Route path="payment" element={<PaymentPage />} />
-          <Route path="address" element={<AddressSelectPage />} />
+          <Route path="myLocation" element={<AddressSelectPage />} />
         </Route>
+        <Route path="/customer/profile" element={<CustomerProfilePage />} />
         <Route path="/customer/chat" element={<ChatPage />} />
         {/*TESTING EXAMPLE FOR GOOGLE MAP*/}
         <Route
@@ -89,7 +96,7 @@ function Router() {
 
         {/*   DRIVER - delivery */}
         <Route path="/driver/delivery" element={<DeliveryContainer />}>
-          <Route path="direction" element={<DeliveryPage />} />
+          <Route path="" element={<DeliveryPage />} />
           <Route path="confirmOrder" element={<ConfirmOrderPage />} />
         </Route>
         <Route path="/driver/orderSummary" element={<OrderSummary />} />

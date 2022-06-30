@@ -9,16 +9,16 @@ import { useCustomer } from "../../../contexts/CustomerContext";
 function HomeHeader() {
   const { getMenuById } = useCustomer();
 
-  useEffect(() => {
-    const searchMenus = async () => {};
-  }, []);
+  // useEffect(() => {
+  //   const searchMenus = async () => {};
+  // }, []);
 
   return (
     <Box
       className="flex justify-between items-center h-16  px-5 rounded-2lg "
       sx={{ boxShadow: "0px -1px 5px rgba(0, 0, 0, 0.25)" }}
     >
-      <Link to="/myLocation">
+      <Link to="/customer/myLocation">
         <div className="flex items-center text-green text-20 font-bold">
           <div className="rounded-full bg-light-green w-7 h-7 flex items-center justify-center mr-4">
             <MdLocationOn className="" />

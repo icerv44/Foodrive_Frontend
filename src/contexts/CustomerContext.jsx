@@ -1,16 +1,21 @@
 import { createContext, useEffect, useState, useContext } from "react";
 import { useParams } from "react-router-dom";
 import axios from "../config/axios";
+import { useError } from "./ErrorContext";
 import { useLoading } from "./LoadingContext";
 
 export const CustomerContext = createContext();
 
 export function CustomerContextProvider({ children }) {
   const { setLoading } = useLoading();
+  const { setError } = useError();
   const [search, setSearch] = useState("");
+  const [searchClick, setSearchClick] = useState("");
   const [restaurant, setRestaurant] = useState("");
   const [menus, setMenus] = useState("");
   const [menu, setMenu] = useState("");
+  const [carts, setCarts] = useState("");
+  const [cart, setCart] = useState("");
 
   const getRestaurantById = async (restaurantId) => {
     try {
@@ -19,6 +24,7 @@ export function CustomerContextProvider({ children }) {
       setRestaurant(res.data.restaurant);
     } catch (err) {
       console.log(err);
+      setError(err.response.data.message);
     } finally {
       setLoading(false);
     }
@@ -34,8 +40,8 @@ export function CustomerContextProvider({ children }) {
         keyword: search || "",
       });
       setMenus(res.data.menus);
-      console.log(search);
       console.log(menus);
+      console.log(search);
     } catch (err) {
       console.log(err);
     } finally {
@@ -56,14 +62,27 @@ export function CustomerContextProvider({ children }) {
     }
   };
 
+  const getAllCart = async () => {
+    try {
+      const res = await axios.get("/customer/carts");
+      setCarts(res.data.carts);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <CustomerContext.Provider
       value={{
         search,
         setSearch,
+        searchClick,
+        setSearchClick,
         restaurant,
         menus,
         menu,
+        cart,
+        carts,
         getRestaurantById,
         getMenus,
         getMenuById,

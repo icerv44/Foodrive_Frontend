@@ -5,6 +5,7 @@ import { DeliveryContextProvider } from "./contexts/DeliveryContext";
 import { CustomerContextProvider } from "./contexts/CustomerContext";
 import { LoadingContextProvider } from "./contexts/LoadingContext";
 import { StyledEngineProvider } from "@mui/styled-engine-sc";
+import { ErrorContextProvider } from "./contexts/ErrorContext";
 
 function App() {
   const theme = createTheme({
@@ -41,13 +42,15 @@ function App() {
     <ThemeProvider theme={theme}>
       <StyledEngineProvider injectFirst>
         <CssVarsProvider>
-          <LoadingContextProvider>
-            <CustomerContextProvider>
-              <DeliveryContextProvider>
-                <Router />
-              </DeliveryContextProvider>
-            </CustomerContextProvider>
-          </LoadingContextProvider>
+          <ErrorContextProvider>
+            <LoadingContextProvider>
+              <CustomerContextProvider>
+                <DeliveryContextProvider>
+                  <Router />
+                </DeliveryContextProvider>
+              </CustomerContextProvider>
+            </LoadingContextProvider>
+          </ErrorContextProvider>
         </CssVarsProvider>
       </StyledEngineProvider>
     </ThemeProvider>

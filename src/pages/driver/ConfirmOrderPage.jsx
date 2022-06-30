@@ -18,7 +18,7 @@ function confirmOrderPage() {
       img: "https://www.kfc.co.th/Content/OnlineOrderingImages/Menu/Items/HotDeals_JuJai_ff.png",
       menuTitle: "Test",
       menuQuantity: 2,
-      menuPrice: 45,
+      menuPrice: 455,
     },
     {
       img: "https://www.kfc.co.th/Content/OnlineOrderingImages/Menu/Items/HotDeals_JuJai_ff.png",
@@ -39,7 +39,7 @@ function confirmOrderPage() {
       img: "https://www.kfc.co.th/Content/OnlineOrderingImages/Menu/Items/HotDeals_JuJai_ff.png",
       menuTitle: "Test3",
       menuQuantity: 1,
-      menuPrice: 50,
+      menuPrice: 1050,
       commentMenu: "uygghjiuhgbniugbjuygbyg1234567890uygghjiuhgbniugbjuygbyg",
     },
   ];

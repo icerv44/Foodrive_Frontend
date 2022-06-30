@@ -6,7 +6,9 @@ import FoodPic from "../../role/customer/food/FoodPic";
 
 function DetailFoodPage() {
   const { menuId } = useParams();
-  const { getMenuById } = useCustomer();
+  const { getMenuById, menu } = useCustomer();
+
+  console.log(menu);
 
   useEffect(() => {
     try {
