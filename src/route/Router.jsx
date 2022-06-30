@@ -34,6 +34,7 @@ import CartPage from "../pages/customer/CartPage";
 import CartContainer from "../role/customer/order/CartContainer";
 import CustomerProfilePage from "../pages/customer/CustomerProfilePage";
 import CreateFoodOption from "../pages/restaurant/CreateFoodOption";
+import CheckDeliveryOrder from "../pages/restaurant/CheckDeliveryOrder";
 
 function Router() {
   const dispatch = useDispatch();
@@ -108,6 +109,7 @@ function Router() {
         <Route path="/restaurant/login" element={<LoginPage />} />
         <Route path="/restaurant" element={<RestaurantContainer />}>
           <Route path="category" element={<CreateCategory />} />
+          <Route path="checkorder" element={<CheckDeliveryOrder />} />
         </Route>
         <Route path="restaurant/food" element={<CreateFood />} />
         <Route path="restaurant/food/option" element={<CreateFoodOption />} />
