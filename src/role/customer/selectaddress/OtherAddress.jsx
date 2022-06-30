@@ -10,7 +10,9 @@ function OtherAddress() {
         <ButtonLocation />
         <h6 className="font-semibold">Mint Tower 123</h6>
       </div>
-      <h6 className="pt-7 pl-7 font-semibold text-[#53E88B]">set location</h6>
+      <h6 className="mt-3 ml-[55px] font-semibold text-[#53E88B]">
+        set location
+      </h6>
     </div>
   );
 }
