@@ -106,9 +106,3 @@ export const {
 const registerReducer = registerSlice.reducer;
 
 export default registerReducer;
-
-//register
-//const {pathname} = useLocation()
-//role = pathname.split('/')[1]
-//dispatch(register({role: role}))
-// dispatch();
