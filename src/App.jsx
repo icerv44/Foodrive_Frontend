@@ -4,6 +4,7 @@ import { CssVarsProvider } from "@mui/joy/styles";
 import { DeliveryContextProvider } from "./contexts/DeliveryContext";
 import { CustomerContextProvider } from "./contexts/CustomerContext";
 import { LoadingContextProvider } from "./contexts/LoadingContext";
+import { StyledEngineProvider } from "@mui/styled-engine-sc";
 
 function App() {
   const theme = createTheme({
@@ -38,15 +39,17 @@ function App() {
   });
   return (
     <ThemeProvider theme={theme}>
-      <CssVarsProvider>
-        <LoadingContextProvider>
-          <CustomerContextProvider>
-            <DeliveryContextProvider>
-              <Router />
-            </DeliveryContextProvider>
-          </CustomerContextProvider>
-        </LoadingContextProvider>
-      </CssVarsProvider>
+      <StyledEngineProvider injectFirst>
+        <CssVarsProvider>
+          <LoadingContextProvider>
+            <CustomerContextProvider>
+              <DeliveryContextProvider>
+                <Router />
+              </DeliveryContextProvider>
+            </CustomerContextProvider>
+          </LoadingContextProvider>
+        </CssVarsProvider>
+      </StyledEngineProvider>
     </ThemeProvider>
   );
 }

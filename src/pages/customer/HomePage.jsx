@@ -11,24 +11,23 @@ import { useLocation } from "react-router-dom";
 // import HomeHeader from "../../components/home/HomeHeader";
 
 function HomePage() {
-  const { setLoading } = useLoading();
   const dispatch = useDispatch();
   const userInfo = useSelector((state) => state.user.info);
   const { latitude, longitude } = userInfo;
-  const { getMenus } = useCustomer();
+  const { getMenus, search } = useCustomer();
 
   const { pathname } = useLocation();
 
   useEffect(() => {
     try {
       const fetchMenus = async () => {
-        await getMenus(latitude, longitude);
+        await getMenus(latitude, longitude, search);
       };
       return fetchMenus;
     } catch (err) {}
-  }, [pathname]);
+  }, [pathname, search]);
 
-  return <HomeContainer />;
+  return <HomeContainer latitude={latitude} longitude={longitude} />;
 }
 
 export default HomePage;

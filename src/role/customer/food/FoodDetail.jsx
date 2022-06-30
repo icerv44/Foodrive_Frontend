@@ -4,8 +4,10 @@ import ButtonGreenGradiant from "../../../components/button/ButtonGreenGradiant"
 import { AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
 import { useState } from "react";
 import IconButton from "@mui/joy/IconButton";
+import { useCustomer } from "../../../contexts/CustomerContext";
 
 function FoodDetail() {
+  const { menu } = useCustomer();
   const [count, setCount] = useState(1);
 
   const handleClickIncreaseAmount = () => {
@@ -24,19 +26,29 @@ function FoodDetail() {
       <Box className="mx-6 mt-5 overflow-auto h-[26vh]">
         <Box className="flex justify-between items-center my-5">
           <Typography sx={{ fontWeight: 700, fontSize: "26px" }}>
-            Jujai
+            {menu?.name}
           </Typography>
           <Typography sx={{ fontWeight: 700, fontSize: "26px" }}>
-            459฿
+            {menu?.price} ฿
           </Typography>
         </Box>
-        <FoodOption />
-        <FoodOption />
-        <FoodOption />
+
+        {menu?.MenuOptionGroups?.map(
+          (el) =>
+            el?.status === "ACTIVE" && (
+              <FoodOption
+                el={el}
+                key={el?.id}
+                name={el?.name}
+                MenuOptions={el?.MenuOptions}
+              />
+            )
+        )}
       </Box>
 
       <Box>
         <Box className="my-4">
+          {/* BTN - Decrease */}
           <Box className="flex justify-center items-center gap-3">
             <IconButton
               sx={{ bgcolor: "#f9a94d22", color: "green" }}
@@ -44,7 +56,10 @@ function FoodDetail() {
             >
               <AiOutlineMinus />
             </IconButton>
+
             <Box className="font-semibold">{count}</Box>
+
+            {/* BTN - Increase */}
             <IconButton
               sx={{
                 background:
@@ -57,6 +72,7 @@ function FoodDetail() {
             </IconButton>
           </Box>
         </Box>
+
         <Box className="text-center my-4">
           <ButtonGreenGradiant title="Add to Cart" px="115px" />
         </Box>

@@ -33,7 +33,6 @@ function Category() {
           "::-webkit-scrollbar": { display: "none" },
         }}
       >
-        {/*  */}
         <CardHome />
       </Box>
     </Box>
