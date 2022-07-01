@@ -11,7 +11,7 @@ function CardCartRes() {
   return (
     <Card
       variant="outlined"
-      row
+      row="true"
       sx={{
         maxWidth: "300px",
         gap: 2,

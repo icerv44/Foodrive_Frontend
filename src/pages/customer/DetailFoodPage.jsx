@@ -7,17 +7,14 @@ import FoodPic from "../../role/customer/food/FoodPic";
 function DetailFoodPage() {
   const { menuId } = useParams();
   const { getMenuById, menu } = useCustomer();
-
-  console.log(menuId);
+  // console.log(getMenuById);
 
   useEffect(() => {
     try {
-      console.log("fetch");
       const fetchMenu = async () => {
         await getMenuById(menuId);
-
-        return fetchMenu;
       };
+      fetchMenu();
     } catch (err) {
       console.log(err);
     }

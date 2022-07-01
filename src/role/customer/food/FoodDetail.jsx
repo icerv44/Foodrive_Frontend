@@ -2,13 +2,96 @@ import { Box, Typography } from "@mui/material";
 import FoodOption from "./FoodOption";
 import ButtonGreenGradiant from "../../../components/button/ButtonGreenGradiant";
 import { AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import IconButton from "@mui/joy/IconButton";
 import { useCustomer } from "../../../contexts/CustomerContext";
 
 function FoodDetail() {
-  const { menu } = useCustomer();
+  const { menu, cart, setCart, createCart } = useCustomer();
   const [count, setCount] = useState(1);
+  const [menuOptionGroup, setMenuOptionGroup] = useState([]);
+  const [menuOption, setMenuOption] = useState([]);
+  const [total, setTotal] = useState(0);
+
+  const restaurantId = menu?.restaurantId;
+  console.log("menuById", menu);
+
+  const keys = menuOptionGroup.map((e) => {
+    // setMenuOption({ test: e.name });
+    return e.name;
+    // setMenuOption(element=> {...element, })
+  });
+
+  // Menu option groups clone from  api
+  useEffect(() => {
+    const defaultOptionArr = [];
+    const myMenuOptionGroup = menu?.MenuOptionGroups.reduce((a, c) => {
+      const currentMenuOptionGroup = {
+        id: c.id,
+        options: [],
+        name: c.name,
+        MenuOptions: c.MenuOptions,
+        status: c.status,
+      };
+      a.push(currentMenuOptionGroup);
+
+      // ////////////
+      const defaultObjectOption = {};
+      defaultObjectOption.id = c.id;
+      defaultObjectOption.options = [{ id: c.MenuOptions[0].id }];
+      defaultOptionArr.push(defaultObjectOption);
+      return a;
+    }, []);
+    setMenuOptionGroup(myMenuOptionGroup);
+    setMenuOption(defaultOptionArr);
+  }, []);
+
+  const handleOptionChange = (e, parentid) => {
+    //  1. Clone old menu
+    //  2. find Object ===> id : optionsGroup (Size,flavor)
+    //  2.1 if have ==> replace new options
+    //  2.2 if dont have ==> push
+    //  3 Set new State
+    const newMenuOption = [...menuOption];
+    const matchIndex = newMenuOption.findIndex((el) => el.id == parentid);
+
+    const newOption = {
+      id: parentid,
+      options: [{ id: e.target.value }],
+    };
+    if (matchIndex !== -1) {
+      newMenuOption.splice(matchIndex, 1, newOption);
+    } else {
+      newMenuOption.push(newOption);
+    }
+
+    setMenuOption(newMenuOption);
+  };
+
+  const handleAddToCart = async () => {
+    // CART === MENUS
+    // clean option group, send only api require
+    const cleanMenuOptionGroup = menuOptionGroup.reduce((a, c) => {
+      const currentOptionGroup = { id: c.id, options: menuOption };
+      a.push(currentOptionGroup);
+      return a;
+    }, []);
+
+    // New menu
+    const newOrder = {
+      id: menu?.id,
+      optionGroups: cleanMenuOptionGroup,
+    };
+
+    // put new menu to cart
+    const newCart = [...cart, newOrder];
+    setCart(newCart);
+
+    await createCart({
+      restaurantId,
+      menus: cart,
+    });
+  };
 
   const handleClickIncreaseAmount = () => {
     if (count <= 8) {
@@ -33,14 +116,16 @@ function FoodDetail() {
           </Typography>
         </Box>
 
-        {menu?.MenuOptionGroups?.map(
-          (el) =>
+        {menuOptionGroup.map(
+          (el, idx) =>
             el?.status === "ACTIVE" && (
               <FoodOption
                 el={el}
+                parentid={el?.id}
                 key={el?.id}
                 name={el?.name}
                 MenuOptions={el?.MenuOptions}
+                onChange={handleOptionChange}
               />
             )
         )}
@@ -74,7 +159,11 @@ function FoodDetail() {
         </Box>
 
         <Box className="text-center my-4">
-          <ButtonGreenGradiant title="Add to Cart" px="115px" />
+          <ButtonGreenGradiant
+            title="Add to Cart"
+            px="115px"
+            onClick={handleAddToCart}
+          />
         </Box>
       </Box>
     </Box>

@@ -13,8 +13,15 @@ export function CustomerContextProvider({ children }) {
   const [restaurant, setRestaurant] = useState("");
   const [menus, setMenus] = useState("");
   const [menu, setMenu] = useState("");
-  const [carts, setCarts] = useState("");
-  const [cart, setCart] = useState("");
+  const [carts, setCarts] = useState();
+  const [cart, setCart] = useState([]);
+  // useState([
+  //   { id: 1, optionGroups: [{ id: 1, options: [{ id: 1 }, { id: 2 }] }] },
+  // ]);
+
+  console.log("cart", cart);
+
+  const [foodOption, setFoodOption] = useState([]);
 
   const getRestaurantById = async (restaurantId) => {
     try {
@@ -52,9 +59,8 @@ export function CustomerContextProvider({ children }) {
     try {
       setLoading(true);
       const res = await axios.get("/customer/getMenu/" + Number(menuId));
-      setMenu({ ...res.data.menu });
+      setMenu(res.data.menu);
 
-      // setMenu("");
       console.log("customerContext", res?.data.menu);
     } catch (err) {
       console.log(err);
@@ -72,9 +78,13 @@ export function CustomerContextProvider({ children }) {
     }
   };
 
-  const createCart = async () => {
+  const createCart = async ({ restaurantId, menus }) => {
     try {
-      const res = await axios.post("/customer/addCart");
+      console.log("menuAddToCart", menus);
+      const res = await axios.post("/customer/addCart", {
+        restaurantId,
+        menus,
+      });
     } catch (err) {
       console.log(err);
     }
@@ -100,10 +110,15 @@ export function CustomerContextProvider({ children }) {
         menu,
         cart,
         carts,
+        foodOption,
+        setFoodOption,
         getRestaurantById,
         getMenus,
         getMenuById,
         getAllCart,
+        createCart,
+        appendCart,
+        setCart,
       }}
     >
       {children}

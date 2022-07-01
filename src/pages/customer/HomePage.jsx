@@ -24,7 +24,7 @@ function HomePage() {
         const fetchMenus = async () => {
           await getMenus(latitude, longitude, "");
         };
-        return fetchMenus;
+        fetchMenus();
       }
     } catch (err) {
       console.log(err);

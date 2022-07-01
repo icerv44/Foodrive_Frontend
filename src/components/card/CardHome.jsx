@@ -22,7 +22,7 @@ function CardHome({ el }) {
     <Link to={"/customer/menuDetail/" + el?.id}>
       <Box key={el?.name}>
         <Card
-          row
+          row="true"
           variant="outlined"
           sx={{
             width: "147px",

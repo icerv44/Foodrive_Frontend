@@ -36,7 +36,7 @@ function Category() {
           "::-webkit-scrollbar": { display: "none" },
         }}
       >
-        {menus && menus?.map((el) => <CardHome el={el} />)}
+        {menus && menus?.map((el) => <CardHome el={el} key={el?.id} />)}
       </Box>
     </Box>
   );
