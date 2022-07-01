@@ -10,7 +10,7 @@ console.log(window.Omise);
 const OmiseCard = window.OmiseCard;
 
 function PaymentPage() {
-  const sum = 20;
+  const sum = 2000;
 
   useEffect(() => {
     OmiseCard.configure({
@@ -28,6 +28,24 @@ function PaymentPage() {
     OmiseCard.configureButton("#credit-card-omise");
     OmiseCard.attach();
   }, []);
+
+  const omiseHandler = () => {
+    OmiseCard.open({
+      amount: sum,
+
+      onCreateTokenSuccess: async (token) => {
+        try {
+          console.log(token);
+        } catch (err) {
+          console.log(err);
+        }
+      },
+    });
+  };
+
+  const handleClick = async (e) => {
+    omiseHandler();
+  };
   return (
     <Container>
       <ButtonBack />
@@ -39,7 +57,11 @@ function PaymentPage() {
           <AddPayment />
         </Box>
       </Box>
-      <button id="credit-card-omise">Pay With Omise</button>
+      <form>
+        <button id="credit-card-omise" onClick={handleClick}>
+          Pay With Omise
+        </button>
+      </form>
     </Container>
   );
 }

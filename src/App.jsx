@@ -6,6 +6,7 @@ import { CustomerContextProvider } from "./contexts/CustomerContext";
 import { LoadingContextProvider } from "./contexts/LoadingContext";
 import { StyledEngineProvider } from "@mui/styled-engine-sc";
 import { ErrorContextProvider } from "./contexts/ErrorContext";
+import GoogleMapDriverLoader from "./components/common/googleMapDriver/GoogleMapDriverLoader";
 
 function App() {
   const theme = createTheme({

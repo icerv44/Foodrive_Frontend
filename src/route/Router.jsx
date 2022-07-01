@@ -9,7 +9,7 @@ import RestaurantPage from "../pages/RestaurantPage";
 import OrderPage from "../pages/customer/OrderPage";
 import ShopMenuPage from "../pages/customer/ShopMenuPage";
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getAccessToken } from "../services/localstorage";
 import { fetchUser, setPosition } from "../slices/userSlice";
 import HomePageDriver from "../pages/driver/HomePageDriver";
@@ -33,9 +33,13 @@ import GoogleMapTestPage from "../components/GoogleMapTestPage";
 import CartPage from "../pages/customer/CartPage";
 import CartContainer from "../role/customer/order/CartContainer";
 import CustomerProfilePage from "../pages/customer/CustomerProfilePage";
+import axios from "../config/axios";
+import GoogleMapDriverLoader from "../components/common/googleMapDriver/GoogleMapDriverLoader";
 
 function Router() {
   const dispatch = useDispatch();
+  const driverStatus = useSelector((state) => state.user.info.driverStatus);
+  const { latitude, longitude } = useSelector((state) => state.user.info);
   const token = getAccessToken();
   const { loading } = useLoading();
 
@@ -49,12 +53,41 @@ function Router() {
   }, [token]);
 
   useEffect(() => {
-    getCurrentPosition().then((res) => {
+    getCurrentPosition().then((pos) => {
+      console.log(pos.latitude, pos.longitude);
       dispatch(
-        setPosition({ latitude: res.latitude, longitude: res.longitude })
+        setPosition({ latitude: pos.latitude, longitude: pos.longitude })
       );
     });
   }, [pathname]);
+
+  const updateDriver = async (lat, lng) => {
+    if (latitude && longitude) {
+      const res = await axios.patch("/driver/updateLocation", {
+        latitude: lat,
+        longitude: lng,
+      });
+      console.log(res);
+    }
+  };
+
+  useEffect(() => {
+    let recordingInterval;
+    if (driverStatus === "ONLINE") {
+      recordingInterval = setInterval(async () => {
+        console.log("updating position...");
+        const pos = await getCurrentPosition();
+        await updateDriver(pos.latitude, pos.longitude);
+        dispatch(
+          setPosition({ latitude: pos.latitude, longitude: pos.longitude })
+        );
+      }, 5000);
+    }
+
+    return () => {
+      clearInterval(recordingInterval);
+    };
+  }, [driverStatus]);
 
   return (
     <>
