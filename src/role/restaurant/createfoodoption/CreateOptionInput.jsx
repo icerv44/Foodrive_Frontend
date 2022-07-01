@@ -33,18 +33,19 @@ function CreateOptionInput() {
             border: "1px solid #F4F4F4",
             borderRadius: "15px",
             p: "12px",
+            fontSize: "13px",
           }}
         >
-          <Box sx={{ fontSize: "13px" }}>
+          <Box sx={{ fontWeight: 700 }}>
             Does the customer have to choose this option?
           </Box>
-          <Box>1</Box>
-          <Box>1</Box>
+          <Box>O Must Have</Box>
+          <Box>O optional</Box>
         </Box>
       </Box>
       {/* More Option */}
       <Box>
-        <Box className="opacity-[0.7] text-xl font-semibold">Mini Option</Box>
+        <Box className="opacity-[0.7] text-xl font-semibold m-2">Optional</Box>
         <Box>
           <ModalForCreateFoodOption />
         </Box>

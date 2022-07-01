@@ -2,11 +2,12 @@ import { useState } from "react";
 import Modal from "react-modal";
 import { AiOutlineClose } from "react-icons/ai";
 import ButtonGreenGradient from "../../../components/button/ButtonGreenGradiant";
+import { Box } from "@mui/material";
 
 // Modal.setAppElement("#ใส่ไอดีของโมดัลอันนี้ในหน้าที่เอาไปใช้");
 // Import Modal ไปในไฟล์ที่จะใช้ด้วย
 
-function ModalForCreateFoodOption({ ref }) {
+function ModalForCreateFoodOption() {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleSubmit = (e) => {
@@ -15,6 +16,7 @@ function ModalForCreateFoodOption({ ref }) {
 
   return (
     <>
+      {/* BUTTON */}
       <div
         style={{
           boxShadow: "12px 26px 50px rgba(90, 108, 234, 0.07)",
@@ -23,19 +25,19 @@ function ModalForCreateFoodOption({ ref }) {
           padding: "12px",
           color: "#37C989",
         }}
-        ref={ref}
         onClick={() => setIsOpen(true)}
       >
-        Add mini option
+        Add more optional
       </div>
+      {/* CONTENT */}
       <Modal
         style={{
           overlay: { backgroundColor: "rgba(0,0,0,0.5)" },
           content: {
             borderRadius: "18px",
             boxShadow: "12px 26px 50px rgba(90, 108, 234, 0.07)",
-            height: "34vh",
-            top: "29%",
+            height: "43vh",
+            top: "27%",
           },
         }}
         id="root"
@@ -43,34 +45,43 @@ function ModalForCreateFoodOption({ ref }) {
         onRequestClose={() => setIsOpen(false)}
       >
         <div>
-          <div className="flex justify-end text-xl">
+          <div className="absolute right-2 top-2">
             <button onClick={() => setIsOpen(false)}>
               <AiOutlineClose />
             </button>
           </div>
-          <div className="text-center text-2xl font-bold mb-4">
-            Add Category
-          </div>
+          <div className="text-center text-2xl font-bold mb-4">Add Option</div>
           {/* Input */}
-          <form onSubmit={handleSubmit} className="flex flex-col gap-6">
+          <form onSubmit={handleSubmit} className="flex flex-col gap-2">
+            {/* INPUT 1 */}
             <div>
               <div className="text-[#3B3B3B] opacity-[0.3] m-2">
-                Category Name
+                Option Name
               </div>
-              <div
-                sx={{
-                  boxShadow: "12px 26px 50px rgba(90, 108, 234, 0.07)",
-                  mb: "16px",
-                }}
-              >
+              <div>
                 <input
                   type="text"
-                  className="rounded-xl w-full py-2 px-3 border border-teal-200"
+                  className="shadow-lg shadow-blue-200 rounded-xl w-full py-2 px-3 border border-teal-200"
                 />
               </div>
             </div>
-            <div className="flex justify-center">
-              <ButtonGreenGradient title="Create Category" px="58px" />
+            {/* INPUT 2 */}
+            <div>
+              <div className="text-[#3B3B3B] opacity-[0.3] m-2">Price</div>
+              <div>
+                <input
+                  type="text"
+                  className="shadow-lg shadow-blue-200 rounded-xl w-full py-2 px-3 border border-teal-200"
+                />
+              </div>
+            </div>
+            {/* SUBMIT BUTTON */}
+            <div className="flex justify-center mt-5">
+              <ButtonGreenGradient
+                type="submit"
+                title="Create Category"
+                px="58px"
+              />
             </div>
           </form>
         </div>
