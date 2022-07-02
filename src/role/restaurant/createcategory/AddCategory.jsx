@@ -1,11 +1,14 @@
 import IconButton from "@mui/joy/IconButton";
 import { Box, Typography } from "@mui/material";
 import { useState } from "react";
-import { AiOutlinePlus } from "react-icons/ai";
 import { BsChevronRight, BsChevronDown } from "react-icons/bs";
+import Modal from "react-modal";
+import ModalForCreate from "../modal/ModalForCreate";
 
-function AddOrEditMenu({ title, subTitle, onClick }) {
+function AddCategory({ title, subTitle }) {
   const [isOpen, setIsOpen] = useState(false);
+
+  Modal.setAppElement("#root");
 
   const handleClickOpenMenu = () => {
     setIsOpen(!isOpen);
@@ -24,13 +27,12 @@ function AddOrEditMenu({ title, subTitle, onClick }) {
     >
       <Box>
         <IconButton
-          onClick={onClick}
           sx={{
             bgcolor: "#f9a94d22",
             color: "green",
           }}
         >
-          <AiOutlinePlus className="font-semibold text-xl" />
+          <ModalForCreate />
         </IconButton>
       </Box>
       <Box sx={{ flexGrow: 1 }}>
@@ -46,4 +48,4 @@ function AddOrEditMenu({ title, subTitle, onClick }) {
   );
 }
 
-export default AddOrEditMenu;
+export default AddCategory;

@@ -41,6 +41,7 @@ function GoogleMapDriver() {
           travelMode: window.google.maps.TravelMode.DRIVING,
         },
         (result, status) => {
+          console.log(result);
           if (status === "OK" && result) {
             setDirection(result);
           }
@@ -49,9 +50,7 @@ function GoogleMapDriver() {
     }
   }, [latitude, longitude]);
 
-  useEffect(() => {
-    // console.log(driverPosition, center);
-  });
+  useEffect(() => {});
 
   return (
     <div
@@ -63,10 +62,11 @@ function GoogleMapDriver() {
         zoom={16}
         center={driverPosition}
         onLoad={onLoad}
+        mapContainerStyle={{ width: "70%", height: "50vh" }}
       >
         <Marker key={"marker1"} position={driverPosition} />
         <Marker key={"customer marker"} position={customerPosition} />
-        <DirectionsRenderer directions={direction} />
+        {direction && <DirectionsRenderer directions={direction} />}
       </GoogleMap>
     </div>
   );

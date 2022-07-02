@@ -7,7 +7,7 @@ import IconButton from "@mui/joy/IconButton";
 import { useCustomer } from "../../../contexts/CustomerContext";
 
 function FoodDetail() {
-  const { menu, cart, setCart, createCart } = useCustomer();
+  const { menu, addToCart, setAddToCart, createCart } = useCustomer();
   const [count, setCount] = useState(1);
   const [menuOptionGroup, setMenuOptionGroup] = useState([]);
   const [menuOption, setMenuOption] = useState([]);
@@ -84,12 +84,12 @@ function FoodDetail() {
     };
 
     // put new menu to cart
-    const newCart = [...cart, newOrder];
-    setCart(newCart);
+    const newCart = [...addToCart, newOrder];
+    setAddToCart(newCart);
 
     await createCart({
       restaurantId,
-      menus: cart,
+      menus: addToCart,
     });
   };
 

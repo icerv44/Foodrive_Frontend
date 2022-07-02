@@ -1,25 +1,50 @@
-import React, { useEffect } from "react";
-import { Box, Link } from "@mui/joy";
+import React, { useEffect, useState } from "react";
+import { Box } from "@mui/joy";
 import ButtonBackNew from "../../components/button/ButtonBackNew";
 import CardCartRes from "../../components/card/CardCartRes";
 import { useCustomer } from "../../contexts/CustomerContext";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import { CarCrashTwoTone } from "@mui/icons-material";
 
 function CartPage() {
-  const { carts, getAllCart } = useCustomer();
+  const { resCarts, getAllRestaurantsCart } = useCustomer();
   const { pathname } = useLocation();
 
   useEffect(() => {
     try {
-      const fetchCarts = async () => {
-        await getAllCart();
+      const fetchRestaurantCart = async () => {
+        await getAllRestaurantsCart();
       };
-      return fetchCarts;
-    } catch (err) {}
+      fetchRestaurantCart();
+    } catch (err) {
+      console.log(err);
+    }
   }, [pathname]);
 
-  console.log(carts);
+  console.log("resCarts", resCarts);
 
+  // useEffect(() => {
+  //   try {
+  //     const fetchCarts = async () => {
+  //       await getAllCart();
+  //     };
+  //     fetchCarts();
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // }, [pathname]);
+
+  // const uniqueRestaurant = (array) => {
+  //   if (array) {
+  //     const restaurantId = array.map((order) => order.restaurantId);
+  //     const uniqueRes = restaurantId.filter(
+  //       (value, index, self) => self.indexOf(value) === index
+  //     );
+  //     return uniqueRes;
+  //   }
+  // };
+
+  // const restaurantsId = uniqueRestaurant([carts]);
   return (
     <Box className="flex flex-col ">
       <Box
@@ -32,10 +57,12 @@ function CartPage() {
         <ButtonBackNew />
       </Box>
 
-      <Box className="flex justify-center">
-        <Link to={"/customer/cart/" + 1}>
-          <CardCartRes />
-        </Link>
+      <Box className="flex flex-col items-center gap-5">
+        {resCarts?.map((el) => (
+          <Link key={el.id} to={"/customer/cart/" + 1}>
+            <CardCartRes name={el.name} image={el.image} />
+          </Link>
+        ))}
       </Box>
     </Box>
   );

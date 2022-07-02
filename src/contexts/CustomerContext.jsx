@@ -13,14 +13,10 @@ export function CustomerContextProvider({ children }) {
   const [restaurant, setRestaurant] = useState("");
   const [menus, setMenus] = useState("");
   const [menu, setMenu] = useState("");
-  const [carts, setCarts] = useState();
+  const [carts, setCarts] = useState([]);
+  const [resCarts, setResCarts] = useState([]);
   const [cart, setCart] = useState([]);
-  // useState([
-  //   { id: 1, optionGroups: [{ id: 1, options: [{ id: 1 }, { id: 2 }] }] },
-  // ]);
-
-  console.log("cart", cart);
-
+  const [addToCart, setAddToCart] = useState([]);
   const [foodOption, setFoodOption] = useState([]);
 
   const getRestaurantById = async (restaurantId) => {
@@ -60,8 +56,6 @@ export function CustomerContextProvider({ children }) {
       setLoading(true);
       const res = await axios.get("/customer/getMenu/" + Number(menuId));
       setMenu(res.data.menu);
-
-      console.log("customerContext", res?.data.menu);
     } catch (err) {
       console.log(err);
     } finally {
@@ -78,10 +72,27 @@ export function CustomerContextProvider({ children }) {
     }
   };
 
+  const getAllRestaurantsCart = async () => {
+    try {
+      const res = await axios.get("/customer/restaurantsCart");
+      setResCarts(res.data.restaurants);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const getCartById = async (cartId) => {
+    try {
+      const res = await axios.get("/customer/cart/" + cartId);
+      setCarts(res.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   const createCart = async ({ restaurantId, menus }) => {
     try {
-      console.log("menuAddToCart", menus);
-      const res = await axios.post("/customer/addCart", {
+      await axios.post("/customer/addCart", {
         restaurantId,
         menus,
       });
@@ -110,12 +121,18 @@ export function CustomerContextProvider({ children }) {
         menu,
         cart,
         carts,
+        addToCart,
+        setAddToCart,
+        resCarts,
+        setResCarts,
         foodOption,
         setFoodOption,
         getRestaurantById,
         getMenus,
         getMenuById,
         getAllCart,
+        getAllRestaurantsCart,
+        getCartById,
         createCart,
         appendCart,
         setCart,

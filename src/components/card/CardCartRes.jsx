@@ -1,13 +1,11 @@
-import { AspectRatio } from "@mui/icons-material";
+import AspectRatio from "@mui/joy/AspectRatio";
 import { Box, Chip, Typography } from "@mui/joy";
 import Card from "@mui/joy/Card";
 import React from "react";
 import { Link } from "react-router-dom";
 import { useCustomer } from "../../contexts/CustomerContext";
 
-function CardCartRes() {
-  const { carts } = useCustomer();
-
+function CardCartRes({ image, name }) {
   return (
     <Card
       variant="outlined"
@@ -15,6 +13,7 @@ function CardCartRes() {
       sx={{
         maxWidth: "300px",
         gap: 2,
+        boxShadow: "0 3px 10px rgba(90, 108, 234, 0.1)",
         "&:hover": {
           boxShadow: "md",
           borderColor: "neutral.outlinedHoverBorder",
@@ -22,19 +21,14 @@ function CardCartRes() {
       }}
     >
       <AspectRatio ratio="1" sx={{ width: 90 }}>
-        <img
-          src="https://images.unsplash.com/photo-1507833423370-a126b89d394b?crop=entropy&auto=format&fit=crop&w=3387"
-          alt=""
-        />
+        <img src={image} alt={name} />
       </AspectRatio>
       <Box>
         <Box sx={{ ml: 0.5 }}>
           <Typography level="h2" fontSize="lg" id="card-description" mb={0.5}>
-            Yosemite Park
+            {name}
           </Typography>
-          <Typography fontSize="sm" aria-describedby="card-description" mb={1}>
-            detail
-          </Typography>
+
           <Chip
             variant="outlined"
             color="primary"
