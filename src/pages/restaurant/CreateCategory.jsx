@@ -3,8 +3,11 @@ import ButtonBackNew from "../../components/button/ButtonBackNew";
 import AddOrEditMenu from "../../role/restaurant/createcategory/AddOrEditMenu";
 import { useNavigate } from "react-router-dom";
 import AddCategory from "../../role/restaurant/createcategory/AddCategory";
+import { useState } from "react";
+import CategoryList from "../../role/restaurant/createcategory/CategoryList";
 
 function CreateCategory() {
+  const [category, setCategory] = useState("");
   const navigate = useNavigate();
 
   return (
@@ -44,10 +47,13 @@ function CreateCategory() {
           subTitle="add or edit food"
         />
         <AddCategory
+          category={category}
+          setCategory={setCategory}
           title="Add more Category"
           subTitle="add or edit category"
         />
       </Box>
+      <CategoryList />
     </Box>
   );
 }
