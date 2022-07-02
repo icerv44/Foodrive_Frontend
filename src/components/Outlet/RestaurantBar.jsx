@@ -1,6 +1,8 @@
 import { Box, Typography } from "@mui/joy";
 import { AiOutlineFileText } from "react-icons/ai";
-import { BsFillChatDotsFill, BsCartDashFill } from "react-icons/bs";
+import { BsFillChatDotsFill, BsFillPeopleFill } from "react-icons/bs";
+import { MdOutlineRestaurantMenu } from "react-icons/md";
+import { Link } from "react-router-dom";
 
 function RestaurantBar() {
   return (
@@ -25,48 +27,74 @@ function RestaurantBar() {
           zIndex: 20,
         }}
       >
-        <Box
-          role="button"
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            color: "#3B3B3B",
-            fontSize: "26px",
-          }}
-        >
-          <AiOutlineFileText />
-          <Typography>delivery</Typography>
-        </Box>
-        <Box
-          role="button"
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            color: "#3B3B3B",
-            fontSize: "26px",
-          }}
-        >
-          <BsFillChatDotsFill />
-          <Typography>message</Typography>
-        </Box>
-        <Box
-          role="button"
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            color: "#3B3B3B",
-            fontSize: "26px",
-          }}
-        >
-          <BsCartDashFill />
-          <Typography>order</Typography>
-        </Box>
+        {/* Delivery */}
+        <Link to="/restaurant/checkorder">
+          <Box
+            role="button"
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              color: "#3B3B3B",
+              fontSize: "26px",
+            }}
+          >
+            <AiOutlineFileText />
+            <Typography>delivery</Typography>
+          </Box>
+        </Link>
+        {/* Menu */}
+        <Link to="/restaurant/category">
+          <Box
+            role="button"
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              color: "#3B3B3B",
+              fontSize: "26px",
+            }}
+          >
+            <MdOutlineRestaurantMenu />
+            <Typography>menu</Typography>
+          </Box>
+        </Link>
+        {/* Message */}
+        <Link to="">
+          <Box
+            role="button"
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              color: "#3B3B3B",
+              fontSize: "26px",
+            }}
+          >
+            <BsFillChatDotsFill />
+            <Typography>message</Typography>
+          </Box>
+        </Link>
+        {/* Profile */}
+        <Link to="/restaurant/profile">
+          <Box
+            role="button"
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              color: "#3B3B3B",
+              fontSize: "26px",
+            }}
+          >
+            <BsFillPeopleFill />
+            <Typography>profile</Typography>
+          </Box>
+        </Link>
       </Box>
     </Box>
   );

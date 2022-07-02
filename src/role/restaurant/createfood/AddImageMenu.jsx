@@ -1,19 +1,8 @@
 import IconButton from "@mui/joy/IconButton";
 import { Box, Typography } from "@mui/material";
-import { useState } from "react";
-import { BsChevronRight, BsChevronDown } from "react-icons/bs";
-import Modal from "react-modal";
-import ModalForCreate from "../modal/ModalForCreate";
+import { MdDeleteForever } from "react-icons/md";
 
-function AddCategory({ title, subTitle, category, setCategory }) {
-  const [isOpen, setIsOpen] = useState(false);
-
-  Modal.setAppElement("#root");
-
-  const handleClickOpenMenu = () => {
-    setIsOpen(!isOpen);
-  };
-
+function AddImageMenu({ icon, title, subTitle, onClick, onDelete }) {
   return (
     <Box
       sx={{
@@ -27,12 +16,16 @@ function AddCategory({ title, subTitle, category, setCategory }) {
     >
       <Box>
         <IconButton
+          onClick={onClick}
           sx={{
             bgcolor: "#f9a94d22",
             color: "green",
+            maxWidth: "40px",
+            maxHeight: "40px",
+            fontSize: "24px",
           }}
         >
-          <ModalForCreate />
+          {icon}
         </IconButton>
       </Box>
       <Box sx={{ flexGrow: 1 }}>
@@ -41,11 +34,11 @@ function AddCategory({ title, subTitle, category, setCategory }) {
         </Typography>
         <Typography sx={{ color: "grey" }}>{subTitle}</Typography>
       </Box>
-      <Box onClick={handleClickOpenMenu} className="text-[#DA6317] text-xl">
-        {isOpen === true ? <BsChevronDown /> : <BsChevronRight />}
+      <Box onClick={onDelete} className="text-2xl">
+        <MdDeleteForever />
       </Box>
     </Box>
   );
 }
 
-export default AddCategory;
+export default AddImageMenu;

@@ -1,10 +1,12 @@
 import { Box } from "@mui/material";
-import AddOrEditMenu from "../createcategory/AddOrEditMenu";
 import ButtonGreenGradiant from "../../../components/button/ButtonGreenGradiant";
 import ButtonWhite from "../../../components/button/ButtonWhite";
 import { useRef } from "react";
 import { useRestaurant } from "../../../contexts/RestaurantContext";
 import { useNavigate } from "react-router-dom";
+import AddImageMenu from "./AddImageMenu";
+import { AiFillCheckCircle } from "react-icons/ai";
+import { IoImageSharp } from "react-icons/io5";
 
 function CreateFoodInput() {
   const navigate = useNavigate();
@@ -37,10 +39,12 @@ function CreateFoodInput() {
         type="file"
         placeholder="Name"
       />
-      <AddOrEditMenu
+      <AddImageMenu
         onClick={() => inputFileRef.current.click()}
-        title="Add Food Picture"
+        title={foodImage ? "Image Ready!" : "Add some Food!"}
         subTitle="max-size: 2mb file: JPG,PNG"
+        onDelete={() => setFoodImage("")}
+        icon={foodImage ? <AiFillCheckCircle /> : <IoImageSharp />}
       />
       <Box className="flex flex-col justify-center my-6">
         {/* Foodname */}
@@ -86,11 +90,11 @@ function CreateFoodInput() {
           <input
             value={foodPrice}
             onChange={(e) => setFoodPrice(e.target.value)}
-            type="text"
+            type="number"
             className="rounded-xl w-full py-2 px-3 border border-teal-200"
           />
         </Box>
-        {/* Tag */}
+        {/* Tag MUSTMAP CATEGORY LATER */}
         <Box className="text-[#3B3B3B] opacity-[0.3] m-2">Category*</Box>
         <Box
           sx={{
