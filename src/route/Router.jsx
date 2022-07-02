@@ -35,6 +35,8 @@ import CartContainer from "../role/customer/order/CartContainer";
 import CustomerProfilePage from "../pages/customer/CustomerProfilePage";
 import CreateFoodOption from "../pages/restaurant/CreateFoodOption";
 import CheckDeliveryOrder from "../pages/restaurant/CheckDeliveryOrder";
+import ResDeliveryStatus from "../pages/restaurant/ResDeliveryStatus";
+import ProfilePage from "../pages/ProfilePage";
 
 function Router() {
   const dispatch = useDispatch();
@@ -108,8 +110,10 @@ function Router() {
         <Route path="/restaurant/register" element={<RegisterPage />} />
         <Route path="/restaurant/login" element={<LoginPage />} />
         <Route path="/restaurant" element={<RestaurantContainer />}>
+          <Route path="profile" element={<ProfilePage />} />
           <Route path="category" element={<CreateCategory />} />
           <Route path="checkorder" element={<CheckDeliveryOrder />} />
+          <Route path="checkorder/:id" element={<ResDeliveryStatus />} />
         </Route>
         <Route path="restaurant/food" element={<CreateFood />} />
         <Route path="restaurant/food/option" element={<CreateFoodOption />} />

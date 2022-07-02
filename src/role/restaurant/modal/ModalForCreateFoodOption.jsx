@@ -2,16 +2,30 @@ import { useState } from "react";
 import Modal from "react-modal";
 import { AiOutlineClose } from "react-icons/ai";
 import ButtonGreenGradient from "../../../components/button/ButtonGreenGradiant";
-import { Box } from "@mui/material";
 
 // Modal.setAppElement("#ใส่ไอดีของโมดัลอันนี้ในหน้าที่เอาไปใช้");
 // Import Modal ไปในไฟล์ที่จะใช้ด้วย
 
-function ModalForCreateFoodOption() {
+function ModalForCreateFoodOption({
+  optionCart,
+  setOptionCart,
+  optionName,
+  setOptionName,
+  optionPrice,
+  setOptionPrice,
+}) {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    optionCart.push({
+      optionName,
+      optionPrice,
+    });
+    setOptionCart(optionCart);
+    setOptionName("");
+    setOptionPrice("");
+    setIsOpen(false);
   };
 
   return (
@@ -24,6 +38,8 @@ function ModalForCreateFoodOption() {
           borderRadius: "15px",
           padding: "12px",
           color: "#37C989",
+          fontWeight: 700,
+          fontSize: "18px",
         }}
         onClick={() => setIsOpen(true)}
       >
@@ -60,6 +76,8 @@ function ModalForCreateFoodOption() {
               </div>
               <div>
                 <input
+                  value={optionName}
+                  onChange={(e) => setOptionName(e.target.value)}
                   type="text"
                   className="shadow-lg shadow-blue-200 rounded-xl w-full py-2 px-3 border border-teal-200"
                 />
@@ -70,7 +88,9 @@ function ModalForCreateFoodOption() {
               <div className="text-[#3B3B3B] opacity-[0.3] m-2">Price</div>
               <div>
                 <input
-                  type="text"
+                  value={optionPrice}
+                  onChange={(e) => setOptionPrice(e.target.value)}
+                  type="number"
                   className="shadow-lg shadow-blue-200 rounded-xl w-full py-2 px-3 border border-teal-200"
                 />
               </div>

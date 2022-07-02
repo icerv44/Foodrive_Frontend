@@ -9,6 +9,12 @@ function RestaurantContextProvider({ children }) {
   const [foodPrice, setFoodPrice] = useState("");
   const [foodCategory, setFoodCategory] = useState("");
 
+  const [optionTitle, setOptionTitle] = useState("");
+  const [optionCart, setOptionCart] = useState([]);
+  const [optionName, setOptionName] = useState("");
+  const [optionPrice, setOptionPrice] = useState("");
+  const [isOptionMustHave, setIsOptionMustHave] = useState(false);
+
   return (
     <RestaurantContext.Provider
       value={{
@@ -22,6 +28,16 @@ function RestaurantContextProvider({ children }) {
         setFoodPrice,
         foodCategory,
         setFoodCategory,
+        optionCart,
+        setOptionCart,
+        optionName,
+        setOptionName,
+        optionPrice,
+        setOptionPrice,
+        optionTitle,
+        setOptionTitle,
+        isOptionMustHave,
+        setIsOptionMustHave,
       }}
     >
       {children}
