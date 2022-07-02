@@ -22,13 +22,12 @@ function GoogleMapDriver() {
         let driverLocation;
         let customerLocation;
         if (fakeRole === "driver") {
-          console.log("init map");
           driverLocation = { lat: +latitude, lng: +longitude };
           const res = await axios.get("/driver/order/" + orderId);
 
           const newLatitude = res.data.order.customerLatitude;
           const newLongitude = res.data.order.customerLongitude;
-          console.log(newLatitude, +newLongitude);
+
           //await fetch customer position
           customerLocation = { lat: +newLatitude, lng: +newLongitude };
         } else if (fakeRole === "customer") {
@@ -49,9 +48,7 @@ function GoogleMapDriver() {
             travelMode: window.google.maps.TravelMode.DRIVING,
           },
           (result, status) => {
-            console.log(result);
             if (status === "OK" && result) {
-              console.log(result);
               setDirection(result);
             }
           }

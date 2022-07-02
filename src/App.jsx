@@ -39,6 +39,7 @@ function App() {
       },
     },
   });
+
   return (
     <ThemeProvider theme={theme}>
       <StyledEngineProvider injectFirst>

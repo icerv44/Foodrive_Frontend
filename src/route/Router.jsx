@@ -81,13 +81,15 @@ function Router() {
         dispatch(
           setPosition({ latitude: pos.latitude, longitude: pos.longitude })
         );
-      }, 5000);
+      }, 10000);
     }
 
     return () => {
       clearInterval(recordingInterval);
     };
   }, [driverStatus]);
+
+  // return <SocketTest />;
 
   return (
     <>

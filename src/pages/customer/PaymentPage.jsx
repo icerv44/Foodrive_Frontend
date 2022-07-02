@@ -6,7 +6,6 @@ import AddPayment from "../../role/customer/payment/AddPayment";
 import CashPayment from "../../role/customer/payment/CashPayment";
 import CreditPayment from "../../role/customer/payment/CreditPayment";
 
-console.log(window.Omise);
 const OmiseCard = window.OmiseCard;
 
 function PaymentPage() {
