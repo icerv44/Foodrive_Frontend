@@ -52,15 +52,15 @@ function PaymentPage() {
         <Box className="ml-5 py-5 font-bold text-3xl">Payment Method</Box>
         <Box className="flex flex-col justify-center items-center gap-5">
           <CashPayment />
-          <CreditPayment />
+          <form>
+            <CreditPayment onClick={handleClick} />
+          </form>
           <AddPayment />
         </Box>
       </Box>
-      <form>
-        <button id="credit-card-omise" onClick={handleClick}>
+      {/* <button id="credit-card-omise" onClick={handleClick}>
           Pay With Omise
-        </button>
-      </form>
+        </button> */}
     </Container>
   );
 }

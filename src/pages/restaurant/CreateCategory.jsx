@@ -1,8 +1,15 @@
 import { Box, Typography } from "@mui/material";
 import ButtonBackNew from "../../components/button/ButtonBackNew";
 import AddOrEditMenu from "../../role/restaurant/createcategory/AddOrEditMenu";
+import { useNavigate } from "react-router-dom";
+import AddCategory from "../../role/restaurant/createcategory/AddCategory";
+import { useState } from "react";
+import CategoryList from "../../role/restaurant/createcategory/CategoryList";
 
 function CreateCategory() {
+  const [category, setCategory] = useState("");
+  const navigate = useNavigate();
+
   return (
     <Box
       sx={{
@@ -33,10 +40,20 @@ function CreateCategory() {
           Main Menu
         </Box>
       </Box>
-      <AddOrEditMenu
-        title="Add more Category"
-        subTitle="add or edit category"
-      />
+      <Box>
+        <AddOrEditMenu
+          onClick={() => navigate("/restaurant/food")}
+          title="Add Food"
+          subTitle="add or edit food"
+        />
+        <AddCategory
+          category={category}
+          setCategory={setCategory}
+          title="Add more Category"
+          subTitle="add or edit category"
+        />
+      </Box>
+      <CategoryList />
     </Box>
   );
 }

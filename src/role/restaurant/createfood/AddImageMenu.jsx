@@ -1,16 +1,8 @@
 import IconButton from "@mui/joy/IconButton";
 import { Box, Typography } from "@mui/material";
-import { useState } from "react";
-import { AiOutlinePlus } from "react-icons/ai";
-import { BsChevronRight, BsChevronDown } from "react-icons/bs";
+import { MdDeleteForever } from "react-icons/md";
 
-function AddOrEditMenu({ title, subTitle, onClick }) {
-  const [isOpen, setIsOpen] = useState(false);
-
-  const handleClickOpenMenu = () => {
-    setIsOpen(!isOpen);
-  };
-
+function AddImageMenu({ icon, title, subTitle, onClick, onDelete }) {
   return (
     <Box
       sx={{
@@ -28,9 +20,12 @@ function AddOrEditMenu({ title, subTitle, onClick }) {
           sx={{
             bgcolor: "#f9a94d22",
             color: "green",
+            maxWidth: "40px",
+            maxHeight: "40px",
+            fontSize: "24px",
           }}
         >
-          <AiOutlinePlus className="font-semibold text-xl" />
+          {icon}
         </IconButton>
       </Box>
       <Box sx={{ flexGrow: 1 }}>
@@ -39,11 +34,11 @@ function AddOrEditMenu({ title, subTitle, onClick }) {
         </Typography>
         <Typography sx={{ color: "grey" }}>{subTitle}</Typography>
       </Box>
-      <Box onClick={handleClickOpenMenu} className="text-[#DA6317] text-xl">
-        {isOpen === true ? <BsChevronDown /> : <BsChevronRight />}
+      <Box onClick={onDelete} className="text-2xl">
+        <MdDeleteForever />
       </Box>
     </Box>
   );
 }
 
-export default AddOrEditMenu;
+export default AddImageMenu;

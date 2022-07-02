@@ -13,6 +13,9 @@ function ButtonWhite({ title, px, width, onClick }) {
         fontWeight: "700",
         px: `${px}`,
         width: `${width}`,
+        ":hover": {
+          background: "#E0E0E0",
+        },
       }}
     >
       {title}
