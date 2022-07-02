@@ -1,5 +1,4 @@
 import { createContext, useEffect, useState, useContext } from "react";
-import { useParams } from "react-router-dom";
 import axios from "../config/axios";
 import { useError } from "./ErrorContext";
 import { useLoading } from "./LoadingContext";
@@ -33,15 +32,15 @@ export function CustomerContextProvider({ children }) {
   const getMenus = async (latitude, longitude) => {
     try {
       setLoading(true);
-      const res = await axios.post("/customer/searchMenus", {
-        latitude,
-        longitude,
-        tag: search || "",
-        keyword: search || "",
-      });
-      setMenus(res.data.menus);
-      console.log(menus);
-      console.log(search);
+      if (longitude && latitude) {
+        const res = await axios.post("/customer/searchMenus", {
+          latitude,
+          longitude,
+          tag: search || "",
+          keyword: search || "",
+        });
+        setMenus(res.data.menus);
+      }
     } catch (err) {
       console.log(err);
     } finally {
@@ -53,7 +52,9 @@ export function CustomerContextProvider({ children }) {
     try {
       setLoading(true);
       const res = await axios.get("/customer/getMenu/" + Number(menuId));
-      setMenu(res.data.menu);
+      setMenu({ ...res.data.menu });
+
+      // setMenu("");
       console.log("customerContext", res?.data.menu);
     } catch (err) {
       console.log(err);
@@ -66,6 +67,22 @@ export function CustomerContextProvider({ children }) {
     try {
       const res = await axios.get("/customer/carts");
       setCarts(res.data.carts);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const createCart = async () => {
+    try {
+      const res = await axios.post("/customer/addCart");
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const appendCart = async (cartId) => {
+    try {
+      const res = await axios.post(`/customer/cart/${cartId}/append-menu`);
     } catch (err) {
       console.log(err);
     }
@@ -86,6 +103,7 @@ export function CustomerContextProvider({ children }) {
         getRestaurantById,
         getMenus,
         getMenuById,
+        getAllCart,
       }}
     >
       {children}

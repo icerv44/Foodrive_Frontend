@@ -2,6 +2,8 @@ import { Box, Button, Chip, Link, Typography } from "@mui/joy";
 import AspectRatio from "@mui/joy/AspectRatio";
 import React from "react";
 import { FiBarChart2 } from "react-icons/fi";
+import { useDispatch, useSelector } from "react-redux";
+import { setDriverStatus } from "../../../slices/userSlice";
 
 function DriverProfile() {
   return (
@@ -30,10 +32,10 @@ function DriverProfile() {
         </Typography>
       </div>
 
-      <Link
-        overlay
-        underline="none"
-        href="#interactive-card"
+      <Box
+        // overlay
+        // underline="none"
+        // to="#interactive-card"
         sx={{ color: "text.tertiary" }}
       >
         <Button
@@ -51,7 +53,7 @@ function DriverProfile() {
             Revenue
           </Typography>
         </Button>
-      </Link>
+      </Box>
     </Box>
   );
 }

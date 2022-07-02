@@ -7,6 +7,8 @@ import Card from "@mui/joy/Card";
 import Chip from "@mui/joy/Chip";
 import Typography from "@mui/joy/Typography";
 import DriverProfile from "./DriverProfile";
+import { useDispatch, useSelector } from "react-redux";
+import { setDriverStatus } from "../../../slices/userSlice";
 
 function DriverContainer() {
   return (
