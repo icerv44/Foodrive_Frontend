@@ -15,17 +15,35 @@ function ModalForCreateFoodOption({
   setOptionPrice,
 }) {
   const [isOpen, setIsOpen] = useState(false);
+  const [errName, setErrName] = useState("");
+  const [errPrice, setErrPrice] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    optionCart.push({
-      optionName,
-      optionPrice,
-    });
-    setOptionCart(optionCart);
+    if (optionName?.trim() === "") {
+      setErrName("Option name is required");
+    } else if (optionPrice?.trim() === "") {
+      setErrPrice("Option price is required");
+    } else {
+      optionCart.push({
+        optionName,
+        optionPrice,
+      });
+      setOptionCart(optionCart);
+      setOptionName("");
+      setOptionPrice("");
+      setErrName("");
+      setErrPrice("");
+      setIsOpen(false);
+    }
+  };
+
+  const handleCloseModal = () => {
+    setIsOpen(false);
+    setErrName("");
+    setErrPrice("");
     setOptionName("");
     setOptionPrice("");
-    setIsOpen(false);
   };
 
   return (
@@ -62,7 +80,7 @@ function ModalForCreateFoodOption({
       >
         <div>
           <div className="absolute right-2 top-2">
-            <button onClick={() => setIsOpen(false)}>
+            <button onClick={handleCloseModal}>
               <AiOutlineClose />
             </button>
           </div>
@@ -76,6 +94,7 @@ function ModalForCreateFoodOption({
               </div>
               <div>
                 <input
+                  placeholder={errName ? errName : ""}
                   value={optionName}
                   onChange={(e) => setOptionName(e.target.value)}
                   type="text"
@@ -88,6 +107,7 @@ function ModalForCreateFoodOption({
               <div className="text-[#3B3B3B] opacity-[0.3] m-2">Price</div>
               <div>
                 <input
+                  placeholder={errPrice ? errPrice : ""}
                   value={optionPrice}
                   onChange={(e) => setOptionPrice(e.target.value)}
                   type="number"

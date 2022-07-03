@@ -39,6 +39,7 @@ import CheckDeliveryOrder from "../pages/restaurant/CheckDeliveryOrder";
 import ResDeliveryStatus from "../pages/restaurant/ResDeliveryStatus";
 import ProfilePage from "../pages/ProfilePage";
 import MenuOrderPage from "../role/customer/order/MenuOrderPage";
+import CategoryFoodPage from "../pages/restaurant/CategoryFoodPage";
 import ToastError from "../components/ui/ToastError";
 import ToastSuccess from "../components/ui/ToastSuccess";
 import { useSuccess } from "../contexts/SuccessContext";
@@ -126,6 +127,7 @@ function Router() {
         </Route>
         <Route path="restaurant/food" element={<CreateFood />} />
         <Route path="restaurant/food/option" element={<CreateFoodOption />} />
+        <Route path="restaurant/category/:id" element={<CategoryFoodPage />} />
       </Routes>
     </>
   );

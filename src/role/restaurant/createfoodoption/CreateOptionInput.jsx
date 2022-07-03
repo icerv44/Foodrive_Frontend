@@ -83,32 +83,32 @@ function CreateOptionInput({
             setOptionPrice={setOptionPrice}
           />
         </Box>
-        <Box
-          sx={{
-            borderColor: "1px solid #F4F4F4",
-            boxShadow: "12px 26px 50px rgba(90, 108, 234, 0.07)",
-            borderRadius: "16px",
-            p: "12px",
-            display: "flex",
-            flexDirection: "column",
-            gap: "16px",
-            maxHeight: "26vh",
-            overflowY: "scroll",
-            my: "16px",
-          }}
-        >
-          {optionCart.map((el, idx) => (
-            <OptionalFood
-              key={idx}
-              optionName={el.optionName}
-              optionPrice={el.optionPrice}
-              index={idx}
-              onDelete={handleDeleteOption}
-            />
-          ))}
+        <Box sx={{ height: "29vh" }}>
+          <Box
+            sx={{
+              borderColor: "1px solid #F4F4F4",
+              boxShadow: "12px 26px 50px rgba(90, 108, 234, 0.07)",
+              borderRadius: "16px",
+              p: "12px",
+              display: "flex",
+              flexDirection: "column",
+              gap: "16px",
+              my: "16px",
+            }}
+          >
+            {optionCart.map((el, idx) => (
+              <OptionalFood
+                key={idx}
+                optionName={el.optionName}
+                optionPrice={el.optionPrice}
+                index={idx}
+                onDelete={handleDeleteOption}
+              />
+            ))}
+          </Box>
         </Box>
         <Button
-          variant="outlined"
+          // variant="outlined"
           color="success"
           sx={{ width: "100%" }}
           type="submit"
