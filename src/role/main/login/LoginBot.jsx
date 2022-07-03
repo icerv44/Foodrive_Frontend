@@ -13,6 +13,7 @@ function LoginBot() {
   const role = pathname.split("/")[1];
 
   const onClick = async () => {
+    console.log(role);
     const res = await dispatch(login({ role }));
     console.log(res);
     if (res?.error?.message !== "Rejected") {
@@ -56,16 +57,14 @@ function LoginBot() {
       </Link>
 
       <Box className="flex flex-col items-center gap-5 my-5">
-        {roleLogin.map((el) => (
-          <Link
-            to={el.to}
-            key={el.id}
-            className={role === el.role ? "hidden" : ""}
-          >
-            <button className="text-brown bg-light-brown px-5 py-2 hover:bg-brown hover:text-light-brown">
-              {el.btnName}
-            </button>
-          </Link>
+        {roleLogin.map((el, idx) => (
+          <Box key={idx}>
+            <Link to={el.to} className={role === el.role ? "hidden" : ""}>
+              <button className="text-brown bg-light-brown px-5 py-2 hover:bg-brown hover:text-light-brown">
+                {el.btnName}
+              </button>
+            </Link>
+          </Box>
         ))}
       </Box>
     </div>

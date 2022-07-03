@@ -9,7 +9,7 @@ import RestaurantPage from "../pages/RestaurantPage";
 import OrderPage from "../pages/customer/OrderPage";
 import ShopMenuPage from "../pages/customer/ShopMenuPage";
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { getAccessToken } from "../services/localstorage";
 import { fetchUser, setPosition } from "../slices/userSlice";
 import HomePageDriver from "../pages/driver/HomePageDriver";
@@ -37,13 +37,10 @@ import CreateFoodOption from "../pages/restaurant/CreateFoodOption";
 import CheckDeliveryOrder from "../pages/restaurant/CheckDeliveryOrder";
 import ResDeliveryStatus from "../pages/restaurant/ResDeliveryStatus";
 import ProfilePage from "../pages/ProfilePage";
-import axios from "../config/axios";
-import GoogleMapDriverLoader from "../components/common/googleMapDriver/GoogleMapDriverLoader";
+import MenuOrderPage from "../role/customer/order/MenuOrderPage";
 
 function Router() {
   const dispatch = useDispatch();
-  const driverStatus = useSelector((state) => state.user.info.driverStatus);
-  const { latitude, longitude } = useSelector((state) => state.user.info);
   const token = getAccessToken();
   const { loading } = useLoading();
 
@@ -57,41 +54,12 @@ function Router() {
   }, [token]);
 
   useEffect(() => {
-    getCurrentPosition().then((pos) => {
-      console.log(pos.latitude, pos.longitude);
+    getCurrentPosition().then((res) => {
       dispatch(
-        setPosition({ latitude: pos.latitude, longitude: pos.longitude })
+        setPosition({ latitude: res.latitude, longitude: res.longitude })
       );
     });
   }, [pathname]);
-
-  const updateDriver = async (lat, lng) => {
-    if (latitude && longitude) {
-      const res = await axios.patch("/driver/updateLocation", {
-        latitude: lat,
-        longitude: lng,
-      });
-      console.log(res);
-    }
-  };
-
-  useEffect(() => {
-    let recordingInterval;
-    if (driverStatus === "ONLINE") {
-      recordingInterval = setInterval(async () => {
-        console.log("updating position...");
-        const pos = await getCurrentPosition();
-        await updateDriver(pos.latitude, pos.longitude);
-        dispatch(
-          setPosition({ latitude: pos.latitude, longitude: pos.longitude })
-        );
-      }, 5000);
-    }
-
-    return () => {
-      clearInterval(recordingInterval);
-    };
-  }, [driverStatus]);
 
   return (
     <>
@@ -109,6 +77,7 @@ function Router() {
           <Route path="cart" element={<CartContainer />}>
             <Route path="" element={<CartPage />} />
             <Route path=":cartId" element={<OrderPage />} />
+            <Route path="menuOrder/:menuOrderId" element={<MenuOrderPage />} />
           </Route>
           <Route path="payment" element={<PaymentPage />} />
           <Route path="myLocation" element={<AddressSelectPage />} />
