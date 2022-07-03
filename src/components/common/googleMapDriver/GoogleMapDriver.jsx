@@ -84,7 +84,7 @@ function GoogleMapDriver() {
           driverPosition && customerPosition ? null : center /*same as above*/
         }
         onLoad={onLoad}
-        mapContainerStyle={{ width: "70%", height: "50vh" }}
+        mapContainerStyle={{ width: "100%", height: "100%" }}
       >
         {driverPosition && <Marker key={"marker1"} position={driverPosition} />}
         {customerPosition && (

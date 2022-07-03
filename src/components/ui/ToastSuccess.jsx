@@ -1,10 +1,9 @@
-import { Box, Button } from "@mui/joy";
-import { Typography } from "@mui/material";
-import { RiCloseCircleFill } from "react-icons/ri";
+import { Box, Typography } from "@mui/joy";
+import React from "react";
+import { BsFillCheckCircleFill } from "react-icons/bs";
 
-function ToastError({ children }) {
+function ToastSuccess({ children }) {
   return (
-    // class="flex items-center w-full max-w-xs p-4 text-gray-500 bg-white rounded-lg shadow dark:text-gray-400 dark:bg-gray-800"
     <Box
       sx={{
         display: "flex",
@@ -17,7 +16,7 @@ function ToastError({ children }) {
           zIndex: 10,
           position: "fixed",
           top: "20px",
-          backgroundColor: "#ef4444",
+          backgroundColor: "#15BE77",
           color: "white",
           padding: "5px 20px",
           borderRadius: "5px",
@@ -26,7 +25,7 @@ function ToastError({ children }) {
           alignItems: "center",
         }}
       >
-        <RiCloseCircleFill />
+        <BsFillCheckCircleFill />
         <Typography
           sx={{
             color: "#ffffff",
@@ -39,4 +38,4 @@ function ToastError({ children }) {
   );
 }
 
-export default ToastError;
+export default ToastSuccess;

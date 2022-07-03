@@ -19,7 +19,7 @@ function HomeContainerDriver() {
 
   return (
     <>
-      <Box className="fixed right-5 top-5">
+      <Box className="fixed right-5 top-5 z-50">
         <ButtonLogout onClick={handleLogOut}>Log Out</ButtonLogout>
       </Box>
       <Box className="">
