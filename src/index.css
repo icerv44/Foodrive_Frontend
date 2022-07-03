@@ -2,6 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  html {
+    font-family: "IBM Plex Sans Thai", sans-serif;
+    font-weight: 400;
+  }
+}
+
 body {
   margin: 0;
   padding: 0;

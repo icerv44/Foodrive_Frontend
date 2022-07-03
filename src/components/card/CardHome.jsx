@@ -1,73 +1,87 @@
 import * as React from "react";
 import Card from "@mui/material/Card";
-// import CardActions from "@mui/material/CardActions";
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
-
 import Typography from "@mui/material/Typography";
+import AspectRatio from "@mui/joy/AspectRatio";
+import Box from "@mui/joy/Box";
+import CardOverflow from "@mui/joy/CardOverflow";
+import { useCustomer } from "../../contexts/CustomerContext";
+import { Link, useNavigate } from "react-router-dom";
 
-function CardHome({ Name, Time, Distance }) {
+function CardHome({ el }) {
+  // const { menus } = useCustomer();
+
+  const cutLetter = (name = "", length) => {
+    if (name.length > length) {
+      const cutName = name.substring(0, length) + "...";
+      return cutName;
+    }
+    return name;
+  };
+
   return (
-    <>
-      <Typography
-        variant="h6"
-        sx={{
-          // fontFamily: "IBM Plex Sans Thai, sans-serif",
-          fontFamily: "Chakra Petch, sans-serif",
-        }}
-      >
-        {Name}
-      </Typography>
-      {/* <Card
+    <Link to={"/customer/menuDetail/" + el?.id}>
+      <Box key={el?.name}>
+        <Card
+          row="true"
+          variant="outlined"
           sx={{
             width: "147px",
             background: " #FFFFFF",
-            boxShadow: "12px 26px 50px rgba(90, 108, 234, 0.07)",
+            boxShadow: "0 3px 10px rgba(90, 108, 234, 0.1)",
             borderRadius: "22px",
             height: "184px",
+            gap: 2,
+            "--Card-padding": (theme) => theme.spacing(2),
           }}
         >
-          <CardMedia
-            component="img"
-            // height="97"
-            image="https://picsum.photos/200/300"
-            alt="green iguana"
+          <AspectRatio
+            ratio="1.5"
             sx={{
               borderRadius: "22px 22px 0px 0px",
-              width: "147px",
-              height: "97px",
             }}
-          />
-          <CardContent>
-            <Typography
-              gutterBottom
-              component="div"
-              sx={{
-                width: "122px",
-                height: "13px",
-                fontSize: "10px",
-                fontWeight: "700",
-                lineHeight: "13px",
-                textAlign: "left",
-                color: "#000000",
-              }}
-            >
-              {Name}
-            </Typography>
-            <Typography
-              sx={{
-                width: "25px",
-                height: "10px",
-                fontStyle: "normal",
-                fontWeight: "400",
-                fontSize: "8px",
-              }}
-            >
-              {Time} นาที {Distance} กม.
-            </Typography>
-          </CardContent>
-        </Card> */}
-    </>
+          >
+            <img
+              src={`${el?.menuImage}`}
+              srcSet={`${el?.menuImage}`}
+              alt={el?.name}
+            />
+          </AspectRatio>
+          <CardOverflow>
+            <Box>
+              <Box sx={{ whiteSpace: "nowrap" }}>
+                <Typography
+                  fontWeight="md"
+                  level="h2"
+                  sx={{
+                    width: "122px",
+                    height: "13px",
+                    mt: 2,
+                    fontWeight: "700",
+                    lineHeight: "13px",
+                    textAlign: "left",
+                    color: "#000000",
+                    fontSize: "14x",
+                  }}
+                >
+                  {cutLetter(el?.name, 10)}
+                </Typography>
+
+                <Typography
+                  level="body2"
+                  sx={{
+                    fontSize: "10px",
+                    mt: 2,
+                    mb: 2,
+                  }}
+                >
+                  {cutLetter(el?.description, 18)}
+                </Typography>
+              </Box>
+            </Box>
+          </CardOverflow>
+        </Card>
+      </Box>
+    </Link>
   );
 }
 

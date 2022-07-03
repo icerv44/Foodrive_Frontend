@@ -1,28 +1,26 @@
 import * as React from "react";
-import Button from "@mui/material/Button";
+import { Button } from "@mui/joy";
 import Typography from "@mui/material/Typography";
 function ButtonLogin({ height, width, borderRadius, background, color, text }) {
   return (
     <>
-      {" "}
       <Button
         variant="contained"
-        // sx={{
-        //   height: "57px",
-        //   width: "141px",
-        //   borderRadius: "15px",
-        //   background:
-        //     "linear-gradient(98.81deg, #53E88B -0.82%, #15BE77 101.53%)",
-        //   color: "white",
-        // }}
-
         sx={{
-          height,
-          width,
-          borderRadius,
-          background,
-          color,
+          height: "57px",
+          width: "141px",
+          borderRadius: "15px",
+          background:
+            "linear-gradient(98.81deg, #53E88B -0.82%, #15BE77 101.53%)",
+          color: "white",
         }}
+        // sx={{
+        //   height,
+        //   width,
+        //   borderRadius,
+        //   background,
+        //   color,
+        // }}
       >
         <Typography
           variant="button"
