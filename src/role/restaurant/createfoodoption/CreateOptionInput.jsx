@@ -1,3 +1,4 @@
+import { Button } from "@mui/joy";
 import { Box } from "@mui/material";
 import Modal from "react-modal";
 import ModalForCreateFoodOption from "../modal/ModalForCreateFoodOption";
@@ -93,7 +94,7 @@ function CreateOptionInput({
             gap: "16px",
             maxHeight: "26vh",
             overflowY: "scroll",
-            mt: "16px",
+            my: "16px",
           }}
         >
           {optionCart.map((el, idx) => (
@@ -106,6 +107,14 @@ function CreateOptionInput({
             />
           ))}
         </Box>
+        <Button
+          variant="outlined"
+          color="success"
+          sx={{ width: "100%" }}
+          type="submit"
+        >
+          Submit
+        </Button>
       </Box>
     </form>
   );

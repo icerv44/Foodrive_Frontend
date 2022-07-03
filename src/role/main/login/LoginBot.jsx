@@ -12,6 +12,8 @@ function LoginBot() {
   const { pathname } = useLocation();
   const role = pathname.split("/")[1];
 
+  console.log(role);
+
   const onClick = async () => {
     const res = await dispatch(login({ role }));
     console.log(res);
