@@ -47,6 +47,7 @@ export function CustomerContextProvider({ children }) {
       }
     } catch (err) {
       console.log(err);
+      setError(err.response.data.message);
     } finally {
       setLoading(false);
     }
@@ -59,6 +60,7 @@ export function CustomerContextProvider({ children }) {
       setMenu(res.data.menu);
     } catch (err) {
       console.log(err);
+      setError(err.response.data.message);
     } finally {
       setLoading(false);
     }
@@ -70,6 +72,7 @@ export function CustomerContextProvider({ children }) {
       setAllCart(res.data.carts);
     } catch (err) {
       console.log(err);
+      setError(err.response.data.message);
     }
   };
 
@@ -79,6 +82,7 @@ export function CustomerContextProvider({ children }) {
       setResCarts(res.data.restaurants);
     } catch (err) {
       console.log(err);
+      setError(err.response.data.message);
     }
   };
 
@@ -88,25 +92,32 @@ export function CustomerContextProvider({ children }) {
       setCarts(res.data);
     } catch (err) {
       console.log(err);
+      setError(err.response.data.message);
     }
   };
 
   const createCart = async ({ restaurantId, menus }) => {
     try {
-      await axios.post("/customer/addCart", {
+      const res = await axios.post("/customer/addCart", {
         restaurantId,
         menus,
       });
+      console.log("create cart", res);
     } catch (err) {
       console.log(err);
+      setError(err.response.data.message);
     }
   };
 
   const appendCart = async (cartId, menus) => {
     try {
-      await axios.post(`/customer/cart/${cartId}/append-menu`, { menus });
+      const res = await axios.post(`/customer/cart/${cartId}/append-menu`, {
+        menus,
+      });
+      console.log("append cart", res);
     } catch (err) {
       console.log(err);
+      setError(err.response.data.message);
     }
   };
 
@@ -116,6 +127,7 @@ export function CustomerContextProvider({ children }) {
       await axios.delete("/customer/deleteMenu/" + orderMenuId);
     } catch (err) {
       console.log(err);
+      setError(err.response.data.message);
     }
   };
 
