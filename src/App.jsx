@@ -7,6 +7,8 @@ import { LoadingContextProvider } from "./contexts/LoadingContext";
 import { StyledEngineProvider } from "@mui/styled-engine-sc";
 import { ErrorContextProvider } from "./contexts/ErrorContext";
 import GoogleMapDriverLoader from "./components/common/googleMapDriver/GoogleMapDriverLoader";
+import { SocketContextProvider } from "./contexts/SocketContext";
+import { CustomerAddressContextProvider } from "./contexts/CustomerAddressContext.jsx";
 
 function App() {
   const theme = createTheme({
@@ -42,19 +44,23 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <StyledEngineProvider injectFirst>
-        <CssVarsProvider>
-          <ErrorContextProvider>
-            <LoadingContextProvider>
-              <CustomerContextProvider>
-                <DeliveryContextProvider>
-                  <Router />
-                </DeliveryContextProvider>
-              </CustomerContextProvider>
-            </LoadingContextProvider>
-          </ErrorContextProvider>
-        </CssVarsProvider>
-      </StyledEngineProvider>
+      <SocketContextProvider>
+        <StyledEngineProvider injectFirst>
+          <CssVarsProvider>
+            <ErrorContextProvider>
+              <LoadingContextProvider>
+                <CustomerContextProvider>
+                  <DeliveryContextProvider>
+                    <CustomerAddressContextProvider>
+                      <Router />
+                    </CustomerAddressContextProvider>
+                  </DeliveryContextProvider>
+                </CustomerContextProvider>
+              </LoadingContextProvider>
+            </ErrorContextProvider>
+          </CssVarsProvider>
+        </StyledEngineProvider>
+      </SocketContextProvider>
     </ThemeProvider>
   );
 }

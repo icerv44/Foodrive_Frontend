@@ -39,11 +39,17 @@ import ResDeliveryStatus from "../pages/restaurant/ResDeliveryStatus";
 import ProfilePage from "../pages/ProfilePage";
 import axios from "../config/axios";
 import GoogleMapDriverLoader from "../components/common/googleMapDriver/GoogleMapDriverLoader";
+import { io } from "socket.io-client";
+import { useSocket } from "../contexts/SocketContext";
+import { SOCKET_ENDPOINT_URL } from "../config/env";
 
 function Router() {
   const dispatch = useDispatch();
   const driverStatus = useSelector((state) => state.user.info.driverStatus);
   const { latitude, longitude } = useSelector((state) => state.user.info);
+  const userInfo = useSelector((state) => state.user.info);
+  const socketCtx = useSocket();
+  const { setSocket, socket } = socketCtx;
   const token = getAccessToken();
   const { loading } = useLoading();
 
@@ -51,10 +57,31 @@ function Router() {
   const role = pathname.split("/")[1];
 
   useEffect(() => {
-    if (token) {
-      dispatch(fetchUser({ role }));
+    const getUser = async () => {
+      if (token) {
+        if (!role) return;
+        const res = await dispatch(fetchUser({ role }));
+        console.log(res);
+        const newSocket = io(SOCKET_ENDPOINT_URL);
+        setSocket(newSocket);
+      }
+    };
+    getUser();
+  }, []);
+  //socket setup
+  useEffect(() => {
+    if (!socket) return;
+    console.log(socket);
+    socket?.emit("newUser", {
+      role: userInfo.role,
+      info: userInfo,
+    });
+    if (userInfo.role === "restaurant") {
+      socket?.on("restaurantReceiveOrder", ({ message }) => {
+        alert(message);
+      });
     }
-  }, [token]);
+  }, [socket]);
 
   useEffect(() => {
     getCurrentPosition().then((pos) => {
@@ -92,8 +119,6 @@ function Router() {
       clearInterval(recordingInterval);
     };
   }, [driverStatus]);
-
-  // return <SocketTest />;
 
   return (
     <>
