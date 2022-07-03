@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Modal from "react-modal";
 import { AiOutlinePlus, AiOutlineClose } from "react-icons/ai";
 import ButtonGreenGradient from "../../../components/button/ButtonGreenGradiant";
