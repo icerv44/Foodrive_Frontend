@@ -7,7 +7,7 @@ const register = createAsyncThunk("/register", async (payload, thunkApi) => {
   try {
     const role = payload.role;
 
-    console.log(role);
+    console.log("role", role);
 
     const name = thunkApi.getState().register.name;
     const firstName = thunkApi.getState().register.firstName;

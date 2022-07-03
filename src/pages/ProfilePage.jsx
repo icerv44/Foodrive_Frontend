@@ -4,12 +4,12 @@ import ProfileImg from "../components/imglogo/ProfileImg";
 import InputBox from "../components/input/InputBox";
 
 function ProfilePage({}) {
-  const [profileImg, setProfileImge] = useState("");
+  const [profileImg, setProfileImg] = useState("");
 
   const profileRef = useRef(null);
 
   const handleCancelChange = () => {
-    setProfileImge("");
+    setProfileImg("");
   };
 
   const handleSaveProfile = () => {};

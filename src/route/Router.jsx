@@ -9,7 +9,7 @@ import RestaurantPage from "../pages/RestaurantPage";
 import OrderPage from "../pages/customer/OrderPage";
 import ShopMenuPage from "../pages/customer/ShopMenuPage";
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { getAccessToken } from "../services/localstorage";
 import { fetchUser, setPosition } from "../slices/userSlice";
 import HomePageDriver from "../pages/driver/HomePageDriver";
@@ -42,6 +42,7 @@ import GoogleMapDriverLoader from "../components/common/googleMapDriver/GoogleMa
 import { io } from "socket.io-client";
 import { useSocket } from "../contexts/SocketContext";
 import { SOCKET_ENDPOINT_URL } from "../config/env";
+import MenuOrderPage from "../role/customer/order/MenuOrderPage";
 
 function Router() {
   const dispatch = useDispatch();
@@ -50,10 +51,11 @@ function Router() {
   const userInfo = useSelector((state) => state.user.info);
   const socketCtx = useSocket();
   const { setSocket, socket } = socketCtx;
-  const token = getAccessToken();
   const { loading } = useLoading();
-
   const { pathname } = useLocation();
+
+  const token = getAccessToken();
+
   const role = pathname.split("/")[1];
 
   useEffect(() => {
@@ -84,10 +86,9 @@ function Router() {
   }, [socket]);
 
   useEffect(() => {
-    getCurrentPosition().then((pos) => {
-      console.log(pos.latitude, pos.longitude);
+    getCurrentPosition().then((res) => {
       dispatch(
-        setPosition({ latitude: pos.latitude, longitude: pos.longitude })
+        setPosition({ latitude: res.latitude, longitude: res.longitude })
       );
     });
   }, [pathname]);
@@ -136,6 +137,7 @@ function Router() {
           <Route path="cart" element={<CartContainer />}>
             <Route path="" element={<CartPage />} />
             <Route path=":cartId" element={<OrderPage />} />
+            <Route path="menuOrder/:menuOrderId" element={<MenuOrderPage />} />
           </Route>
           <Route path="payment" element={<PaymentPage />} />
           <Route path="myLocation" element={<AddressSelectPage />} />

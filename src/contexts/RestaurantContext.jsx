@@ -1,8 +1,11 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
+import axios from "../config/axios";
 
 const RestaurantContext = createContext();
 
 function RestaurantContextProvider({ children }) {
+  const [categoryData, setCategoryData] = useState([]);
+
   const [foodImage, setFoodImage] = useState("");
   const [foodName, setFoodName] = useState("");
   const [foodDetail, setFoodDetail] = useState("");
@@ -15,9 +18,32 @@ function RestaurantContextProvider({ children }) {
   const [optionPrice, setOptionPrice] = useState("");
   const [isOptionMustHave, setIsOptionMustHave] = useState(false);
 
+  const fetchCategory = async () => {
+    try {
+      const res = await axios.get("restaurant/getAllCategory");
+      setCategoryData(res.data.category);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchCategory();
+  }, []);
+
+  const handleDeleteCategory = async (categoryId) => {
+    try {
+      await axios.delete("restaurant/deleteCategory/" + categoryId);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <RestaurantContext.Provider
       value={{
+        handleDeleteCategory,
+        categoryData,
         foodImage,
         setFoodImage,
         foodName,
