@@ -40,12 +40,15 @@ import ResDeliveryStatus from "../pages/restaurant/ResDeliveryStatus";
 import ProfilePage from "../pages/ProfilePage";
 import MenuOrderPage from "../role/customer/order/MenuOrderPage";
 import ToastError from "../components/ui/ToastError";
+import ToastSuccess from "../components/ui/ToastSuccess";
+import { useSuccess } from "../contexts/SuccessContext";
 
 function Router() {
   const dispatch = useDispatch();
   const token = getAccessToken();
   const { loading } = useLoading();
   const { error } = useError();
+  const { success } = useSuccess();
 
   const { pathname } = useLocation();
   const role = pathname.split("/")[1];
@@ -67,6 +70,7 @@ function Router() {
   return (
     <>
       {loading && <Spinner />}
+      {success && <ToastSuccess>{success}</ToastSuccess>}
       {error && <ToastError>{error}</ToastError>}
       {/* CUSTOMER */}
       <Routes>
@@ -86,6 +90,7 @@ function Router() {
           <Route path="myLocation" element={<AddressSelectPage />} />
         </Route>
         <Route path="/customer/profile" element={<CustomerProfilePage />} />
+        <Route path="/customer/editProfile" element={<ProfilePage />} />
         <Route path="/customer/chat" element={<ChatPage />} />
         {/*TESTING EXAMPLE FOR GOOGLE MAP*/}
         <Route
