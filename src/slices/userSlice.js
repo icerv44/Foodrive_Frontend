@@ -23,6 +23,7 @@ const userSlice = createSlice({
       latitude: null,
       longitude: null,
       role: "",
+      driverStatus: "OFFLINE", // or "ONLINE"
     },
     isLoading: "",
     error: "",
@@ -32,16 +33,22 @@ const userSlice = createSlice({
       state.info.latitude = action.payload.latitude;
       state.info.longitude = action.payload.longitude;
     },
+    setDriverStatus: (state, action) => {
+      state.info.driverStatus = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
       .addCase(fetchUser.pending, (state, action) => {
-        console.log(action);
         state.isLoading = true;
         state.error = "";
       })
       .addCase(fetchUser.fulfilled, (state, action) => {
-        state.info = { ...state.info, ...action.payload };
+        const { latitude: lat, longitude: lng, ...rest } = action.payload;
+        state.info = {
+          ...state.info,
+          ...rest,
+        };
         state.isLoading = false;
         state.error = false;
       })
@@ -54,6 +61,6 @@ const userSlice = createSlice({
 
 export { fetchUser };
 
-export const { setPosition } = userSlice.actions;
+export const { setPosition, setDriverStatus } = userSlice.actions;
 
 export default userSlice.reducer;

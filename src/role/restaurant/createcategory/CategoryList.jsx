@@ -10,7 +10,7 @@ function CategoryList({ categoryName }) {
         px: "20px",
       }}
     >
-      <Typography>eieiei {categoryName}</Typography>
+      <Typography>{categoryName}</Typography>
       <Box
         sx={{
           display: "flex",
