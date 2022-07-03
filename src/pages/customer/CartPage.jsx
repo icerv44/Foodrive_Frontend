@@ -4,47 +4,24 @@ import ButtonBackNew from "../../components/button/ButtonBackNew";
 import CardCartRes from "../../components/card/CardCartRes";
 import { useCustomer } from "../../contexts/CustomerContext";
 import { Link, useLocation } from "react-router-dom";
-import { CarCrashTwoTone } from "@mui/icons-material";
 
 function CartPage() {
-  const { resCarts, getAllRestaurantsCart } = useCustomer();
+  const { allCart, getAllCart, getAllRestaurantsCart } = useCustomer();
   const { pathname } = useLocation();
 
   useEffect(() => {
     try {
-      const fetchRestaurantCart = async () => {
-        await getAllRestaurantsCart();
+      const fetchCarts = async () => {
+        await getAllCart();
       };
-      fetchRestaurantCart();
+      fetchCarts();
     } catch (err) {
       console.log(err);
     }
   }, [pathname]);
 
-  console.log("resCarts", resCarts);
+  console.log("allCart", allCart);
 
-  // useEffect(() => {
-  //   try {
-  //     const fetchCarts = async () => {
-  //       await getAllCart();
-  //     };
-  //     fetchCarts();
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // }, [pathname]);
-
-  // const uniqueRestaurant = (array) => {
-  //   if (array) {
-  //     const restaurantId = array.map((order) => order.restaurantId);
-  //     const uniqueRes = restaurantId.filter(
-  //       (value, index, self) => self.indexOf(value) === index
-  //     );
-  //     return uniqueRes;
-  //   }
-  // };
-
-  // const restaurantsId = uniqueRestaurant([carts]);
   return (
     <Box className="flex flex-col ">
       <Box
@@ -58,10 +35,16 @@ function CartPage() {
       </Box>
 
       <Box className="flex flex-col items-center gap-5">
-        {resCarts?.map((el) => (
-          <Link key={el.id} to={"/customer/cart/" + 1}>
-            <CardCartRes name={el.name} image={el.image} />
-          </Link>
+        {allCart?.map((el, idx) => (
+          <Box key={idx}>
+            <Link to={"/customer/cart/" + el.id}>
+              <CardCartRes
+                name={el.Restaurant.name}
+                image={el.Restaurant.image}
+                id={el.id}
+              />
+            </Link>
+          </Box>
         ))}
       </Box>
     </Box>

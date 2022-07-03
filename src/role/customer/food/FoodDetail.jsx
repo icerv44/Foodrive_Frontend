@@ -7,22 +7,35 @@ import IconButton from "@mui/joy/IconButton";
 import { useCustomer } from "../../../contexts/CustomerContext";
 
 function FoodDetail() {
-  const { menu, addToCart, setAddToCart, createCart } = useCustomer();
+  const {
+    menu,
+    resCarts,
+    addToCart,
+    setAddToCart,
+    createCart,
+    appendCart,
+    getAllRestaurantsCart,
+  } = useCustomer();
   const [count, setCount] = useState(1);
   const [menuOptionGroup, setMenuOptionGroup] = useState([]);
   const [menuOption, setMenuOption] = useState([]);
   const [total, setTotal] = useState(0);
 
   const restaurantId = menu?.restaurantId;
-  console.log("menuById", menu);
 
-  const keys = menuOptionGroup.map((e) => {
-    // setMenuOption({ test: e.name });
-    return e.name;
-    // setMenuOption(element=> {...element, })
-  });
+  // fetchAllCarts
+  useEffect(() => {
+    try {
+      const fetchAllCarts = async () => {
+        await getAllRestaurantsCart();
+      };
+      fetchAllCarts();
+    } catch (err) {
+      console.log(err);
+    }
+  }, []);
 
-  // Menu option groups clone from  api
+  // clone menu option groups
   useEffect(() => {
     const defaultOptionArr = [];
     const myMenuOptionGroup = menu?.MenuOptionGroups.reduce((a, c) => {
@@ -35,7 +48,6 @@ function FoodDetail() {
       };
       a.push(currentMenuOptionGroup);
 
-      // ////////////
       const defaultObjectOption = {};
       defaultObjectOption.id = c.id;
       defaultObjectOption.options = [{ id: c.MenuOptions[0].id }];
@@ -45,6 +57,11 @@ function FoodDetail() {
     setMenuOptionGroup(myMenuOptionGroup);
     setMenuOption(defaultOptionArr);
   }, []);
+
+  const checkCarts = (id, data) => {
+    const res = data.find((obj) => obj.id === id);
+    return res;
+  };
 
   const handleOptionChange = (e, parentid) => {
     //  1. Clone old menu
@@ -87,10 +104,21 @@ function FoodDetail() {
     const newCart = [...addToCart, newOrder];
     setAddToCart(newCart);
 
-    await createCart({
-      restaurantId,
-      menus: addToCart,
-    });
+    const test = checkCarts(restaurantId, resCarts);
+    console.log(test);
+
+    if (checkCarts(restaurantId, resCarts)) {
+      const cartId = checkCarts(restaurantId, resCarts).cart.id;
+      console.log("addToCart", addToCart);
+      await appendCart(cartId, addToCart);
+      console.log("addMenu");
+    } else {
+      console.log("createNewCart");
+      await createCart({
+        restaurantId,
+        menus: addToCart,
+      });
+    }
   };
 
   const handleClickIncreaseAmount = () => {

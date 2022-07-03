@@ -15,7 +15,8 @@ function OrderBot() {
         background:
           "linear-gradient(98.81deg, #53E88B -0.82%, #15BE77 101.53%)",
         mx: "auto",
-        my: "10px",
+        mt: "10px",
+        mb: "100px",
         borderRadius: "20px",
         boxShadow: "12px 26px 50px rgba(90, 108, 234, 0.07)",
         color: "white",

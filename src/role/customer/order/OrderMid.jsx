@@ -5,15 +5,18 @@ import CardOrder from "./CardOrder";
 
 function OrderMid() {
   const { carts } = useCustomer();
-  // console.log(carts);
-  // console.log(carts.cartItems.cart);
-
+  console.log("carts", carts);
   const items = carts?.cartItems?.cart;
+  console.log("items", items);
 
-  console.log("items", carts?.cartItems);
+  const getRestaurantFromId = (data) => {
+    const res = data?.find((obj) => obj === obj);
+    console.log(res);
+  };
+  getRestaurantFromId(items);
 
   return (
-    <Box className="mx-5">
+    <Box className="mx-5 ">
       <Typography sx={{ my: "20px", fontWeight: "700", fontSize: "25px" }}>
         Result Order
       </Typography>
@@ -29,9 +32,13 @@ function OrderMid() {
       >
         {items?.map((el, idx) => (
           <Box key={idx}>
-            <Link to={"/customer/menuDetail/" + el.id}>
-              <CardOrder src={el.image} price={el.price} foodName={el.name} />
-            </Link>
+            <CardOrder
+              id={el.id}
+              src={el.image}
+              price={el.price}
+              foodName={el.name}
+              orderMenuOptionGroups={el.OrderMenuOptionGroups}
+            />
           </Box>
         ))}
       </Box>

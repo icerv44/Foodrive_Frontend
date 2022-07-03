@@ -13,6 +13,7 @@ function LoginBot() {
   const role = pathname.split("/")[1];
 
   const onClick = async () => {
+    console.log(role);
     const res = await dispatch(login({ role }));
     console.log(res);
     if (res?.error?.message !== "Rejected") {

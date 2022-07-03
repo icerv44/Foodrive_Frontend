@@ -5,7 +5,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useCustomer } from "../../contexts/CustomerContext";
 
-function CardCartRes({ image, name }) {
+function CardCartRes({ image, name, id }) {
   return (
     <Card
       variant="outlined"

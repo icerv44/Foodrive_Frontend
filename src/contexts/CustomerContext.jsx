@@ -16,6 +16,7 @@ export function CustomerContextProvider({ children }) {
   const [carts, setCarts] = useState([]);
   const [resCarts, setResCarts] = useState([]);
   const [cart, setCart] = useState([]);
+  const [allCart, setAllCart] = useState([]);
   const [addToCart, setAddToCart] = useState([]);
   const [foodOption, setFoodOption] = useState([]);
 
@@ -66,7 +67,7 @@ export function CustomerContextProvider({ children }) {
   const getAllCart = async () => {
     try {
       const res = await axios.get("/customer/carts");
-      setCarts(res.data.carts);
+      setAllCart(res.data.carts);
     } catch (err) {
       console.log(err);
     }
@@ -101,9 +102,18 @@ export function CustomerContextProvider({ children }) {
     }
   };
 
-  const appendCart = async (cartId) => {
+  const appendCart = async (cartId, menus) => {
     try {
-      const res = await axios.post(`/customer/cart/${cartId}/append-menu`);
+      await axios.post(`/customer/cart/${cartId}/append-menu`, { menus });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const deleteMenu = async (orderMenuId) => {
+    try {
+      console.log("orderMenuId", orderMenuId);
+      await axios.delete("/customer/deleteMenu/" + orderMenuId);
     } catch (err) {
       console.log(err);
     }
@@ -121,6 +131,8 @@ export function CustomerContextProvider({ children }) {
         menu,
         cart,
         carts,
+        allCart,
+        setAllCart,
         addToCart,
         setAddToCart,
         resCarts,
@@ -135,6 +147,7 @@ export function CustomerContextProvider({ children }) {
         getCartById,
         createCart,
         appendCart,
+        deleteMenu,
         setCart,
       }}
     >
