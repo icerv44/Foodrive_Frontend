@@ -9,7 +9,7 @@ function HomePageDriver() {
   return (
     <>
       {/* GOOGLE MAP */}
-      <Box sx={{}}>
+      <Box>
         <GoogleMapDriverLoader />
       </Box>
     </>

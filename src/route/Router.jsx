@@ -28,6 +28,7 @@ import RestaurantContainer from "../role/restaurant/container/RestaurantContaine
 import CreateFood from "../pages/restaurant/CreateFood";
 import DetailFoodPage from "../pages/customer/DetailFoodPage";
 import { useLoading } from "../contexts/LoadingContext";
+import { useError } from "../contexts/ErrorContext";
 import Spinner from "../components/ui/Spinner";
 import GoogleMapTestPage from "../components/GoogleMapTestPage";
 import CartPage from "../pages/customer/CartPage";
@@ -38,11 +39,13 @@ import CheckDeliveryOrder from "../pages/restaurant/CheckDeliveryOrder";
 import ResDeliveryStatus from "../pages/restaurant/ResDeliveryStatus";
 import ProfilePage from "../pages/ProfilePage";
 import MenuOrderPage from "../role/customer/order/MenuOrderPage";
+import ToastError from "../components/ui/ToastError";
 
 function Router() {
   const dispatch = useDispatch();
   const token = getAccessToken();
   const { loading } = useLoading();
+  const { error } = useError();
 
   const { pathname } = useLocation();
   const role = pathname.split("/")[1];
@@ -64,7 +67,7 @@ function Router() {
   return (
     <>
       {loading && <Spinner />}
-
+      {error && <ToastError>{error}</ToastError>}
       {/* CUSTOMER */}
       <Routes>
         <Route path="/customer/register" element={<RegisterPage />} />
