@@ -88,11 +88,13 @@ function SignupMid() {
           value={email}
         />
         <InputLogin
+          type="password"
           placeholder="Password"
           onChange={handlePasswordChange}
           value={password}
         />
         <InputLogin
+          type="password"
           placeholder="Confirm Password"
           onChange={handleConfirmPasswordChange}
           value={confirmPassword}

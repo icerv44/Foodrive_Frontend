@@ -1,7 +1,16 @@
 import { Box, Typography } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 import ButtonWhite from "../../../components/button/ButtonWhite";
+import { useCustomer } from "../../../contexts/CustomerContext";
 
 function OrderBot() {
+  const { cart, getTotalFromCart } = useCustomer();
+  const navigate = useNavigate();
+
+  const handleNavPayment = () => {
+    navigate("/customer/payment");
+  };
+
   return (
     <Box
       sx={{
@@ -41,7 +50,7 @@ function OrderBot() {
             width: "100%",
           }}
         >
-          <Typography sx={{ fontWeight: "700" }}>Total Price</Typography>
+          {/* <Typography sx={{ fontWeight: "700" }}>Total Price</Typography>
           <Typography sx={{ fontWeight: "700" }}>999฿</Typography>
         </Box>
         <Box
@@ -54,7 +63,7 @@ function OrderBot() {
           }}
         >
           <Typography sx={{ fontWeight: "700" }}>Delivery fee</Typography>
-          <Typography sx={{ fontWeight: "700" }}>10฿</Typography>
+          <Typography sx={{ fontWeight: "700" }}>10฿</Typography> */}
         </Box>
       </Box>
       <Box
@@ -79,12 +88,16 @@ function OrderBot() {
             Total Price
           </Typography>
           <Typography sx={{ fontWeight: "700", fontSize: "20px" }}>
-            1000฿
+            {cart?.cartItems && getTotalFromCart(cart?.cartItems?.cart) + "฿"}
           </Typography>
         </Box>
       </Box>
       <Box sx={{ marginTop: "12px" }}>
-        <ButtonWhite title="Order Now" width="325px" />
+        <ButtonWhite
+          title="Order Now"
+          width="325px"
+          onClick={handleNavPayment}
+        />
       </Box>
     </Box>
   );

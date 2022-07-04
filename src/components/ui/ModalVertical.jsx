@@ -1,24 +1,31 @@
-import { useState } from "react";
+import React, { useState } from "react";
+import { Box, Button } from "@mui/joy";
+import { Dialog } from "@mui/material";
+import { Chip } from "@mui/joy";
 import Modal from "react-modal";
-import { MdDeleteForever } from "react-icons/md";
 
-// Modal.setAppElement("#ใส่ไอดีของโมดัลอันนี้ในหน้าที่เอาไปใช้");
-// Import Modal ไปในไฟล์ที่จะใช้ด้วย
-
-function ModalForDelete({ ref, itemName }) {
+function ModalVertical({ ref, children, onAction, btnName, title, content }) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <>
-      {/* BUTTON FOR OPEN */}
-      <button
-        className="bg-[#f9a94d22] p-2 rounded-xl border border-red-700"
-        ref={ref}
-        onClick={() => setIsOpen(true)}
-      >
-        <MdDeleteForever className="font-semibold text-red-700 text-2xl" />
+    <div>
+      <button ref={ref} onClick={() => setIsOpen(true)}>
+        <Chip
+          variant="outlined"
+          color="danger"
+          sx={{
+            px: 0.2,
+            writingMode: "vertical-rl",
+            textAlign: "center",
+            fontSize: "xs2",
+            fontWeight: "xl2",
+            letterSpacing: "1px",
+            textTransform: "uppercase",
+          }}
+        >
+          {children}
+        </Chip>
       </button>
-
       <Modal
         style={{
           overlay: { backgroundColor: "rgba(0,0,0,0.5)" },
@@ -29,23 +36,21 @@ function ModalForDelete({ ref, itemName }) {
             top: "33%",
           },
         }}
-        id="root"
+        id={"root"}
         isOpen={isOpen}
         onRequestClose={() => setIsOpen(false)}
       >
         {/* MODAL CONTENT */}
         <div>
-          <div className="px-2 text-2xl font-bold mb-4">Delete {itemName}</div>
+          <div className="px-2 text-2xl font-bold mb-4">{title}</div>
           <form
             onSubmit={(e) => e.preventDefault()}
             className="flex flex-col gap-6"
           >
             <div>
-              <div className="text-[#3B3B3B] opacity-[0.3] m-2">
-                This item will be delete
-              </div>
+              <div className="text-[#666464] m-2">{content}</div>
             </div>
-            {/* Confirm Button */}
+
             <div className="flex items-center justify-around gap-4 font-bold">
               <button
                 onClick={() => setIsOpen(false)}
@@ -53,15 +58,19 @@ function ModalForDelete({ ref, itemName }) {
               >
                 Cancel
               </button>
-              <button className="bg-[#DA6317] text-white rounded-xl p-3 w-full">
-                Delete
+
+              <button
+                onClick={onAction}
+                className="bg-[#DA6317] text-white rounded-xl p-3 w-full"
+              >
+                {btnName}
               </button>
             </div>
           </form>
         </div>
       </Modal>
-    </>
+    </div>
   );
 }
 
-export default ModalForDelete;
+export default ModalVertical;
