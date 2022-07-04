@@ -1,4 +1,10 @@
-import { Route, Routes, useLocation } from "react-router-dom";
+import {
+  Navigate,
+  Route,
+  Routes,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
 import AddressSelectPage from "../pages/customer/AddressSelectPage";
 import LoginPage from "../pages/LoginPage";
 import PaymentPage from "../pages/customer/PaymentPage";
@@ -10,7 +16,7 @@ import OrderPage from "../pages/customer/OrderPage";
 import ShopMenuPage from "../pages/customer/ShopMenuPage";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getAccessToken } from "../services/localstorage";
+import { getAccessToken, removeToken } from "../services/localstorage";
 import { fetchUser, setPosition } from "../slices/userSlice";
 import HomePageDriver from "../pages/driver/HomePageDriver";
 import DriverIncome from "../role/driver/home/DriverIncome";
@@ -42,7 +48,7 @@ import axios from "../config/axios";
 import GoogleMapDriverLoader from "../components/common/googleMapDriver/GoogleMapDriverLoader";
 import { io } from "socket.io-client";
 import { useSocket } from "../contexts/SocketContext";
-// import { SOCKET_ENDPOINT_URL } from "../config/env";
+import { SOCKET_ENDPOINT_URL } from "../config/env";
 import MenuOrderPage from "../role/customer/order/MenuOrderPage";
 import CategoryFoodPage from "../pages/restaurant/CategoryFoodPage";
 import ToastError from "../components/ui/ToastError";
@@ -60,6 +66,7 @@ function Router() {
     (state) => state.user.isLoading
   );
   const socketCtx = useSocket();
+  const navigate = useNavigate();
   const { setSocket, socket } = socketCtx;
   const { loading } = useLoading();
   const { error } = useError();
@@ -76,6 +83,11 @@ function Router() {
       if (token) {
         if (!role) return;
         const res = await dispatch(fetchUser({ role }));
+        console.log(res);
+        if (res.error) {
+          removeToken();
+          navigate("/customer/login");
+        }
         const newSocket = io(SOCKET_ENDPOINT_URL);
         setSocket(newSocket);
       }
@@ -94,9 +106,27 @@ function Router() {
         alert(message);
       });
     }
+    if (userInfo.role === "driver") {
+      socket?.on("incomingOrder", ({ message }) => {
+        alert(message);
+      });
+    }
   }, [socket]);
 
   useEffect(() => {
+    const pathNamesToNotTrack = [
+      "/driver/login",
+      "/driver/register",
+      "/customer/login",
+      "/customer/register",
+      "/restaurant/login",
+      "/restaurant/register",
+    ];
+
+    if (pathNamesToNotTrack.includes(pathname)) return;
+
+    console.log(pathname);
+
     getCurrentPosition().then((res) => {
       dispatch(
         setPosition({ latitude: res.latitude, longitude: res.longitude })
@@ -132,6 +162,83 @@ function Router() {
     };
   }, [driverStatus]);
 
+  const customerRoutes = (
+    <>
+      <Route path="/customer/register" element={<RegisterPage />} />
+      <Route path="/customer/login" element={<LoginPage />} />
+      <Route path="/customer" element={<CustomerPage />}>
+        <Route path="" element={<HomePage />} />
+        <Route path="restaurant/:restaurantId" element={<RestaurantPage />} />
+        <Route path="shop/:restaurantId" element={<ShopMenuPage />} />
+        <Route path="menuDetail/:menuId" element={<DetailFoodPage />} />
+        <Route path="cart" element={<CartContainer />}>
+          <Route path="" element={<CartPage />} />
+          <Route path=":cartId" element={<OrderPage />} />
+          <Route path="menuOrder/:menuOrderId" element={<MenuOrderPage />} />
+        </Route>
+        <Route path="payment" element={<PaymentPage />} />
+        <Route path="myLocation" element={<AddressSelectPage />} />
+      </Route>
+      <Route path="/customer/profile" element={<AccountPage />} />
+      <Route path="/customer/editProfile" element={<ProfilePage />} />
+      <Route path="/customer/chat" element={<ChatPage />} />
+      {/*TESTING EXAMPLE FOR GOOGLE MAP*/}
+      <Route
+        path="/customer/google-map-example"
+        element={<GoogleMapTestPage />}
+      />
+      <Route path="*" element={<Navigate to="/customer/" />} />
+    </>
+  );
+
+  const restaurantRoutes = (
+    <>
+      <Route path="/restaurant/register" element={<RegisterPage />} />
+      <Route path="/restaurant/login" element={<LoginPage />} />
+      <Route path="/restaurant" element={<RestaurantContainer />}>
+        <Route path="category" element={<CreateCategory />} />
+        <Route path="checkorder" element={<CheckDeliveryOrder />} />
+        <Route path="checkorder/:id" element={<ResDeliveryStatus />} />
+      </Route>
+      <Route path="/restaurant/profile" element={<AccountPage />} />
+      <Route path="/restaurant/editProfile" element={<ProfilePage />} />
+      <Route path="restaurant/food" element={<CreateFood />} />
+      <Route path="restaurant/food/option" element={<CreateFoodOption />} />
+      <Route path="restaurant/category/:id" element={<CategoryFoodPage />} />
+      <Route path="*" element={<Navigate to="/restaurant/" />} />
+    </>
+  );
+
+  const driverRoutes = (
+    <>
+      <Route path="driver/" element={<HomeContainerDriver />}>
+        <Route path="" element={<HomePageDriver />} />
+      </Route>
+      <Route path="/driver/delivery" element={<DeliveryContainer />}>
+        <Route path="" element={<DeliveryPage />} />
+        <Route path="confirmOrder" element={<ConfirmOrderPage />} />
+      </Route>
+      <Route path="/driver/profile" element={<AccountPage />} />
+      <Route path="/driver/editProfile" element={<ProfilePage />} />
+      <Route path="/driver/orderSummary" element={<OrderSummary />} />
+      <Route path="/driver/completed" element={<DeliveryCompleted />} />
+      <Route path="/driver/orderRequest" element={<OrderRequestPage />} />
+      <Route path="*" element={<Navigate to="/driver/" />} />
+    </>
+  );
+
+  const commonRoutes = (
+    <>
+      <Route path="/customer/register" element={<RegisterPage />} />
+      <Route path="/customer/login" element={<LoginPage />} />
+      <Route path="/restaurant/register" element={<RegisterPage />} />
+      <Route path="/restaurant/login" element={<LoginPage />} />
+      <Route path="/driver/register" element={<RegisterPage />} />
+      <Route path="/driver/login" element={<LoginPage />} />
+      <Route path="*" element={<Navigate to="/customer/login" />} />
+    </>
+  );
+
   return (
     <>
       {(loading || userLoading) && <Spinner />}
@@ -139,63 +246,17 @@ function Router() {
       {error && <ToastError>{error}</ToastError>}
       {/* CUSTOMER */}
       <Routes>
-        <Route path="/customer/register" element={<RegisterPage />} />
-        <Route path="/customer/login" element={<LoginPage />} />
-        <Route path="/customer" element={<CustomerPage />}>
-          <Route path="" element={<HomePage />} />
-          <Route path="restaurant/:restaurantId" element={<RestaurantPage />} />
-          <Route path="shop/:restaurantId" element={<ShopMenuPage />} />
-          <Route path="menuDetail/:menuId" element={<DetailFoodPage />} />
-          <Route path="cart" element={<CartContainer />}>
-            <Route path="" element={<CartPage />} />
-            <Route path=":cartId" element={<OrderPage />} />
-            <Route path="menuOrder/:menuOrderId" element={<MenuOrderPage />} />
-          </Route>
-          <Route path="payment" element={<PaymentPage />} />
-          <Route path="myLocation" element={<AddressSelectPage />} />
-        </Route>
-        <Route path="/customer/profile" element={<AccountPage />} />
-        <Route path="/customer/editProfile" element={<ProfilePage />} />
-        <Route path="/customer/chat" element={<ChatPage />} />
-        {/*TESTING EXAMPLE FOR GOOGLE MAP*/}
-        <Route
-          path="/customer/google-map-example"
-          element={<GoogleMapTestPage />}
-        />
-
-        {/* DRIVER */}
-        <Route path="/driver/login" element={<LoginPage />} />
-        <Route path="/driver/register" element={<RegisterPage />} />
-        <Route path="/driver" element={<HomeContainerDriver />}>
-          <Route path="" element={<HomePageDriver />} />
-        </Route>
-        <Route path="/driver/income" element={<DriverIncome />} />
-        <Route path="/driver/profile" element={<AccountPage />} />
-        <Route path="/driver/editProfile" element={<ProfilePage />} />
-        <Route path="/driver/orderRequest" element={<OrderRequestPage />} />
-
-        {/*   DRIVER - delivery */}
-
-        <Route path="/driver/delivery" element={<DeliveryContainer />}>
-          <Route path="" element={<DeliveryPage />} />
-          <Route path="confirmOrder" element={<ConfirmOrderPage />} />
-        </Route>
-        <Route path="/driver/orderSummary" element={<OrderSummary />} />
-        <Route path="/driver/completed" element={<DeliveryCompleted />} />
-
-        {/* RESTAURANT */}
-        <Route path="/restaurant/register" element={<RegisterPage />} />
-        <Route path="/restaurant/login" element={<LoginPage />} />
-        <Route path="/restaurant" element={<RestaurantContainer />}>
-          {/* <Route path="profile" element={<AccountPage />} /> */}
-          <Route path="editProfile" element={<ProfilePage />} />
-          <Route path="category" element={<CreateCategory />} />
-          <Route path="checkorder" element={<CheckDeliveryOrder />} />
-          <Route path="checkorder/:id" element={<ResDeliveryStatus />} />
-        </Route>
-        <Route path="restaurant/food" element={<CreateFood />} />
-        <Route path="restaurant/food/option" element={<CreateFoodOption />} />
-        <Route path="restaurant/category/:id" element={<CategoryFoodPage />} />
+        {role === "restaurant" && email ? (
+          restaurantRoutes
+        ) : role === "customer" && email ? (
+          customerRoutes
+        ) : role === "driver" && email ? (
+          driverRoutes
+        ) : token ? (
+          <Route path="*" element={<Spinner />} />
+        ) : (
+          commonRoutes
+        )}
       </Routes>
     </>
   );
