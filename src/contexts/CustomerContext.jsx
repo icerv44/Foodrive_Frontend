@@ -47,6 +47,7 @@ export function CustomerContextProvider({ children }) {
       }
     } catch (err) {
       console.log(err);
+      setError(err.response.data.message);
     } finally {
       setLoading(false);
     }
@@ -59,6 +60,7 @@ export function CustomerContextProvider({ children }) {
       setMenu(res.data.menu);
     } catch (err) {
       console.log(err);
+      setError(err.response.data.message);
     } finally {
       setLoading(false);
     }
@@ -70,6 +72,7 @@ export function CustomerContextProvider({ children }) {
       setAllCart(res.data.carts);
     } catch (err) {
       console.log(err);
+      setError(err.response.data.message);
     }
   };
 
@@ -79,6 +82,7 @@ export function CustomerContextProvider({ children }) {
       setResCarts(res.data.restaurants);
     } catch (err) {
       console.log(err);
+      setError(err.response.data.message);
     }
   };
 
@@ -88,6 +92,7 @@ export function CustomerContextProvider({ children }) {
       setCarts(res.data);
     } catch (err) {
       console.log(err);
+      setError(err.response.data.message);
     }
   };
 
@@ -100,6 +105,7 @@ export function CustomerContextProvider({ children }) {
       return res.data;
     } catch (err) {
       console.log(err);
+      setError(err.response.data.message);
     }
   };
 
@@ -111,6 +117,7 @@ export function CustomerContextProvider({ children }) {
       return res.data;
     } catch (err) {
       console.log(err);
+      setError(err.response.data.message);
     }
   };
 
@@ -120,6 +127,7 @@ export function CustomerContextProvider({ children }) {
       await axios.delete("/customer/deleteMenu/" + orderMenuId);
     } catch (err) {
       console.log(err);
+      setError(err.response.data.message);
     }
   };
 

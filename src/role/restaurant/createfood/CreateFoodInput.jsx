@@ -22,6 +22,7 @@ function CreateFoodInput() {
     setFoodPrice,
     foodCategory,
     setFoodCategory,
+    categoryData,
   } = useRestaurant();
 
   const inputFileRef = useRef(null);
@@ -102,12 +103,16 @@ function CreateFoodInput() {
             mb: "16px",
           }}
         >
-          <input
-            value={foodCategory}
+          <select
             onChange={(e) => setFoodCategory(e.target.value)}
-            type="text"
             className="rounded-xl w-full py-2 px-3 border border-teal-200"
-          />
+          >
+            {categoryData.map((el, idx) => (
+              <option key={idx} value={el.name}>
+                {el.name}
+              </option>
+            ))}
+          </select>
         </Box>
       </Box>
       <Box className="flex flex-col gap-4">
