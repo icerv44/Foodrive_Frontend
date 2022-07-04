@@ -39,10 +39,9 @@ import CheckDeliveryOrder from "../pages/restaurant/CheckDeliveryOrder";
 import ResDeliveryStatus from "../pages/restaurant/ResDeliveryStatus";
 import ProfilePage from "../pages/ProfilePage";
 import axios from "../config/axios";
-import GoogleMapDriverLoader from "../components/common/googleMapDriver/GoogleMapDriverLoader";
 import { io } from "socket.io-client";
 import { useSocket } from "../contexts/SocketContext";
-// import { SOCKET_ENDPOINT_URL } from "../config/env";
+import { SOCKET_ENDPOINT_URL } from "../config/env";
 import MenuOrderPage from "../role/customer/order/MenuOrderPage";
 import CategoryFoodPage from "../pages/restaurant/CategoryFoodPage";
 import ToastError from "../components/ui/ToastError";
@@ -68,13 +67,13 @@ function Router() {
   const token = getAccessToken();
 
   const role = pathname.split("/")[1];
+  const userRole = userInfo.role;
 
   useEffect(() => {
     const getUser = async () => {
       if (token) {
         if (!role) return;
         const res = await dispatch(fetchUser({ role }));
-        console.log(res);
         const newSocket = io(SOCKET_ENDPOINT_URL);
         setSocket(newSocket);
       }
@@ -84,7 +83,6 @@ function Router() {
   //socket setup
   useEffect(() => {
     if (!socket) return;
-    console.log(socket);
     socket?.emit("newUser", {
       role: userInfo.role,
       info: userInfo,

@@ -12,6 +12,7 @@ function OrderPage() {
 
   useEffect(() => {
     try {
+      console.log(cartId);
       const fetchCart = async () => {
         await getCartById(cartId);
       };
