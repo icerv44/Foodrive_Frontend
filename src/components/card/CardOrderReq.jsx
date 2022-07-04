@@ -1,3 +1,4 @@
+import { async } from "@firebase/util";
 import { Box, Typography } from "@mui/joy";
 import Card from "@mui/joy/Card";
 import { CardContent } from "@mui/material";
@@ -68,7 +69,7 @@ function CardOrderReq({ restaurantName, distance, orderList, driverIncome }) {
                     className=" text-20 font-bold flex justify-start "
                     fontSize={14}
                   >
-                    {el.menuTitle} x {el.pieces}
+                    {el.name} x {}
                   </Typography>
                 </Box>
               );

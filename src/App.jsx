@@ -4,7 +4,7 @@ import { CssVarsProvider } from "@mui/joy/styles";
 import { DeliveryContextProvider } from "./contexts/DeliveryContext";
 import { CustomerContextProvider } from "./contexts/CustomerContext";
 import { LoadingContextProvider } from "./contexts/LoadingContext";
-import { StyledEngineProvider } from "@mui/styled-engine-sc";
+//import { StyledEngineProvider } from "@mui/styled-engine-sc";
 import { ErrorContextProvider } from "./contexts/ErrorContext";
 import { SuccessContextProvider } from "./contexts/SuccessContext";
 import GoogleMapDriverLoader from "./components/common/googleMapDriver/GoogleMapDriverLoader";
@@ -46,23 +46,23 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <SocketContextProvider>
-        <StyledEngineProvider injectFirst>
-          <CssVarsProvider>
-            <ErrorContextProvider>
-              <SuccessContextProvider>
-                <LoadingContextProvider>
-                  <CustomerContextProvider>
-                    <DeliveryContextProvider>
-                      <CustomerAddressContextProvider>
-                        <Router />
-                      </CustomerAddressContextProvider>
-                    </DeliveryContextProvider>
-                  </CustomerContextProvider>
-                </LoadingContextProvider>
-              </SuccessContextProvider>
-            </ErrorContextProvider>
-          </CssVarsProvider>
-        </StyledEngineProvider>
+        {/* <StyledEngineProvider injectFirst> */}
+        <CssVarsProvider>
+          <ErrorContextProvider>
+            <SuccessContextProvider>
+              <LoadingContextProvider>
+                <CustomerContextProvider>
+                  <DeliveryContextProvider>
+                    <CustomerAddressContextProvider>
+                      <Router />
+                    </CustomerAddressContextProvider>
+                  </DeliveryContextProvider>
+                </CustomerContextProvider>
+              </LoadingContextProvider>
+            </SuccessContextProvider>
+          </ErrorContextProvider>
+        </CssVarsProvider>
+        {/* </StyledEngineProvider> */}
       </SocketContextProvider>
     </ThemeProvider>
   );
