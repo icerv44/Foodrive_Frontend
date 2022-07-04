@@ -7,10 +7,15 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import ButtonBackNew from "../components/button/ButtonBackNew";
 import ButtonBack from "../components/button/ButtonBack";
 import CardProfile from "../components/card/CardProfile";
+import { useDispatch } from "react-redux";
+import { clearUserInfo } from "../slices/userSlice";
+import { useSocket } from "../contexts/SocketContext";
 
 function AccountPage() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { pathname } = useLocation();
+  const { socket, setSocket } = useSocket();
   const role = pathname.split("/")[1];
 
   const profileList = [
@@ -25,6 +30,12 @@ function AccountPage() {
       role: "driver",
       menu: [{ title: "Edit my profile", to: "/driver/editProfile" }],
     },
+    {
+      role: "restaurant",
+      menu: [
+        { title: "Edit restaurant profile", to: "/restaurant/editProfile" },
+      ],
+    },
   ];
 
   const findRole = () => profileList.find((el) => el.role === role);
@@ -32,6 +43,9 @@ function AccountPage() {
 
   const handleLogout = () => {
     removeToken();
+    dispatch(clearUserInfo());
+    socket?.emit("forceDisconnect");
+    setSocket(null);
     navigate("/customer/login");
   };
 
