@@ -6,6 +6,7 @@ import { CustomerContextProvider } from "./contexts/CustomerContext";
 import { LoadingContextProvider } from "./contexts/LoadingContext";
 import { StyledEngineProvider } from "@mui/styled-engine-sc";
 import { ErrorContextProvider } from "./contexts/ErrorContext";
+import { SuccessContextProvider } from "./contexts/SuccessContext";
 import GoogleMapDriverLoader from "./components/common/googleMapDriver/GoogleMapDriverLoader";
 import { SocketContextProvider } from "./contexts/SocketContext";
 import { CustomerAddressContextProvider } from "./contexts/CustomerAddressContext.jsx";
@@ -48,15 +49,17 @@ function App() {
         <StyledEngineProvider injectFirst>
           <CssVarsProvider>
             <ErrorContextProvider>
-              <LoadingContextProvider>
-                <CustomerContextProvider>
-                  <DeliveryContextProvider>
-                    <CustomerAddressContextProvider>
-                      <Router />
-                    </CustomerAddressContextProvider>
-                  </DeliveryContextProvider>
-                </CustomerContextProvider>
-              </LoadingContextProvider>
+              <SuccessContextProvider>
+                <LoadingContextProvider>
+                  <CustomerContextProvider>
+                    <DeliveryContextProvider>
+                      <CustomerAddressContextProvider>
+                        <Router />
+                      </CustomerAddressContextProvider>
+                    </DeliveryContextProvider>
+                  </CustomerContextProvider>
+                </LoadingContextProvider>
+              </SuccessContextProvider>
             </ErrorContextProvider>
           </CssVarsProvider>
         </StyledEngineProvider>

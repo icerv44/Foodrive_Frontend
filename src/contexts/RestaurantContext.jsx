@@ -37,6 +37,7 @@ function RestaurantContextProvider({ children }) {
   const handleDeleteCategory = async (categoryId) => {
     try {
       await axios.delete("restaurant/deleteCategory/" + categoryId);
+      fetchCategory();
     } catch (error) {
       console.log(error);
     }

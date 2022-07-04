@@ -28,11 +28,12 @@ import RestaurantContainer from "../role/restaurant/container/RestaurantContaine
 import CreateFood from "../pages/restaurant/CreateFood";
 import DetailFoodPage from "../pages/customer/DetailFoodPage";
 import { useLoading } from "../contexts/LoadingContext";
+import { useError } from "../contexts/ErrorContext";
 import Spinner from "../components/ui/Spinner";
 import GoogleMapTestPage from "../components/GoogleMapTestPage";
 import CartPage from "../pages/customer/CartPage";
 import CartContainer from "../role/customer/order/CartContainer";
-import CustomerProfilePage from "../pages/customer/CustomerProfilePage";
+import AccountPage from "../pages/AccountPage";
 import CreateFoodOption from "../pages/restaurant/CreateFoodOption";
 import CheckDeliveryOrder from "../pages/restaurant/CheckDeliveryOrder";
 import ResDeliveryStatus from "../pages/restaurant/ResDeliveryStatus";
@@ -41,8 +42,12 @@ import axios from "../config/axios";
 import GoogleMapDriverLoader from "../components/common/googleMapDriver/GoogleMapDriverLoader";
 import { io } from "socket.io-client";
 import { useSocket } from "../contexts/SocketContext";
-import { SOCKET_ENDPOINT_URL } from "../config/env";
+// import { SOCKET_ENDPOINT_URL } from "../config/env";
 import MenuOrderPage from "../role/customer/order/MenuOrderPage";
+import CategoryFoodPage from "../pages/restaurant/CategoryFoodPage";
+import ToastError from "../components/ui/ToastError";
+import ToastSuccess from "../components/ui/ToastSuccess";
+import { useSuccess } from "../contexts/SuccessContext";
 
 function Router() {
   const dispatch = useDispatch();
@@ -51,9 +56,15 @@ function Router() {
     (state) => state.user.info
   );
   const userInfo = useSelector((state) => state.user.info);
+  const { isLoading: userLoading } = useSelector(
+    (state) => state.user.isLoading
+  );
   const socketCtx = useSocket();
   const { setSocket, socket } = socketCtx;
   const { loading } = useLoading();
+  const { error } = useError();
+  const { success } = useSuccess();
+
   const { pathname } = useLocation();
 
   const token = getAccessToken();
@@ -123,8 +134,9 @@ function Router() {
 
   return (
     <>
-      {loading && <Spinner />}
-
+      {(loading || userLoading) && <Spinner />}
+      {success && <ToastSuccess>{success}</ToastSuccess>}
+      {error && <ToastError>{error}</ToastError>}
       {/* CUSTOMER */}
       <Routes>
         <Route path="/customer/register" element={<RegisterPage />} />
@@ -142,7 +154,8 @@ function Router() {
           <Route path="payment" element={<PaymentPage />} />
           <Route path="myLocation" element={<AddressSelectPage />} />
         </Route>
-        <Route path="/customer/profile" element={<CustomerProfilePage />} />
+        <Route path="/customer/profile" element={<AccountPage />} />
+        <Route path="/customer/editProfile" element={<ProfilePage />} />
         <Route path="/customer/chat" element={<ChatPage />} />
         {/*TESTING EXAMPLE FOR GOOGLE MAP*/}
         <Route
@@ -157,6 +170,8 @@ function Router() {
           <Route path="" element={<HomePageDriver />} />
         </Route>
         <Route path="/driver/income" element={<DriverIncome />} />
+        <Route path="/driver/profile" element={<AccountPage />} />
+        <Route path="/driver/editProfile" element={<ProfilePage />} />
         <Route path="/driver/orderRequest" element={<OrderRequestPage />} />
 
         {/*   DRIVER - delivery */}
@@ -180,6 +195,7 @@ function Router() {
         </Route>
         <Route path="restaurant/food" element={<CreateFood />} />
         <Route path="restaurant/food/option" element={<CreateFoodOption />} />
+        <Route path="restaurant/category/:id" element={<CategoryFoodPage />} />
       </Routes>
     </>
   );

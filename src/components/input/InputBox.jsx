@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
 
-function InputBox({ title, value, onChange }) {
+function InputBox({ title, value, onChange, placeholder }) {
   return (
     <>
       <Box
@@ -10,6 +10,7 @@ function InputBox({ title, value, onChange }) {
       >
         <label className="text-gray">{title}</label>
         <input
+          placeholder={placeholder}
           value={value}
           onChange={onChange}
           type="text"

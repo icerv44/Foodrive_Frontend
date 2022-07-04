@@ -17,7 +17,7 @@ function LoginMid() {
   };
 
   return (
-    <>
+    <form>
       <div className="text-center pb-[60px] text-[25px] font-bold">
         Sign In Your Account
       </div>
@@ -28,13 +28,14 @@ function LoginMid() {
           placeholder="Email"
         />
         <InputLogin
+          type="password"
           onChange={handlePasswordChange}
           value={password}
           placeholder="Password"
         />
       </Box>
       <Typography className="text-center py-5">Or Continue With</Typography>
-    </>
+    </form>
   );
 }
 

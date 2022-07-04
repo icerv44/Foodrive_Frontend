@@ -3,10 +3,10 @@ import Modal from "react-modal";
 // Modal.setAppElement("#ใส่ไอดีของโมดัลอันนี้ในหน้าที่เอาไปใช้");
 // Import Modal ไปในไฟล์ที่จะใช้ด้วย
 
-function Modal({ children, ...props }) {
+function Modal({ title, children, ...props }) {
   return (
     <>
-      <button onClick={() => setIsOpen(true)}>Modal</button>
+      <button onClick={() => setIsOpen(true)}>{title}</button>
       <Modal
         {...props}
         style={{

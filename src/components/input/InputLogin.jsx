@@ -1,7 +1,8 @@
-function InputLogin({ placeholder, onChange, value }) {
+function InputLogin({ placeholder, onChange, value, type }) {
   return (
     <>
       <input
+        type={type || "text"}
         value={value}
         onChange={onChange}
         placeholder={placeholder}
