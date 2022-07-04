@@ -47,7 +47,9 @@ import MenuOrderPage from "../role/customer/order/MenuOrderPage";
 function Router() {
   const dispatch = useDispatch();
   const driverStatus = useSelector((state) => state.user.info.driverStatus);
-  const { latitude, longitude } = useSelector((state) => state.user.info);
+  const { latitude, longitude, email } = useSelector(
+    (state) => state.user.info
+  );
   const userInfo = useSelector((state) => state.user.info);
   const socketCtx = useSocket();
   const { setSocket, socket } = socketCtx;
@@ -68,7 +70,7 @@ function Router() {
       }
     };
     getUser();
-  }, []);
+  }, [email]);
   //socket setup
   useEffect(() => {
     if (!socket) return;
@@ -158,6 +160,7 @@ function Router() {
         <Route path="/driver/orderRequest" element={<OrderRequestPage />} />
 
         {/*   DRIVER - delivery */}
+
         <Route path="/driver/delivery" element={<DeliveryContainer />}>
           <Route path="" element={<DeliveryPage />} />
           <Route path="confirmOrder" element={<ConfirmOrderPage />} />
@@ -169,7 +172,8 @@ function Router() {
         <Route path="/restaurant/register" element={<RegisterPage />} />
         <Route path="/restaurant/login" element={<LoginPage />} />
         <Route path="/restaurant" element={<RestaurantContainer />}>
-          <Route path="profile" element={<ProfilePage />} />
+          {/* <Route path="profile" element={<AccountPage />} /> */}
+          <Route path="editProfile" element={<ProfilePage />} />
           <Route path="category" element={<CreateCategory />} />
           <Route path="checkorder" element={<CheckDeliveryOrder />} />
           <Route path="checkorder/:id" element={<ResDeliveryStatus />} />

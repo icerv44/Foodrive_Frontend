@@ -30,7 +30,13 @@ function PaymentPage() {
 
   const { latitude, longitude } = useSelector((state) => state.user.info);
   const { setAddress, setLatitude, setLongitude } = useCustomerAddress();
-  const [addressLabel, setAddressLabel] = useState("");
+
+  const notifyRestaurant = async () => {
+    const restaurantId = cart.restaurantId;
+    socket.emit("notifyRestaurant", {
+      restaurantId,
+    });
+  };
 
   const getAddressFromLatLng = async (lat, lng) => {
     const res = await axios.get(
@@ -51,16 +57,16 @@ function PaymentPage() {
     }
   };
 
-  useEffect(() => {
-    const fetchLocation = async () => {
-      if (latitude !== null && longitude !== null) {
-        const newAddressLabel = await getAddressFromLatLng(latitude, longitude);
-        console.log(newAddressLabel);
-        setAddressLabel(newAddressLabel);
-      }
-    };
-    fetchLocation();
-  }, [latitude, longitude]);
+  // useEffect(() => {
+  //   const fetchLocation = async () => {
+  //     if (latitude !== null && longitude !== null) {
+  //       const newAddressLabel = await getAddressFromLatLng(latitude, longitude);
+  //       console.log(newAddressLabel);
+  //       setAddressLabel(newAddressLabel);
+  //     }
+  //   };
+  //   fetchLocation();
+  // }, [latitude, longitude]);
 
   useEffect(() => {
     OmiseCard.configure({
@@ -89,10 +95,11 @@ function PaymentPage() {
           await axios.post("/customer/confirmCart/" + cart.id, {
             omiseToken: token,
             totalInBaht: cart.cartItems.totalPrice,
-            latitude,
-            longitude,
+            latitude: customerLatitude,
+            longitude: customerLongitude,
             address,
           });
+          notifyRestaurant();
         } catch (err) {
           console.log(err);
         }
@@ -103,13 +110,6 @@ function PaymentPage() {
   const handleClick = async (e) => {
     if (!address) return alert("please select you address before checking out");
     omiseHandler();
-  };
-
-  const notifyRestaurant = async () => {
-    const restaurantId = cart.restaurantId;
-    socket.emit("notifyRestaurant", {
-      restaurantId,
-    });
   };
 
   return (
