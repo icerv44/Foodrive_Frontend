@@ -104,7 +104,10 @@ export function CustomerContextProvider({ children }) {
 
   const appendCart = async (cartId, menus) => {
     try {
-      await axios.post(`/customer/cart/${cartId}/append-menu`, { menus });
+      const res = await axios.post(`/customer/cart/${cartId}/append-menu`, {
+        menus,
+      });
+      console.log(res.data);
     } catch (err) {
       console.log(err);
     }
@@ -118,6 +121,10 @@ export function CustomerContextProvider({ children }) {
       console.log(err);
     }
   };
+
+  useEffect(() => {
+    console.log(addToCart);
+  }, [addToCart]);
 
   return (
     <CustomerContext.Provider

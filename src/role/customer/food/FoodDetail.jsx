@@ -56,6 +56,7 @@ function FoodDetail() {
     }, []);
     setMenuOptionGroup(myMenuOptionGroup);
     setMenuOption(defaultOptionArr);
+    console.log(defaultOptionArr);
   }, []);
 
   const checkCarts = (id, data) => {
@@ -74,7 +75,7 @@ function FoodDetail() {
 
     const newOption = {
       id: parentid,
-      options: [{ id: e.target.value }],
+      options: [{ id: +e.target.value }],
     };
     if (matchIndex !== -1) {
       newMenuOption.splice(matchIndex, 1, newOption);
@@ -82,6 +83,7 @@ function FoodDetail() {
       newMenuOption.push(newOption);
     }
 
+    console.log(newMenuOption);
     setMenuOption(newMenuOption);
   };
 
@@ -89,10 +91,17 @@ function FoodDetail() {
     // CART === MENUS
     // clean option group, send only api require
     const cleanMenuOptionGroup = menuOptionGroup.reduce((a, c) => {
-      const currentOptionGroup = { id: c.id, options: menuOption };
+      const selectedMenuOptions = menuOption.find((group) => group.id === c.id);
+      console.log(selectedMenuOptions);
+      const currentOptionGroup = {
+        id: c.id,
+        options: selectedMenuOptions.options,
+      };
       a.push(currentOptionGroup);
       return a;
     }, []);
+
+    console.log(cleanMenuOptionGroup);
 
     // New menu
     const newOrder = {
@@ -100,25 +109,25 @@ function FoodDetail() {
       optionGroups: cleanMenuOptionGroup,
     };
 
+    console.log(newOrder);
+
     // put new menu to cart
     const newCart = [...addToCart, newOrder];
-    setAddToCart(newCart);
 
     const test = checkCarts(restaurantId, resCarts);
-    console.log(test);
 
     if (checkCarts(restaurantId, resCarts)) {
       const cartId = checkCarts(restaurantId, resCarts).cart.id;
-      console.log("addToCart", addToCart);
-      await appendCart(cartId, addToCart);
-      console.log("addMenu");
+      console.log("append cart", newCart);
+      const res = await appendCart(cartId, newCart);
     } else {
-      console.log("createNewCart");
-      await createCart({
+      console.log("create cart");
+      const res = await createCart({
         restaurantId,
-        menus: addToCart,
+        menus: newCart,
       });
     }
+    setAddToCart([]);
   };
 
   const handleClickIncreaseAmount = () => {
