@@ -1,10 +1,12 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import axios from "../config/axios";
 
 const RestaurantContext = createContext();
 
 function RestaurantContextProvider({ children }) {
   const [categoryData, setCategoryData] = useState([]);
+  const role = useSelector((state) => state.user.info.role);
 
   const [foodImage, setFoodImage] = useState("");
   const [foodName, setFoodName] = useState("");
@@ -20,6 +22,7 @@ function RestaurantContextProvider({ children }) {
 
   const fetchCategory = async () => {
     try {
+      if (role !== "restaurant") return;
       const res = await axios.get("restaurant/getAllCategory");
       setCategoryData(res.data.category);
     } catch (error) {
@@ -29,7 +32,7 @@ function RestaurantContextProvider({ children }) {
 
   useEffect(() => {
     fetchCategory();
-  }, []);
+  }, [role]);
 
   const handleDeleteCategory = async (categoryId) => {
     try {

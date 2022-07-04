@@ -5,6 +5,7 @@ import { AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
 import { useState, useEffect } from "react";
 import IconButton from "@mui/joy/IconButton";
 import { useCustomer } from "../../../contexts/CustomerContext";
+import { useNavigate } from "react-router-dom";
 
 function FoodDetail() {
   const {
@@ -20,6 +21,7 @@ function FoodDetail() {
   const [menuOptionGroup, setMenuOptionGroup] = useState([]);
   const [menuOption, setMenuOption] = useState([]);
   const [total, setTotal] = useState(0);
+  const navigate = useNavigate();
 
   const restaurantId = menu?.restaurantId;
 
@@ -56,6 +58,7 @@ function FoodDetail() {
     }, []);
     setMenuOptionGroup(myMenuOptionGroup);
     setMenuOption(defaultOptionArr);
+    console.log(defaultOptionArr);
   }, []);
 
   const checkCarts = (id, data) => {
@@ -74,7 +77,7 @@ function FoodDetail() {
 
     const newOption = {
       id: parentid,
-      options: [{ id: e.target.value }],
+      options: [{ id: +e.target.value }],
     };
     if (matchIndex !== -1) {
       newMenuOption.splice(matchIndex, 1, newOption);
@@ -82,6 +85,7 @@ function FoodDetail() {
       newMenuOption.push(newOption);
     }
 
+    console.log(newMenuOption);
     setMenuOption(newMenuOption);
   };
 
@@ -89,10 +93,17 @@ function FoodDetail() {
     // CART === MENUS
     // clean option group, send only api require
     const cleanMenuOptionGroup = menuOptionGroup.reduce((a, c) => {
-      const currentOptionGroup = { id: c.id, options: menuOption };
+      const selectedMenuOptions = menuOption.find((group) => group.id === c.id);
+      console.log(selectedMenuOptions);
+      const currentOptionGroup = {
+        id: c.id,
+        options: selectedMenuOptions.options,
+      };
       a.push(currentOptionGroup);
       return a;
     }, []);
+
+    console.log(cleanMenuOptionGroup);
 
     // New menu
     const newOrder = {
@@ -100,25 +111,32 @@ function FoodDetail() {
       optionGroups: cleanMenuOptionGroup,
     };
 
+    console.log(newOrder);
+
     // put new menu to cart
-    const newCart = [...addToCart, newOrder];
-    setAddToCart(newCart);
+    let newCart = [];
+    for (let i = 0; i < count; i++) {
+      newCart.push(newOrder);
+    }
 
     const test = checkCarts(restaurantId, resCarts);
-    console.log(test);
 
     if (checkCarts(restaurantId, resCarts)) {
       const cartId = checkCarts(restaurantId, resCarts).cart.id;
-      console.log("addToCart", addToCart);
-      await appendCart(cartId, addToCart);
-      console.log("addMenu");
+      console.log("append cart", newCart);
+      const res = await appendCart(cartId, newCart);
+      navigate("/customer/cart/" + cartId);
     } else {
-      console.log("createNewCart");
-      await createCart({
+      console.log("create cart");
+      const res = await createCart({
         restaurantId,
-        menus: addToCart,
+        menus: newCart,
       });
+
+      const cartId = res.cart.id;
+      navigate("/customer/cart/" + cartId);
     }
+    setAddToCart([]);
   };
 
   const handleClickIncreaseAmount = () => {
@@ -127,7 +145,7 @@ function FoodDetail() {
     }
   };
   const handleClickDecreaseAmount = () => {
-    if (count > 0) {
+    if (count > 1) {
       setCount(count - 1);
     }
   };
