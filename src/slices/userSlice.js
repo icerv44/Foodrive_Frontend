@@ -7,6 +7,7 @@ const fetchUser = createAsyncThunk("user/fetch", async (payload, api) => {
 
     const res = await axios.get(`${role}/getMe`);
 
+    console.log(res.data);
     return res.data.user;
   } catch (err) {
     return api.rejectWithValue(err.response?.data?.message || err.message);
@@ -23,7 +24,7 @@ const userSlice = createSlice({
       latitude: null,
       longitude: null,
       role: "",
-      driverStatus: "OFFLINE", // or "ONLINE"
+      driverStatus: "UNAVAILABLE", // or "ONLINE"
     },
     isLoading: "",
     error: "",
@@ -44,15 +45,21 @@ const userSlice = createSlice({
         state.error = "";
       })
       .addCase(fetchUser.fulfilled, (state, action) => {
-        const { latitude: lat, longitude: lng, ...rest } = action.payload;
         state.info = {
           ...state.info,
-          ...rest,
+          name: action.payload.name,
+          firstName: action.payload.firstName,
+          lastName: action.payload.lastName,
+          role: action.payload.role,
+          email: action.payload.email,
+          id: action.payload.id,
+          driverStatus: action.payload.status,
         };
         state.isLoading = false;
         state.error = false;
       })
       .addCase(fetchUser.rejected, (state, action) => {
+        console.log("handled rejected promise. Do not panic.");
         state.error = action.payload;
         state.isLoading = false;
       });

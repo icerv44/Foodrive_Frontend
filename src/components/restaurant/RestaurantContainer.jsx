@@ -11,6 +11,8 @@ function RestaurantContainer() {
   const { getRestaurantById, restaurant } = useCustomer();
   const { restaurantId } = useParams();
 
+  console.log(restaurant);
+
   useEffect(() => {
     try {
       const fetchRestaurant = async () => {
@@ -18,7 +20,7 @@ function RestaurantContainer() {
         await getRestaurantById(+restaurantId);
       };
 
-      return fetchRestaurant;
+      fetchRestaurant();
     } catch (err) {
       console.log(err);
     } finally {

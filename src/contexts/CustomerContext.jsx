@@ -115,6 +115,7 @@ export function CustomerContextProvider({ children }) {
         menus,
       });
       console.log("append cart", res);
+      console.log(res.data);
     } catch (err) {
       console.log(err);
       setError(err.response.data.message);
@@ -130,6 +131,10 @@ export function CustomerContextProvider({ children }) {
       setError(err.response.data.message);
     }
   };
+
+  useEffect(() => {
+    console.log(addToCart);
+  }, [addToCart]);
 
   return (
     <CustomerContext.Provider

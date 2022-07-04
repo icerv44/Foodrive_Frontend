@@ -9,7 +9,7 @@ import RestaurantPage from "../pages/RestaurantPage";
 import OrderPage from "../pages/customer/OrderPage";
 import ShopMenuPage from "../pages/customer/ShopMenuPage";
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getAccessToken } from "../services/localstorage";
 import { fetchUser, setPosition } from "../slices/userSlice";
 import HomePageDriver from "../pages/driver/HomePageDriver";
@@ -38,6 +38,11 @@ import CreateFoodOption from "../pages/restaurant/CreateFoodOption";
 import CheckDeliveryOrder from "../pages/restaurant/CheckDeliveryOrder";
 import ResDeliveryStatus from "../pages/restaurant/ResDeliveryStatus";
 import ProfilePage from "../pages/ProfilePage";
+import axios from "../config/axios";
+import GoogleMapDriverLoader from "../components/common/googleMapDriver/GoogleMapDriverLoader";
+import { io } from "socket.io-client";
+import { useSocket } from "../contexts/SocketContext";
+import { SOCKET_ENDPOINT_URL } from "../config/env";
 import MenuOrderPage from "../role/customer/order/MenuOrderPage";
 import ToastError from "../components/ui/ToastError";
 import ToastSuccess from "../components/ui/ToastSuccess";
@@ -45,19 +50,50 @@ import { useSuccess } from "../contexts/SuccessContext";
 
 function Router() {
   const dispatch = useDispatch();
-  const token = getAccessToken();
+  const driverStatus = useSelector((state) => state.user.info.driverStatus);
+  const { latitude, longitude } = useSelector((state) => state.user.info);
+  const userInfo = useSelector((state) => state.user.info);
+  const { isLoading: userLoading } = useSelector(
+    (state) => state.user.isLoading
+  );
+  const socketCtx = useSocket();
+  const { setSocket, socket } = socketCtx;
   const { loading } = useLoading();
   const { error } = useError();
   const { success } = useSuccess();
 
   const { pathname } = useLocation();
+
+  const token = getAccessToken();
+
   const role = pathname.split("/")[1];
 
   useEffect(() => {
-    if (token) {
-      dispatch(fetchUser({ role }));
+    const getUser = async () => {
+      if (token) {
+        if (!role) return;
+        const res = await dispatch(fetchUser({ role }));
+        console.log(res);
+        const newSocket = io(SOCKET_ENDPOINT_URL);
+        setSocket(newSocket);
+      }
+    };
+    getUser();
+  }, []);
+  //socket setup
+  useEffect(() => {
+    if (!socket) return;
+    console.log(socket);
+    socket?.emit("newUser", {
+      role: userInfo.role,
+      info: userInfo,
+    });
+    if (userInfo.role === "restaurant") {
+      socket?.on("restaurantReceiveOrder", ({ message }) => {
+        alert(message);
+      });
     }
-  }, [token]);
+  }, [socket]);
 
   useEffect(() => {
     getCurrentPosition().then((res) => {
@@ -67,9 +103,37 @@ function Router() {
     });
   }, [pathname]);
 
+  const updateDriver = async (lat, lng) => {
+    if (latitude && longitude) {
+      const res = await axios.patch("/driver/updateLocation", {
+        latitude: lat,
+        longitude: lng,
+      });
+      console.log(res);
+    }
+  };
+
+  useEffect(() => {
+    let recordingInterval;
+    if (driverStatus === "ONLINE") {
+      recordingInterval = setInterval(async () => {
+        console.log("updating position...");
+        const pos = await getCurrentPosition();
+        await updateDriver(pos.latitude, pos.longitude);
+        dispatch(
+          setPosition({ latitude: pos.latitude, longitude: pos.longitude })
+        );
+      }, 10000);
+    }
+
+    return () => {
+      clearInterval(recordingInterval);
+    };
+  }, [driverStatus]);
+
   return (
     <>
-      {loading && <Spinner />}
+      {(loading || userLoading) && <Spinner />}
       {success && <ToastSuccess>{success}</ToastSuccess>}
       {error && <ToastError>{error}</ToastError>}
       {/* CUSTOMER */}
