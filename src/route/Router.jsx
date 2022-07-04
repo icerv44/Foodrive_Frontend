@@ -42,8 +42,9 @@ import axios from "../config/axios";
 import GoogleMapDriverLoader from "../components/common/googleMapDriver/GoogleMapDriverLoader";
 import { io } from "socket.io-client";
 import { useSocket } from "../contexts/SocketContext";
-import { SOCKET_ENDPOINT_URL } from "../config/env";
+// import { SOCKET_ENDPOINT_URL } from "../config/env";
 import MenuOrderPage from "../role/customer/order/MenuOrderPage";
+import CategoryFoodPage from "../pages/restaurant/CategoryFoodPage";
 import ToastError from "../components/ui/ToastError";
 import ToastSuccess from "../components/ui/ToastSuccess";
 import { useSuccess } from "../contexts/SuccessContext";
@@ -192,6 +193,7 @@ function Router() {
         </Route>
         <Route path="restaurant/food" element={<CreateFood />} />
         <Route path="restaurant/food/option" element={<CreateFoodOption />} />
+        <Route path="restaurant/category/:id" element={<CategoryFoodPage />} />
       </Routes>
     </>
   );

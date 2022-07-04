@@ -5,6 +5,7 @@ import { AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
 import { useState, useEffect } from "react";
 import IconButton from "@mui/joy/IconButton";
 import { useCustomer } from "../../../contexts/CustomerContext";
+import { useNavigate } from "react-router-dom";
 
 function FoodDetail() {
   const {
@@ -20,6 +21,7 @@ function FoodDetail() {
   const [menuOptionGroup, setMenuOptionGroup] = useState([]);
   const [menuOption, setMenuOption] = useState([]);
   const [total, setTotal] = useState(0);
+  const navigate = useNavigate();
 
   const restaurantId = menu?.restaurantId;
 
@@ -112,7 +114,10 @@ function FoodDetail() {
     console.log(newOrder);
 
     // put new menu to cart
-    const newCart = [...addToCart, newOrder];
+    let newCart = [];
+    for (let i = 0; i < count; i++) {
+      newCart.push(newOrder);
+    }
 
     const test = checkCarts(restaurantId, resCarts);
 
@@ -120,12 +125,16 @@ function FoodDetail() {
       const cartId = checkCarts(restaurantId, resCarts).cart.id;
       console.log("append cart", newCart);
       const res = await appendCart(cartId, newCart);
+      navigate("/customer/cart/" + cartId);
     } else {
       console.log("create cart");
       const res = await createCart({
         restaurantId,
         menus: newCart,
       });
+
+      const cartId = res.cart.id;
+      navigate("/customer/cart/" + cartId);
     }
     setAddToCart([]);
   };
@@ -136,7 +145,7 @@ function FoodDetail() {
     }
   };
   const handleClickDecreaseAmount = () => {
-    if (count > 0) {
+    if (count > 1) {
       setCount(count - 1);
     }
   };

@@ -102,7 +102,7 @@ export function CustomerContextProvider({ children }) {
         restaurantId,
         menus,
       });
-      console.log("create cart", res);
+      return res.data;
     } catch (err) {
       console.log(err);
       setError(err.response.data.message);
@@ -114,8 +114,7 @@ export function CustomerContextProvider({ children }) {
       const res = await axios.post(`/customer/cart/${cartId}/append-menu`, {
         menus,
       });
-      console.log("append cart", res);
-      console.log(res.data);
+      return res.data;
     } catch (err) {
       console.log(err);
       setError(err.response.data.message);

@@ -77,6 +77,7 @@ function GoogleMapDriver() {
         center={
           driverPosition && customerPosition ? null : center /*same as above*/
         }
+        // options={full}
         onLoad={onLoad}
         mapContainerStyle={{ width: "100%", height: "100vh" }}
       >

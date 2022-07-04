@@ -53,7 +53,13 @@ const userSlice = createSlice({
           role: action.payload.role,
           email: action.payload.email,
           id: action.payload.id,
+<<<<<<< HEAD
           driverStatus: action.payload.status,
+=======
+          driverImage: action.payload.driverImage,
+          profileImage: action.payload.profileImage,
+          image: action.payload.image,
+>>>>>>> 5bb77eab98935a1662fd8cf3ad21d99645dca079
         };
         state.isLoading = false;
         state.error = false;
