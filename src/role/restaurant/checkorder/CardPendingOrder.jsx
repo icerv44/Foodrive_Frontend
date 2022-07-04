@@ -2,7 +2,20 @@ import axios from "../../../config/axios";
 import { Button } from "@mui/joy";
 import { Box } from "@mui/material";
 
-function CardPendingOrder({ orderId, customerName, address, totalPrice }) {
+function CardPendingOrder({
+  orderId,
+  firstName,
+  lastName,
+  address,
+  amountOrder,
+  totalPrice,
+  updatedAt,
+}) {
+  let customerName = firstName + " " + lastName;
+  let orderPrice = totalPrice;
+  let dateTime = new Date(updatedAt).toString();
+  console.log(typeof dateTime);
+
   const handleAcceptedOrder = async () => {
     try {
       await axios.patch("restaurant/pendingOrders/" + orderId, {
@@ -33,14 +46,29 @@ function CardPendingOrder({ orderId, customerName, address, totalPrice }) {
         py: "12px",
       }}
     >
-      <Box>
-        <Box>{customerName}</Box>
+      <Box className="flex flex-col gap-1">
+        <Box className="flex justify-between">
+          <Box className="font-semibold text-xl">{customerName}</Box>
+        </Box>
+        <Box>{dateTime}</Box>
         <Box>{address}</Box>
-        <Box>{totalPrice}</Box>
-        {/* <Box>{orderAmount}</Box>
-        <Box>{updatedAt}</Box> */}
+        <Box className="flex justify-between font-semibold text-lg">
+          <Box>Order :</Box>
+          <Box>{amountOrder} list</Box>
+        </Box>
+        <Box className="flex justify-between font-semibold text-lg">
+          <Box>Total Price :</Box>
+          <Box>{orderPrice.toFixed(2)} ฿</Box>
+        </Box>
       </Box>
-      <Box sx={{ display: "flex", justifyContent: "space-around", gap: "8px" }}>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-around",
+          gap: "8px",
+          mt: "4px",
+        }}
+      >
         <Button
           onClick={handleCanceledOrder}
           color="danger"
