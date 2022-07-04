@@ -59,7 +59,7 @@ function FoodDetail() {
     setMenuOptionGroup(myMenuOptionGroup);
     setMenuOption(defaultOptionArr);
     console.log(defaultOptionArr);
-  }, []);
+  }, [menu]);
 
   const checkCarts = (id, data) => {
     const res = data.find((obj) => obj.id === id);

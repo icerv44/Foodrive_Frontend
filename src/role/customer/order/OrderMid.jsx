@@ -4,14 +4,17 @@ import { useCustomer } from "../../../contexts/CustomerContext";
 import CardOrder from "./CardOrder";
 
 function OrderMid() {
-  const { carts } = useCustomer();
-  console.log("carts", carts);
-  const items = carts?.cartItems?.cart;
-  console.log("items", items);
+  const { cart, getTotalMenuPrice } = useCustomer();
+
+  let items = cart?.cartItems?.cart;
+
+  items = items?.map((menu) => ({
+    ...menu,
+    totalPrice: getTotalMenuPrice(menu),
+  }));
 
   const getRestaurantFromId = (data) => {
     const res = data?.find((obj) => obj === obj);
-    console.log(res);
   };
   getRestaurantFromId(items);
 
@@ -35,7 +38,7 @@ function OrderMid() {
             <CardOrder
               id={el.id}
               src={el.image}
-              price={el.price}
+              price={el.totalPrice}
               foodName={el.name}
               orderMenuOptionGroups={el.OrderMenuOptionGroups}
             />
