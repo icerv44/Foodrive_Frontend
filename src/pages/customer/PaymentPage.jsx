@@ -11,6 +11,8 @@ import CreditPayment from "../../role/customer/payment/CreditPayment";
 import axios from "../../config/axios";
 import { useCustomer } from "../../contexts/CustomerContext";
 import { useSelector } from "react-redux";
+import { TiArrowSortedDown } from "react-icons/ti";
+import { Typography } from "@mui/joy";
 
 const OmiseCard = window.OmiseCard;
 
@@ -115,27 +117,37 @@ function PaymentPage() {
   return (
     <Container>
       <ButtonBack />
-      <Box className="mt-24">
-        <Box className="ml-5 py-5 font-bold text-3xl">Payment Method</Box>
-        <Box className="flex flex-col justify-center items-center gap-5">
-          <CashPayment />
+      <Box className="mt-24 ml-5 ">
+        <Box className="flex flex-col justify-center">
+          <Box className=" py-5 font-bold text-3xl ">Payment</Box>
+
+          <button
+            onClick={() => selectCurrentAddress()}
+            className="font-semibold text-green pt-4 pb-2 flex items-center gap-2"
+          >
+            <TiArrowSortedDown />
+            Select Address
+          </button>
+
+          <Box className="w-[300px] p-5  rounded-lg shadow-md shadow-blue-100 mb-5">
+            <Box className="text-l">
+              <p className="font-semibold pt-4 pb-2 flex items-center gap-2">
+                Current Location:
+              </p>
+              <p className="text-gray">{address || "No address chosen"}</p>
+            </Box>
+          </Box>
+
           <form>
             <CreditPayment onClick={handleClick} />
           </form>
-          <AddPayment />
+        </Box>
+
+        <Box className="absolute bottom-28 flex justify-between bg-green text-white px-5 py-2 rounded-lg w-[300px] text-lg">
+          <p>Total Amount:</p>
+          <p>{cart.cartItems.totalPrice + " ฿"}</p>
         </Box>
       </Box>
-      {/* <button id="credit-card-omise" onClick={handleClick}>
-          Pay With Omise
-        </button> */}
-      {/* <button onClick={() => notifyRestaurant()}>
-        Send notification to restaurant
-      </button> */}
-      <button onClick={() => selectCurrentAddress()}>Select Address</button>
-      <Box className="text-l">
-        Current Address: {address || "No address chosen"}
-      </Box>
-      <Box>Total Amount: {cart.cartItems.totalPrice + " ฿"};</Box>
     </Container>
   );
 }

@@ -19,7 +19,6 @@ function AccountPage() {
       menu: [
         { title: "Edit my profile", to: "/customer/editProfile" },
         { title: "My address", to: "/customer/myLocation" },
-        { title: "My payment method", to: "/customer/payment" },
       ],
     },
     {

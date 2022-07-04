@@ -60,7 +60,10 @@ function ModalVertical({ ref, children, onAction, btnName, title, content }) {
               </button>
 
               <button
-                onClick={onAction}
+                onClick={() => {
+                  onAction();
+                  setIsOpen(false);
+                }}
                 className="bg-[#DA6317] text-white rounded-xl p-3 w-full"
               >
                 {btnName}

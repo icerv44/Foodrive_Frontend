@@ -2,9 +2,9 @@ import ButtonLocation from "../../../components/button/ButtonLocation";
 
 function SelectedAddress({ address, onClick }) {
   return (
-    <div className="w-[336px] h-[108px] px-5 rounded-lg shadow-md shadow-blue-100">
+    <div className="w-[336px] p-5  rounded-lg shadow-md shadow-blue-100">
       <h6 className="font-semibold text-[#3B3B3B] pt-4 pb-2 opacity-[0.3]">
-        Current Address
+        Current Location
       </h6>
       <div
         className="flex gap-3 items-center"
@@ -12,12 +12,12 @@ function SelectedAddress({ address, onClick }) {
         onClick={onClick}
       >
         <ButtonLocation />
-        <h6
+        <p
           className="font-semibold"
-          style={{ overflow: "auto", maxHeight: 50 }}
+          // style={{ overflow: "auto", maxHeight: 50 }}
         >
-          {address || "address name not available"}{" "}
-        </h6>
+          {address || "Address name not available"}{" "}
+        </p>
       </div>
     </div>
   );
