@@ -4,9 +4,13 @@ import HeaderBar from "../../role/restaurant/checkorder/HeaderBar";
 import DeliveryStatus from "../../role/restaurant/checkorder/DeliveryStatus";
 import PendingStatus from "../../role/restaurant/checkorder/PendingStatus";
 import HistoryStatus from "../../role/restaurant/checkorder/HistoryStatus";
+import { useRestaurant } from "../../contexts/RestaurantContext";
 
 function CheckDeliveryOrder() {
+  const { pendingOrderData } = useRestaurant();
   const [status, setStatus] = useState("pending");
+
+  console.log(pendingOrderData);
 
   return (
     <>
@@ -15,7 +19,7 @@ function CheckDeliveryOrder() {
       {status === "delivery" ? (
         <DeliveryStatus />
       ) : status === "pending" ? (
-        <PendingStatus />
+        <PendingStatus pendingOrderData={pendingOrderData} />
       ) : (
         <HistoryStatus />
       )}
