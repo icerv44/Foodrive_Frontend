@@ -1,6 +1,6 @@
 import CardDeliveryCheck from "./CardDeliveryCheck";
 
-function OrderContent() {
+function DeliveryStatus() {
   return (
     <div className="px-7 flex flex-col gap-2">
       <CardDeliveryCheck
@@ -22,4 +22,4 @@ function OrderContent() {
   );
 }
 
-export default OrderContent;
+export default DeliveryStatus;
