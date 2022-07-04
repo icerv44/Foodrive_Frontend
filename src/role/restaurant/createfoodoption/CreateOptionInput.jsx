@@ -13,8 +13,6 @@ function CreateOptionInput({
   setOptionName,
   optionPrice,
   setOptionPrice,
-  isOptionMustHave,
-  setIsOptionMustHave,
 }) {
   Modal.setAppElement("#root");
 
@@ -44,7 +42,7 @@ function CreateOptionInput({
         </Box>
       </Box>
       {/* Option Detail */}
-      <Box className="mb-4">
+      {/* <Box className="mb-4">
         <Box className="text-[#37C989] opacity-[0.7] p-2 text-xl font-semibold">
           Option detail
         </Box>
@@ -69,7 +67,7 @@ function CreateOptionInput({
             Must Have
           </Box>
         </Box>
-      </Box>
+      </Box> */}
       {/* More Option */}
       <Box>
         <Box className="opacity-[0.7] text-xl font-semibold m-2">Optional</Box>
@@ -83,7 +81,7 @@ function CreateOptionInput({
             setOptionPrice={setOptionPrice}
           />
         </Box>
-        <Box sx={{ height: "29vh" }}>
+        <Box sx={{ height: "50vh" }}>
           <Box
             sx={{
               borderColor: "1px solid #F4F4F4",

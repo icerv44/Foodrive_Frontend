@@ -15,8 +15,6 @@ function CreateFoodOption() {
     setOptionName,
     optionPrice,
     setOptionPrice,
-    isOptionMustHave,
-    setIsOptionMustHave,
   } = useRestaurant();
 
   return (
@@ -45,8 +43,6 @@ function CreateFoodOption() {
         setOptionName={setOptionName}
         optionPrice={optionPrice}
         setOptionPrice={setOptionPrice}
-        isOptionMustHave={isOptionMustHave}
-        setIsOptionMustHave={setIsOptionMustHave}
       />
     </Box>
   );

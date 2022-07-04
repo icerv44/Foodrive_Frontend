@@ -15,8 +15,6 @@ function CategoryFoodPage() {
 
   Modal.setAppElement("#root");
 
-  console.log(categoryFoodData);
-
   useEffect(() => {
     const fetchCategoryById = async () => {
       try {
