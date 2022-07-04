@@ -6,6 +6,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { setDriverStatus } from "../../../slices/userSlice";
 
 function DriverProfile() {
+  const user = useSelector((state) => state.user.info);
+  console.log(user);
+
   return (
     <Box
       sx={{ background: "white", marginTop: "1rem" }}
@@ -13,14 +16,17 @@ function DriverProfile() {
     >
       <AspectRatio ratio="1" sx={{ width: 50 }}>
         <img
-          src="https://images.unsplash.com/photo-1507833423370-a126b89d394b?crop=entropy&auto=format&fit=crop&w=3387"
+          src={
+            user.driverImage ||
+            "https://images.unsplash.com/photo-1507833423370-a126b89d394b?crop=entropy&auto=format&fit=crop&w=3387"
+          }
           alt=""
         />
       </AspectRatio>
 
-      <div className="flex flex-col">
+      <div className="flex flex-col ">
         <Typography level="h2" fontSize="lg" id="card-description" mb={0.5}>
-          Mr. Kemplas
+          {user.firstName}
         </Typography>
         <Typography
           fontSize="sm"
