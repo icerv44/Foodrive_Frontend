@@ -20,8 +20,6 @@ function CartPage() {
     }
   }, [pathname]);
 
-  console.log("allCart", allCart);
-
   return (
     <Box className="flex flex-col ">
       <Box

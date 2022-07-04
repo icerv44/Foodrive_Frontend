@@ -25,11 +25,11 @@ function AddressSelectPage() {
 
   const selectCurrentAddress = async () => {
     try {
-      const newAddress = await getAddressFromLatLng(latitude, longitude);
-      setAddress(newAddress);
-      setLatitude(latitude);
-      setLongitude(longitude);
-      navigate("/customer/payment");
+      // const newAddress = await getAddressFromLatLng(latitude, longitude);
+      // setAddress(newAddress);
+      // setLatitude(latitude);
+      // setLongitude(longitude);
+      // navigate("/customer/payment");
     } catch (err) {
       console.log(err);
     }

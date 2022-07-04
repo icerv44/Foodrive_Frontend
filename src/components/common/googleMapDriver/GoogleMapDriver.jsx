@@ -80,7 +80,11 @@ function GoogleMapDriver() {
         center={
           driverPosition && customerPosition ? null : center /*same as above*/
         }
-        // options={full}
+        options={{
+          fullscreenControl: false,
+          streetViewControl: false,
+          mapTypeControl: false,
+        }}
         onLoad={onLoad}
         mapContainerStyle={{ width: "70%", height: "50vh" }}
       >

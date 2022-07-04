@@ -15,7 +15,24 @@ export function CustomerContextProvider({ children }) {
   const [menu, setMenu] = useState("");
   const [carts, setCarts] = useState([]);
   const [resCarts, setResCarts] = useState([]);
-  const [cart, setCart] = useState([]);
+  const [cart, setCart] = useState({
+    addressName: null,
+    cartItems: {
+      cart: [],
+      totalPrice: 0,
+    },
+    createdAt: "1970-01-01T04:55:36.000Z",
+    customerId: 0,
+    customerLatitude: null,
+    customerLongitude: null,
+    deliveryFee: 0,
+    distance: null,
+    driverId: null,
+    price: null,
+    restaurantId: 0,
+    status: "IN_CART",
+    updatedAt: "1970-01-01T04:55:36.000Z",
+  });
   const [allCart, setAllCart] = useState([]);
   const [addToCart, setAddToCart] = useState([]);
   const [foodOption, setFoodOption] = useState([]);
@@ -84,8 +101,10 @@ export function CustomerContextProvider({ children }) {
 
   const getCartById = async (cartId) => {
     try {
+      console.log("get cart");
       const res = await axios.get("/customer/cart/" + cartId);
-      setCarts(res.data);
+      console.log(res.data);
+      setCart(res.data);
     } catch (err) {
       console.log(err);
     }
@@ -123,6 +142,25 @@ export function CustomerContextProvider({ children }) {
     }
   };
 
+  const getTotalMenuPrice = (menu) => {
+    let total = 0;
+    total += menu.price;
+    for (let menuOptionGroup of menu.OrderMenuOptionGroups) {
+      for (let option of menuOptionGroup.options) {
+        total += option.price;
+      }
+    }
+    return total;
+  };
+
+  const getTotalFromCart = (cart) => {
+    let price = 0;
+    for (let menu of cart) {
+      price += getTotalMenuPrice(menu);
+    }
+    return price;
+  };
+
   useEffect(() => {
     console.log(addToCart);
   }, [addToCart]);
@@ -157,6 +195,8 @@ export function CustomerContextProvider({ children }) {
         appendCart,
         deleteMenu,
         setCart,
+        getTotalMenuPrice,
+        getTotalFromCart,
       }}
     >
       {children}

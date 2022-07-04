@@ -6,8 +6,6 @@ const fetchUser = createAsyncThunk("user/fetch", async (payload, api) => {
     const role = payload.role;
 
     const res = await axios.get(`${role}/getMe`);
-
-    console.log(res.data);
     return res.data.user;
   } catch (err) {
     return api.rejectWithValue(err.response?.data?.message || err.message);

@@ -63,7 +63,6 @@ function Router() {
       if (token) {
         if (!role) return;
         const res = await dispatch(fetchUser({ role }));
-        console.log(res);
         const newSocket = io(SOCKET_ENDPOINT_URL);
         setSocket(newSocket);
       }
@@ -73,7 +72,6 @@ function Router() {
   //socket setup
   useEffect(() => {
     if (!socket) return;
-    console.log(socket);
     socket?.emit("newUser", {
       role: userInfo.role,
       info: userInfo,
