@@ -24,7 +24,7 @@ const userSlice = createSlice({
       latitude: null,
       longitude: null,
       role: "",
-      driverStatus: "OFFLINE", // or "ONLINE"
+      driverStatus: "UNAVAILABLE", // or "ONLINE"
     },
     isLoading: "",
     error: "",
@@ -53,6 +53,7 @@ const userSlice = createSlice({
           role: action.payload.role,
           email: action.payload.email,
           id: action.payload.id,
+          driverStatus: action.payload.status,
           driverImage: action.payload.driverImage,
           profileImage: action.payload.profileImage,
           image: action.payload.image,

@@ -66,10 +66,7 @@ function GoogleMapDriver() {
   //   useEffect(() => {});
 
   return (
-    <div
-      className="driver-map-container"
-      style={{ width: "70%", height: "50vh" }}
-    >
+    <div className="driver-map-container">
       <GoogleMap
         mapContainerClassName="driver-map"
         zoom={
@@ -82,7 +79,7 @@ function GoogleMapDriver() {
         }
         // options={full}
         onLoad={onLoad}
-        mapContainerStyle={{ width: "100%", height: "100%" }}
+        mapContainerStyle={{ width: "100%", height: "100vh" }}
       >
         {driverPosition && <Marker key={"marker1"} position={driverPosition} />}
         {customerPosition && (

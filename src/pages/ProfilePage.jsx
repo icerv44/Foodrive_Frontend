@@ -10,9 +10,13 @@ import ButtonBack from "../components/button/ButtonBack";
 import axios from "../config/axios";
 import ButtonGreenGradiant from "../components/button/ButtonGreenGradiant";
 import { Box, Typography } from "@mui/joy";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchUser } from "../slices/userSlice";
 
 function ProfilePage() {
-  // const {user} =
+  const user = useSelector((state) => state.user.info);
+  const dispatch = useDispatch();
+  console.log(user);
   const { setLoading } = useLoading();
   const { setError } = useError();
   const { setSuccess } = useSuccess();
@@ -38,6 +42,7 @@ function ProfilePage() {
       inputProfile: [
         {
           title: "First Name",
+          placeholder: user.firstName,
           value: firstName,
           onChange: function (e) {
             setFirstName(e.target.value);
@@ -45,6 +50,7 @@ function ProfilePage() {
         },
         {
           title: "Last Name",
+          placeholder: user.lastName,
           value: lastName,
           onChange: function (e) {
             setLastName(e.target.value);
@@ -57,6 +63,7 @@ function ProfilePage() {
       inputProfile: [
         {
           title: "First Name",
+          placeholder: user.firstName,
           value: firstName,
           onChange: function (e) {
             setFirstName(e.target.value);
@@ -64,6 +71,7 @@ function ProfilePage() {
         },
         {
           title: "Last Name",
+          placeholder: user.lastName,
           value: lastName,
           onChange: function (e) {
             setLastName(e.target.value);
@@ -76,6 +84,7 @@ function ProfilePage() {
       inputProfile: [
         {
           title: "name",
+          placeholder: user.name,
           value: name,
           onChange: function (e) {
             setName(e.target.value);
@@ -100,6 +109,28 @@ function ProfilePage() {
 
   const findRole = () => inputData.find((el) => el.role === role);
 
+  const showImageByRole = () => {
+    if (role === "restaurant") {
+      return (image && URL.createObjectURL(image)) || user.image;
+    }
+    if (role === "customer") {
+      return (
+        (profileImage && URL.createObjectURL(profileImage)) || user.profileImage
+      );
+    } else
+      return (
+        (driverImage && URL.createObjectURL(driverImage)) || user.driverImage
+      );
+  };
+
+  // const showImage = () => {
+  //   if (role === "restaurant") {
+  //     return user.image;
+  //   } else if (role === "customer") {
+  //   } else {
+  //   }
+  // };
+
   const handleUpdate = async () => {
     try {
       setLoading(true);
@@ -123,6 +154,7 @@ function ProfilePage() {
         setFirstName("");
         setLastName("");
         setName("");
+        dispatch(fetchUser({ role }));
       }
     } catch (err) {
       console.log(err);
@@ -140,15 +172,6 @@ function ProfilePage() {
     setLastName("");
     setName("");
     window.history.back();
-  };
-
-  const showImageByRole = () => {
-    if (role === "restaurant") {
-      return image;
-    }
-    if (role === "customer") {
-      return profileImage;
-    } else return driverImage;
   };
 
   return (
@@ -177,9 +200,7 @@ function ProfilePage() {
             ref={profileRef}
           />
           <ProfileImg
-            src={
-              showImageByRole() ? URL.createObjectURL(showImageByRole()) : ""
-            }
+            src={showImageByRole() || ""}
             onClick={() => profileRef.current.click()}
           />
         </div>
@@ -190,6 +211,7 @@ function ProfilePage() {
               title={el.title}
               value={el.value}
               onChange={el.onChange}
+              placeholder={el.placeholder}
             />
           ))}
         </div>

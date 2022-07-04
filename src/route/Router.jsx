@@ -33,7 +33,7 @@ import Spinner from "../components/ui/Spinner";
 import GoogleMapTestPage from "../components/GoogleMapTestPage";
 import CartPage from "../pages/customer/CartPage";
 import CartContainer from "../role/customer/order/CartContainer";
-import CustomerProfilePage from "../pages/customer/CustomerProfilePage";
+import AccountPage from "../pages/AccountPage";
 import CreateFoodOption from "../pages/restaurant/CreateFoodOption";
 import CheckDeliveryOrder from "../pages/restaurant/CheckDeliveryOrder";
 import ResDeliveryStatus from "../pages/restaurant/ResDeliveryStatus";
@@ -54,6 +54,9 @@ function Router() {
   const driverStatus = useSelector((state) => state.user.info.driverStatus);
   const { latitude, longitude } = useSelector((state) => state.user.info);
   const userInfo = useSelector((state) => state.user.info);
+  const { isLoading: userLoading } = useSelector(
+    (state) => state.user.isLoading
+  );
   const socketCtx = useSocket();
   const { setSocket, socket } = socketCtx;
   const { loading } = useLoading();
@@ -131,7 +134,7 @@ function Router() {
 
   return (
     <>
-      {loading && <Spinner />}
+      {(loading || userLoading) && <Spinner />}
       {success && <ToastSuccess>{success}</ToastSuccess>}
       {error && <ToastError>{error}</ToastError>}
       {/* CUSTOMER */}
@@ -151,7 +154,7 @@ function Router() {
           <Route path="payment" element={<PaymentPage />} />
           <Route path="myLocation" element={<AddressSelectPage />} />
         </Route>
-        <Route path="/customer/profile" element={<CustomerProfilePage />} />
+        <Route path="/customer/profile" element={<AccountPage />} />
         <Route path="/customer/editProfile" element={<ProfilePage />} />
         <Route path="/customer/chat" element={<ChatPage />} />
         {/*TESTING EXAMPLE FOR GOOGLE MAP*/}
@@ -167,6 +170,8 @@ function Router() {
           <Route path="" element={<HomePageDriver />} />
         </Route>
         <Route path="/driver/income" element={<DriverIncome />} />
+        <Route path="/driver/profile" element={<AccountPage />} />
+        <Route path="/driver/editProfile" element={<ProfilePage />} />
         <Route path="/driver/orderRequest" element={<OrderRequestPage />} />
 
         {/*   DRIVER - delivery */}
