@@ -93,10 +93,11 @@ export function CustomerContextProvider({ children }) {
 
   const createCart = async ({ restaurantId, menus }) => {
     try {
-      await axios.post("/customer/addCart", {
+      const res = await axios.post("/customer/addCart", {
         restaurantId,
         menus,
       });
+      return res.data;
     } catch (err) {
       console.log(err);
     }
@@ -107,7 +108,7 @@ export function CustomerContextProvider({ children }) {
       const res = await axios.post(`/customer/cart/${cartId}/append-menu`, {
         menus,
       });
-      console.log(res.data);
+      return res.data;
     } catch (err) {
       console.log(err);
     }
