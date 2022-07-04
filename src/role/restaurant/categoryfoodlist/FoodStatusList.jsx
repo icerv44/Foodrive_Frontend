@@ -4,6 +4,8 @@ import { BsToggleOff, BsToggleOn } from "react-icons/bs";
 function FoodStatusList({ title, price }) {
   const [isFoodAvailable, setIsFoodAvailable] = useState(true);
 
+  let netPrice = price;
+
   const handleSetFoodAvailable = () => {
     setIsFoodAvailable(!isFoodAvailable);
   };
@@ -12,7 +14,7 @@ function FoodStatusList({ title, price }) {
     <div className="flex justify-between items-center">
       <div>
         <h6 className="font-semibold">{title}</h6>
-        <h6 className="text-gray text-sm">{price} ฿</h6>
+        <h6 className="text-gray text-sm">{netPrice?.toFixed(2)} ฿</h6>
       </div>
       <div onClick={handleSetFoodAvailable} className="text-3xl">
         {isFoodAvailable ? (
