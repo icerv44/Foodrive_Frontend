@@ -47,7 +47,7 @@ function RestaurantContextProvider({ children }) {
 
   useEffect(() => {
     fetchPendingOrder();
-  }, []);
+  }, [role]);
 
   const handleDeleteCategory = async (categoryId) => {
     try {
