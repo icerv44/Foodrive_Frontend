@@ -6,8 +6,7 @@ import { BsSearch } from "react-icons/bs";
 import { useState } from "react";
 import { useCustomer } from "../../../contexts/CustomerContext";
 
-function HeaderMenuList() {
-  const [onFocus, setOnFocus] = useState(false);
+function HeaderMenuList({ searchMenu, setSearchMenu }) {
   const { restaurant } = useCustomer();
 
   return (
@@ -31,18 +30,10 @@ function HeaderMenuList() {
           p: "2px 18px 12px",
         }}
       >
-        <Box>
-          {/* <Autocomplete
-            disablePortal
-            id="combo-box-demo"
-            options={top100Films}
-            sx={{ width: 300 }}
-            renderInput={(params) => <TextField {...params} label="Movie" />}
-          /> */}
-        </Box>
         <Box sx={{ flexGrow: 1 }}>
           <Input
-            placeholder={onFocus ? "Enjoy a taste of heaven" : "Search"}
+            onChange={(e) => setSearchMenu(e.target.value)}
+            placeholder={"Search"}
             sx={{ borderRadius: "14px", bgcolor: "#f9a94d22" }}
             startDecorator={<BsSearch />}
           />

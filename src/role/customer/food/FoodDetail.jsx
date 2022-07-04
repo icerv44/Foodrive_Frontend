@@ -152,12 +152,12 @@ function FoodDetail() {
 
   return (
     <Box>
-      <Box className="mx-6 mt-5 overflow-auto h-[26vh]">
-        <Box className="flex justify-between items-center my-5">
-          <Typography sx={{ fontWeight: 700, fontSize: "26px" }}>
+      <Box className="overflow-auto h-[38vh]">
+        <Box className="flex justify-between items-center my-2 px-6">
+          <Typography sx={{ fontWeight: 600, fontSize: "24px" }}>
             {menu?.name}
           </Typography>
-          <Typography sx={{ fontWeight: 700, fontSize: "26px" }}>
+          <Typography sx={{ fontWeight: 600, fontSize: "24px" }}>
             {menu?.price} ฿
           </Typography>
         </Box>
@@ -165,14 +165,21 @@ function FoodDetail() {
         {menuOptionGroup.map(
           (el, idx) =>
             el?.status === "ACTIVE" && (
-              <FoodOption
-                el={el}
-                parentid={el?.id}
+              <Box
                 key={el?.id}
-                name={el?.name}
-                MenuOptions={el?.MenuOptions}
-                onChange={handleOptionChange}
-              />
+                className="rounded-lg px-6 py-1"
+                sx={{
+                  boxShadow: "10px 10px 10px 10px rgba(20, 20, 20, 0.04)",
+                }}
+              >
+                <FoodOption
+                  el={el}
+                  parentid={el?.id}
+                  name={el?.name}
+                  MenuOptions={el?.MenuOptions}
+                  onChange={handleOptionChange}
+                />
+              </Box>
             )
         )}
       </Box>

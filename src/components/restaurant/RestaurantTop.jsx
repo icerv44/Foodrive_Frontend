@@ -7,6 +7,7 @@ import CardOverflow from "@mui/joy/CardOverflow";
 import Typography from "@mui/joy/Typography";
 import { useCustomer } from "../../contexts/CustomerContext";
 import { Button } from "@mui/joy";
+import { BiChevronLeft } from "react-icons/bi";
 
 function RestaurantTop() {
   const { restaurant } = useCustomer();
@@ -26,39 +27,6 @@ function RestaurantTop() {
           />
         </AspectRatio>
       </CardOverflow>
-      {/* <Box sx={{}}>
-        <Typography level="h2" sx={{ fontSize: "md", mt: 2 }}>
-          Yosemite National Park
-        </Typography>
-        <Typography level="body2" sx={{ mt: 0.5, mb: 2 }}>
-          California
-        </Typography>
-        <CardOverflow
-          variant="soft"
-          sx={{
-            display: "flex",
-            gap: 1.5,
-            py: 1.5,
-            px: "var(--Card-padding)",
-            borderTop: "1px solid",
-            borderColor: "neutral.outlinedBorder",
-          }}
-        >
-          <Typography
-            level="body3"
-            sx={{ fontWeight: "md", color: "text.secondary" }}
-          >
-            6.3k views
-          </Typography>
-          <Box sx={{ width: 2, bgcolor: "divider" }} />
-          <Typography
-            level="body3"
-            sx={{ fontWeight: "md", color: "text.secondary" }}
-          >
-            1 hour ago
-          </Typography>
-        </CardOverflow>
-      </Box> */}
     </Box>
   );
 }
