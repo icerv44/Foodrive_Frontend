@@ -168,14 +168,23 @@ function Router() {
       <Route path="/customer/login" element={<LoginPage />} />
       <Route path="/customer" element={<CustomerPage />}>
         <Route path="" element={<HomePage />} />
+<<<<<<< HEAD
+=======
+        <Route path="restaurant/:restaurantId" element={<RestaurantPage />} />
+        <Route path="shop/:restaurantId" element={<ShopMenuPage />} />
+        <Route path="menuDetail/:menuId" element={<DetailFoodPage />} />
+>>>>>>> 01acf63a4a615f21deed54ee2524410d618f03f9
         <Route path="cart" element={<CartContainer />}>
           <Route path="" element={<CartPage />} />
           <Route path=":cartId" element={<OrderPage />} />
           <Route path="menuOrder/:menuOrderId" element={<MenuOrderPage />} />
         </Route>
+<<<<<<< HEAD
         <Route path="restaurant/:restaurantId" element={<RestaurantPage />} />
         <Route path="shop/:restaurantId" element={<ShopMenuPage />} />
         <Route path="menuDetail/:menuId" element={<DetailFoodPage />} />
+=======
+>>>>>>> 01acf63a4a615f21deed54ee2524410d618f03f9
         <Route path="payment" element={<PaymentPage />} />
         <Route path="myLocation" element={<AddressSelectPage />} />
       </Route>
