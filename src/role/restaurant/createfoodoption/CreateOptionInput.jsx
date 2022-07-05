@@ -1,6 +1,7 @@
 import { Button } from "@mui/joy";
 import { Box } from "@mui/material";
 import Modal from "react-modal";
+import { useRestaurant } from "../../../contexts/RestaurantContext";
 import ModalForCreateFoodOption from "../modal/ModalForCreateFoodOption";
 import OptionalFood from "./OptionalFood";
 
@@ -13,6 +14,8 @@ function CreateOptionInput({
   setOptionName,
   optionPrice,
   setOptionPrice,
+  optionGroups,
+  setOptionGroups,
 }) {
   Modal.setAppElement("#root");
 
@@ -20,6 +23,35 @@ function CreateOptionInput({
     let cloneOptionCart = [...optionCart];
     cloneOptionCart.splice(idx, 1);
     setOptionCart(cloneOptionCart);
+  };
+
+  console.log(optionCart);
+  const formatOptinCart = (optionCart) => {
+    let cloneOptionCart = [...optionCart];
+    let optionCartFormatted = [];
+    cloneOptionCart.forEach((option) => {
+      optionCartFormatted.push({
+        name: option.optionName,
+        price: option.optionPrice,
+      });
+    });
+    return optionCartFormatted;
+  };
+
+  console.log(formatOptinCart(optionCart));
+
+  const handleSubmitCreateOption = (e) => {
+    e.preventDefault();
+    let optionCartFormatted = formatOptinCart(optionCart);
+    const newOptionGroup = {
+      name: optionTitle,
+      menuOptions: optionCartFormatted,
+    };
+    setOptionGroups((prevState) => [...prevState, newOptionGroup]);
+    setOptionTitle("");
+    setOptionCart([]);
+    setOptionName("");
+    setOptionPrice("");
   };
 
   return (
@@ -41,33 +73,6 @@ function CreateOptionInput({
           />
         </Box>
       </Box>
-      {/* Option Detail */}
-      {/* <Box className="mb-4">
-        <Box className="text-[#37C989] opacity-[0.7] p-2 text-xl font-semibold">
-          Option detail
-        </Box>
-        <Box
-          sx={{
-            boxShadow: "12px 26px 50px rgba(90, 108, 234, 0.07)",
-            border: "1px solid #F4F4F4",
-            borderRadius: "15px",
-            p: "12px",
-            fontSize: "13px",
-          }}
-        >
-          <Box sx={{ fontWeight: 700, fontSize: "17px" }}>
-            Does the customer have to choose this option?
-          </Box>
-          <Box className="flex gap-2 mt-1">
-            <input
-              type="checkbox"
-              checked={isOptionMustHave}
-              onChange={(e) => setIsOptionMustHave(e.target.checked)}
-            />
-            Must Have
-          </Box>
-        </Box>
-      </Box> */}
       {/* More Option */}
       <Box>
         <Box className="opacity-[0.7] text-xl font-semibold m-2">Optional</Box>
@@ -106,10 +111,9 @@ function CreateOptionInput({
           </Box>
         </Box>
         <Button
-          // variant="outlined"
           color="success"
           sx={{ width: "100%" }}
-          type="submit"
+          onClick={handleSubmitCreateOption}
         >
           Submit
         </Button>

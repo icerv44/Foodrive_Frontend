@@ -15,6 +15,8 @@ function CreateFoodOption() {
     setOptionName,
     optionPrice,
     setOptionPrice,
+    optionGroups,
+    setOptionGroups,
   } = useRestaurant();
 
   return (
@@ -43,6 +45,8 @@ function CreateFoodOption() {
         setOptionName={setOptionName}
         optionPrice={optionPrice}
         setOptionPrice={setOptionPrice}
+        optionGroups={optionGroups}
+        setOptionGroups={setOptionGroups}
       />
     </Box>
   );
