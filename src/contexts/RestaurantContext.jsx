@@ -8,6 +8,7 @@ function RestaurantContextProvider({ children }) {
   const role = useSelector((state) => state.user.info.role);
   const [categoryData, setCategoryData] = useState([]);
   const [pendingOrderData, setPendingOrderData] = useState([]);
+  const [optionGroups, setOptionGroups] = useState([]);
 
   const [foodImage, setFoodImage] = useState("");
   const [foodName, setFoodName] = useState("");
@@ -24,7 +25,7 @@ function RestaurantContextProvider({ children }) {
   const fetchCategory = async () => {
     try {
       if (role !== "restaurant") return;
-      const res = await axios.get("restaurant/getAllCategory");
+      const res = await axios.get("/restaurant/getAllCategory");
       setCategoryData(res.data.category);
     } catch (error) {
       console.log(error);
@@ -47,7 +48,7 @@ function RestaurantContextProvider({ children }) {
 
   useEffect(() => {
     fetchPendingOrder();
-  }, []);
+  }, [role]);
 
   const handleDeleteCategory = async (categoryId) => {
     try {
@@ -61,6 +62,7 @@ function RestaurantContextProvider({ children }) {
   return (
     <RestaurantContext.Provider
       value={{
+        fetchCategory,
         pendingOrderData,
         setPendingOrderData,
         handleDeleteCategory,
@@ -85,6 +87,8 @@ function RestaurantContextProvider({ children }) {
         setOptionTitle,
         isOptionMustHave,
         setIsOptionMustHave,
+        optionGroups,
+        setOptionGroups,
       }}
     >
       {children}

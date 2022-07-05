@@ -11,7 +11,7 @@ function ModalVertical({ ref, children, onAction, btnName, title, content }) {
     <div>
       <button ref={ref} onClick={() => setIsOpen(true)}>
         <Chip
-          variant="outlined"
+          variant="solid"
           color="danger"
           sx={{
             px: 0.2,

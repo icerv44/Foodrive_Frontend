@@ -28,10 +28,7 @@ function AccountPage() {
     },
     {
       role: "driver",
-      menu: [
-        { title: "Edit my profile", to: "/driver/editProfile" },
-        { title: "Order request", to: "/driver/orderRequest" },
-      ],
+      menu: [{ title: "Edit my profile", to: "/driver/editProfile" }],
     },
     {
       role: "restaurant",

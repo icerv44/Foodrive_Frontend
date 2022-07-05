@@ -8,7 +8,7 @@ import CategoryList from "../../role/restaurant/createcategory/CategoryList";
 import { useRestaurant } from "../../contexts/RestaurantContext";
 
 function CreateCategory() {
-  const { categoryData } = useRestaurant();
+  const { categoryData, fetchCategory } = useRestaurant();
 
   const [category, setCategory] = useState("");
   const navigate = useNavigate();
@@ -50,6 +50,7 @@ function CreateCategory() {
           subTitle="add or edit food"
         />
         <AddCategory
+          fetch={fetchCategory}
           category={category}
           setCategory={setCategory}
           title="Add more Category"
