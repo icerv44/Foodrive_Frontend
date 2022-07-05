@@ -10,6 +10,7 @@ import Modal from "react-modal";
 import Card from "@mui/joy/Card";
 import { CardContent } from "@mui/material";
 import { MdOutlineLocationOn } from "react-icons/md";
+import ModalOrderReq from "../../components/ui/ModalOrderReq";
 
 function OrderRequestPage() {
   const { latitude, longitude } = useSelector((state) => state.user.info);
@@ -19,7 +20,7 @@ function OrderRequestPage() {
 
   useEffect(() => {
     fetchOrder();
-    console.log("lat : ", latitude, "long : ", longitude);
+    // console.log("lat : ", latitude, "long : ", longitude);
   }, [latitude, longitude]);
 
   const fetchOrder = async () => {
@@ -29,30 +30,19 @@ function OrderRequestPage() {
         longitude: longitude,
       };
 
-      console.log("Lat Long : ", latLong);
+      // console.log("Lat Long : ", latLong);
       const resOrder = await axios.post("/driver/searchOrder", latLong);
       setOrder(resOrder.data.order);
-      console.log("Fetch Order : " + JSON.stringify(resOrder));
+      // console.log("Fetch Order : " + JSON.stringify(resOrder));
     } catch (err) {
       console.log(err);
     }
   };
 
-  const cutLetter = 14;
-  const cutOrder = 1;
-
-  const cutRestaurantName = (name) => {
-    if (name.length > cutLetter) {
-      const cutName = name.substring(0, cutLetter) + "...";
-      return cutName;
-    }
-    return name;
-  };
-
-  const clickOrderAccepted = async (id) => {
-    const resOrder = await axios.post(`driver/deliveringStatus/${id}`);
-    console.log("Click : ", resOrder);
-  };
+  // const clickOrderAccepted = async (id) => {
+  //   const resOrder = await axios.post(`driver/deliveringStatus/${id}`);
+  //   console.log("Click : ", resOrder);
+  // };
 
   return (
     <Box>
@@ -69,21 +59,17 @@ function OrderRequestPage() {
       <Box className="flex flex-col items-center">
         {order.map((el, idx) => (
           <>
-            <Box
-              onClick={() => {
-                clickOrderAccepted(el.id);
-              }}
-              // onClick={() => setIsOpen(true)}
-            >
-              <CardOrderReq
-                key={idx}
-                id={el.id}
-                restaurantName={el.Restaurant.name}
-                distance={el.distance}
-                driverIncome={el.deliveryFee}
-                orderList={el.OrderMenus}
-              />
-            </Box>
+            <CardOrderReq
+              key={idx}
+              id={el.id}
+              restaurantName={el.Restaurant.name}
+              distance={el.distance}
+              driverIncome={el.deliveryFee}
+              orderList={el.OrderMenus}
+              restaurantLatitude={el.Restaurant.latitude}
+              restaurantLongtitude={el.Restaurant.longitude}
+              customerAddress={el.addressName}
+            />
           </>
         ))}
       </Box>

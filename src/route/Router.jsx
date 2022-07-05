@@ -174,10 +174,11 @@ function Router() {
 
         {/*   DRIVER - delivery */}
         <Route path="/driver/delivery" element={<DeliveryContainer />}>
-          <Route path="" element={<DeliveryPage />} />
+          <Route path=":orderId" element={<DeliveryPage />} />
           <Route path="confirmOrder" element={<ConfirmOrderPage />} />
+          <Route path="orderSummary" element={<OrderSummary />} />
         </Route>
-        <Route path="/driver/orderSummary" element={<OrderSummary />} />
+
         <Route path="/driver/completed" element={<DeliveryCompleted />} />
 
         {/* RESTAURANT */}

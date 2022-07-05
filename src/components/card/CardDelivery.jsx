@@ -1,18 +1,23 @@
 import { Box } from "@mui/joy";
 import Card from "@mui/joy/Card";
 import { CardContent, Typography } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { MdOutlineLocationOn } from "react-icons/md";
 import { useDelivery } from "../../contexts/DeliveryContext";
+import { useParams } from "react-router-dom";
+import { GOOGLE_MAP_KEY } from "../../config/env";
+import axios from "../../config/axios";
 
 function CardDelivery() {
-  const { textColor } = useDelivery();
+  const { getOrderDetailById, order, textColor } = useDelivery();
+  console.log("CardDetail order: ", order);
+  const { orderId } = useParams();
+  console.log("CardDetail orderId: ", orderId);
   const header = "รับจาก";
-  const restaurantName = "Starbucks Coffee Bang";
   const cutLetter = 18;
-  const location = "225/945 ม.7 ต.นาเกลือ อ.เมือง จ.เชียงราย 11250";
 
-  const cutRestaurantName = (name) => {
+  const [location, setLocation] = useState("");
+  const cutRestaurantName = (name = "") => {
     if (name.length > cutLetter) {
       const cutName = name.substring(0, cutLetter) + "...";
       return cutName;
@@ -20,9 +25,36 @@ function CardDelivery() {
     return name;
   };
 
+  const getAddressFromLatLng = async (lat, lng) => {
+    const res = await axios.get(
+      `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${GOOGLE_MAP_KEY}`
+    );
+    // console.log("SET address : ", res.data.results[0].formatted_address);
+    setLocation(res.data.results[0].formatted_address);
+    return res.data.results[0].formatted_address;
+  };
+
+  useEffect(() => {
+    if (order) {
+      getAddressFromLatLng(
+        +order?.Restaurant?.latitude,
+        +order?.Restaurant?.longitude
+      );
+    } else {
+      getOrderDetailById(Number(orderId));
+    }
+
+    console.log("location : ", location);
+  }, [order]);
+
   return (
     <Card
+      className="shadow-lg shadow-blue-100 rounded-lg ml-10 mt-[70px]"
       sx={{
+        zIndex: "99",
+        position: "absolute",
+        width: "320px",
+        // height: "150px",
         background: "#fafdff",
         "&:hover": {
           boxShadow: "md",
@@ -33,15 +65,15 @@ function CardDelivery() {
       <CardContent className="flex justify-between items-center">
         <Box className="flex flex-col gap-2">
           {/* Distance */}
-          <span className={"pl-10 text-2xl font-bold  " + textColor}>
+          <span className={"pl-10 text-[15px] font-bold  " + textColor}>
             {header}
           </span>
 
           {/* Restaurant name */}
           <Box className="flex items-center">
             <MdOutlineLocationOn className={"text-2xl mr-4" + textColor} />
-            <Typography fontSize={27} fontWeight="bold">
-              {cutRestaurantName(restaurantName)}
+            <Typography fontSize={18} fontWeight="bold">
+              {cutRestaurantName(order?.Restaurant?.name)}
             </Typography>
           </Box>
 

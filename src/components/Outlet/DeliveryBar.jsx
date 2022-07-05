@@ -5,8 +5,9 @@ import { MdOutlineLocationOn, MdCall } from "react-icons/md";
 import { BsFillChatDotsFill, BsFillCartFill } from "react-icons/bs";
 import Card from "@mui/joy/Card";
 import { useDelivery } from "../../contexts/DeliveryContext";
-import { useLocation } from "react-router-dom";
 // import { IoIosCall } from "react-icons/io";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Place } from "@mui/icons-material";
 
 const listMenu = [
   {
@@ -28,10 +29,12 @@ const listMenu = [
 ];
 
 function DeliveryBar() {
+  const navigate = useNavigate();
   const { setPlace, btnTitle } = useDelivery();
   const { pathname } = useLocation();
   const path = pathname.split("/")[3] === "direction";
-
+  const delivery = "/driver/delivery/";
+  const confirmOrder = "/driver/delivery/confirmOrder";
   const title = "ถึงร้านแล้ว";
 
   const handleBar = () => {
@@ -40,7 +43,21 @@ function DeliveryBar() {
   };
 
   const handleBtn = () => {
-    setPlace("customerLocation");
+    if (pathname.split("/")[3] === "confirmOrder") {
+      setPlace("OrderSummary");
+      navigate(`/driver/delivery/orderSummary`);
+    } else if (pathname.split("/")[3] === "orderSummary") {
+      console.log("confirmOrder : ", Place);
+      navigate(`/driver/completed`);
+    } else {
+      setPlace("customerLocation");
+      navigate(`/driver/delivery/confirmOrder`);
+    }
+
+    console.log("DeliveryBar 1 : ", pathname);
+    // // console.log("DeliveryBar 2 : ", pathname.includes(delivery));
+    // console.log("DeliveryBar 2 : ", pathname.split("/")[3] === "confirmOrder");
+    // console.log("DeliveryBar 3", pathname.includes(confirmOrder));
   };
 
   return (
