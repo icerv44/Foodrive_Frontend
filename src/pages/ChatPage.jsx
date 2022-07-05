@@ -7,6 +7,7 @@ import UserChat from "../role/main/privatechat/UserChat";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 import { collection, limit, orderBy, query } from "firebase/firestore";
 import { db } from "../config/firebaseConfig";
+import { Typography } from "@mui/joy";
 
 function ChatPage() {
   const userId = "driver" + "1";
@@ -25,9 +26,20 @@ function ChatPage() {
   const [messages = []] = useCollectionData(q);
 
   console.log(messages);
+
+  // if (true) return <Box>test</Box>;
+
   return (
     <Container className="bg-[#FEFEFF]">
       <ButtonBack />
+
+      {/* // NO CHAT */}
+      <Box className="mt-24 flex justify-center">
+        <Box color="#858786" fontSize="24px" className="mt-[auto] mb-[auto] ">
+          No chat available for now.
+        </Box>
+      </Box>
+
       <UserCard
         name="I-Here-TUU"
         src="https://s3.theasianparent.com/cdn-cgi/image/width=450,quality=90/tap-assets-prod/wp-content/uploads/sites/32/2019/01/49949680_519372558558364_2070976338994397184_n-e1547451146329.jpg"
