@@ -20,7 +20,7 @@ function RestaurantTop() {
         <AspectRatio ratio="1.2">
           <img
             src={
-              restaurant?.image ||
+              restaurant?.restaurant?.image ||
               "https://images.unsplash.com/photo-1532614338840-ab30cf10ed36?crop=entropy&auto=format&fit=crop&w=3270"
             }
             alt=""

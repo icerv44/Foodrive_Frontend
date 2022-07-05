@@ -3,10 +3,11 @@ import AspectRatio from "@mui/joy/AspectRatio";
 import React from "react";
 import { FiBarChart2 } from "react-icons/fi";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function DriverProfile() {
   const user = useSelector((state) => state.user.info);
+  const navigate = useNavigate();
 
   return (
     <Box
@@ -48,6 +49,7 @@ function DriverProfile() {
         sx={{ color: "text.tertiary" }}
       >
         <Button
+          onClick={() => navigate("/driver/orderRequest")}
           variant="plain"
           sx={{
             color: "#15BE77",
