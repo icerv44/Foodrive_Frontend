@@ -8,7 +8,7 @@ import { useError } from "../../../contexts/ErrorContext";
 // Modal.setAppElement("#ใส่ไอดีของโมดัลอันนี้ในหน้าที่เอาไปใช้");
 // Import Modal ไปในไฟล์ที่จะใช้ด้วย
 
-function ModalForCreate({ ref }) {
+function ModalForCreate({ ref, fetch }) {
   const { setError } = useError();
   const [isOpen, setIsOpen] = useState(false);
   const [addCategory, setAddCategory] = useState("");
@@ -21,6 +21,7 @@ function ModalForCreate({ ref }) {
       });
       setAddCategory("");
       setIsOpen(false);
+      fetch();
     } catch (err) {
       setError(err.response.data.error);
     }
