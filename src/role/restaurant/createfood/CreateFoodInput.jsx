@@ -7,9 +7,13 @@ import { useNavigate } from "react-router-dom";
 import AddImageMenu from "./AddImageMenu";
 import { AiFillCheckCircle } from "react-icons/ai";
 import { IoImageSharp } from "react-icons/io5";
+import axios from "axios";
+import { useSelector } from "react-redux";
 
 function CreateFoodInput() {
   const navigate = useNavigate();
+
+  const { id } = useSelector((state) => state.user.info);
 
   const {
     foodImage,
@@ -23,12 +27,31 @@ function CreateFoodInput() {
     foodCategory,
     setFoodCategory,
     categoryData,
+    optionGroups,
+    setOptionGroups,
   } = useRestaurant();
 
   const inputFileRef = useRef(null);
 
   const handleCreateFood = async (e) => {
     e.preventDefault();
+    try {
+      const formData = new FormData();
+      formData.append("menuImage", foodImage);
+      formData.append("name", foodName);
+      formData.append("price", foodPrice);
+      formData.append("description", foodDetail);
+      formData.append("menuOptionGroups", JSON.stringify(optionGroups));
+      formData.append("categoryId", foodCategory);
+      const res = await axios.post("/restaurant/" + id + "/addMenu", formData);
+      setOptionGroups([]);
+      setFoodImage("");
+      setFoodName("");
+      setFoodDetail("");
+      setFoodPrice("");
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
@@ -48,6 +71,25 @@ function CreateFoodInput() {
         icon={foodImage ? <AiFillCheckCircle /> : <IoImageSharp />}
       />
       <Box className="flex flex-col justify-center my-6">
+        {/*  CATEGORY MAP */}
+        <Box className="text-[#3B3B3B] opacity-[0.3] m-2">Category*</Box>
+        <Box
+          sx={{
+            boxShadow: "12px 26px 50px rgba(90, 108, 234, 0.07)",
+            mb: "16px",
+          }}
+        >
+          <select
+            onChange={(e) => setFoodCategory(e.target.value)}
+            className="my-select-menu rounded-xl w-full py-2 px-3 border border-teal-200"
+          >
+            {categoryData.map((el, idx) => (
+              <option key={idx} value={el.id}>
+                {el.name}
+              </option>
+            ))}
+          </select>
+        </Box>
         {/* Foodname */}
         <Box className="text-[#3B3B3B] opacity-[0.3] m-2">Foodname*</Box>
         <Box
@@ -95,26 +137,8 @@ function CreateFoodInput() {
             className="rounded-xl w-full py-2 px-3 border border-teal-200"
           />
         </Box>
-        {/* Tag MUSTMAP CATEGORY LATER */}
-        <Box className="text-[#3B3B3B] opacity-[0.3] m-2">Category*</Box>
-        <Box
-          sx={{
-            boxShadow: "12px 26px 50px rgba(90, 108, 234, 0.07)",
-            mb: "16px",
-          }}
-        >
-          <select
-            onChange={(e) => setFoodCategory(e.target.value)}
-            className="rounded-xl w-full py-2 px-3 border border-teal-200"
-          >
-            {categoryData.map((el, idx) => (
-              <option key={idx} value={el.name}>
-                {el.name}
-              </option>
-            ))}
-          </select>
-        </Box>
       </Box>
+      {/* SUBMIT */}
       <Box className="flex flex-col gap-4">
         <ButtonWhite
           onClick={() => navigate("/restaurant/food/option")}

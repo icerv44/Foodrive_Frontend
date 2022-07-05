@@ -3,7 +3,7 @@ import { Box, Typography } from "@mui/material";
 import Modal from "react-modal";
 import ModalForCreate from "../modal/ModalForCreate";
 
-function AddCategory({ title, subTitle }) {
+function AddCategory({ title, subTitle, fetch }) {
   Modal.setAppElement("#root");
 
   return (
@@ -24,7 +24,7 @@ function AddCategory({ title, subTitle }) {
             color: "green",
           }}
         >
-          <ModalForCreate />
+          <ModalForCreate fetch={fetch} />
         </IconButton>
       </Box>
       <Box sx={{ flexGrow: 1 }}>
