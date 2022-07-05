@@ -5,8 +5,14 @@ import { useSelector } from "react-redux";
 
 function GoogleMapDriver() {
   const [center, setCenter] = useState(null);
-  const [driverPosition, setDriverPosition] = useState(null);
-  const [customerPosition, setCustomerPosition] = useState(null);
+  const [driverPosition, setDriverPosition] = useState({
+    lat: null,
+    lng: null,
+  });
+  const [customerPosition, setCustomerPosition] = useState({
+    lat: null,
+    lng: null,
+  });
   const [direction, setDirection] = useState(null);
   const mapRef = useRef(null);
   const { latitude, longitude, role } = useSelector((state) => state.user.info);
@@ -16,31 +22,50 @@ function GoogleMapDriver() {
   const initMap = async () => {
     try {
       if (latitude && longitude) {
-        const fakeRole = "driver";
+        const role = "driver";
         //Get current order
-        const orderId = 1;
+        let order;
+        if (role === "driver") {
+          const result = await axios.get("/driver/currentOrder");
+          order = result.data.order;
+        }
+
+        const orderId = order?.id;
         let driverLocation;
         let customerLocation;
-        if (fakeRole === "driver") {
+        if (role === "driver") {
           driverLocation = { lat: +latitude, lng: +longitude };
-          const res = await axios.get("/driver/order/" + orderId);
 
-          const newLatitude = res.data.order.customerLatitude;
-          const newLongitude = res.data.order.customerLongitude;
+          let newLatitude, newLongitude;
+
+          if (!order) {
+            customerLocation = { lat: null, lng: null };
+          } else {
+            const res = await axios.get("/driver/order/" + orderId);
+            newLatitude = res.data.order.customerLatitude;
+            newLongitude = res.data.order.customerLongitude;
+            customerLocation = { lat: +newLatitude, lng: +newLongitude };
+          }
 
           //await fetch customer position
-          customerLocation = { lat: +newLatitude, lng: +newLongitude };
-        } else if (fakeRole === "customer") {
+        } else if (role === "customer") {
           driverLocation = { lat: +latitude, lng: +longitude };
           //await fetch driver position
           customerLocation = { lat: 14, lng: 100.5 };
         }
+        console.log(driverLocation, customerLocation);
         setDriverPosition(driverLocation);
         setCustomerPosition(customerLocation);
         setCenter({ lat: latitude, lng: longitude });
 
         const service = new window.google.maps.DirectionsService();
-        if (!customerLocation || !driverLocation) return;
+        if (
+          !driverLocation.lng ||
+          !driverLocation.lat ||
+          !customerLocation.lat ||
+          !customerLocation.lng
+        )
+          return;
         service.route(
           {
             origin: driverLocation,
@@ -61,21 +86,39 @@ function GoogleMapDriver() {
 
   useEffect(() => {
     initMap();
-  }, [latitude, longitude]);
-
-  //   useEffect(() => {});
+  }, [latitude, longitude, role]);
+  useEffect(() => {
+    console.log(
+      Boolean(
+        driverPosition.lng &&
+          driverPosition.lat &&
+          customerPosition.lat &&
+          customerPosition.lng
+      )
+    );
+  });
 
   return (
     <div className="driver-map-container">
       <GoogleMap
         mapContainerClassName="driver-map"
         zoom={
-          driverPosition && customerPosition
+          driverPosition.lng &&
+          driverPosition.lat &&
+          customerPosition.lat &&
+          customerPosition.lng
             ? null
-            : center /*Auto zoom(null) if driver and customer are present other wise zoom to the current location*/
+            : 16 /*Auto zoom(null) if driver and customer are present other wise zoom to the current location*/
         }
         center={
-          driverPosition && customerPosition ? null : center /*same as above*/
+          Boolean(
+            driverPosition.lng &&
+              driverPosition.lat &&
+              customerPosition.lat &&
+              customerPosition.lng
+          )
+            ? null
+            : center /*same as above*/
         }
         options={{
           fullscreenControl: false,
@@ -85,8 +128,10 @@ function GoogleMapDriver() {
         onLoad={onLoad}
         mapContainerStyle={{ width: "100%", height: "100vh" }}
       >
-        {driverPosition && <Marker key={"marker1"} position={driverPosition} />}
-        {customerPosition && (
+        {driverPosition.lng && driverPosition.lat && (
+          <Marker key={"marker1"} position={driverPosition} />
+        )}
+        {customerPosition.lng && customerPosition.lat && (
           <Marker key={"customer marker"} position={customerPosition} />
         )}
         {direction && <DirectionsRenderer directions={direction} />}

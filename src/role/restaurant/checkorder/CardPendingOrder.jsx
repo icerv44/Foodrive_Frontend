@@ -10,11 +10,12 @@ function CardPendingOrder({
   amountOrder,
   totalPrice,
   updatedAt,
+  customerId,
+  driverId,
 }) {
   let customerName = firstName + " " + lastName;
   let orderPrice = totalPrice;
   let dateTime = new Date(updatedAt).toString();
-  console.log(typeof dateTime);
 
   const handleAcceptedOrder = async () => {
     try {

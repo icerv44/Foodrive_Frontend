@@ -83,7 +83,7 @@ function Router() {
       if (token) {
         if (!role) return;
         const res = await dispatch(fetchUser({ role }));
-        console.log(res);
+
         if (res.error) {
           removeToken();
           navigate("/customer/login");
@@ -124,8 +124,6 @@ function Router() {
     ];
 
     if (pathNamesToNotTrack.includes(pathname)) return;
-
-    console.log(pathname);
 
     getCurrentPosition().then((res) => {
       dispatch(
@@ -223,6 +221,7 @@ function Router() {
       <Route path="/driver/orderSummary" element={<OrderSummary />} />
       <Route path="/driver/completed" element={<DeliveryCompleted />} />
       <Route path="/driver/orderRequest" element={<OrderRequestPage />} />
+      <Route path="/driver/chat" element={<ChatPage />} />
       <Route path="*" element={<Navigate to="/driver/" />} />
     </>
   );

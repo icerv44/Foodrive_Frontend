@@ -1,8 +1,6 @@
 import CardPendingOrder from "./CardPendingOrder";
 
 function PendingStatus({ pendingOrderData }) {
-  console.log(pendingOrderData);
-
   return (
     <div className="mx-auto px-6">
       {pendingOrderData.map((el, idx) => {
@@ -19,6 +17,8 @@ function PendingStatus({ pendingOrderData }) {
               amountOrder={el?.OrderMenus?.length}
               updatedAt={el?.updatedAt}
               totalPrice={el?.price}
+              customerId={el?.customerId}
+              driverId={el?.driverId}
             />
           );
         }
