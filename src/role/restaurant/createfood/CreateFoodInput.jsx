@@ -7,13 +7,9 @@ import { useNavigate } from "react-router-dom";
 import AddImageMenu from "./AddImageMenu";
 import { AiFillCheckCircle } from "react-icons/ai";
 import { IoImageSharp } from "react-icons/io5";
-import axios from "axios";
-import { useSelector } from "react-redux";
 
 function CreateFoodInput() {
   const navigate = useNavigate();
-
-  const { id } = useSelector((state) => state.user.info);
 
   const {
     foodImage,
@@ -33,29 +29,8 @@ function CreateFoodInput() {
 
   const inputFileRef = useRef(null);
 
-  const handleCreateFood = async (e) => {
-    e.preventDefault();
-    try {
-      const formData = new FormData();
-      formData.append("menuImage", foodImage);
-      formData.append("name", foodName);
-      formData.append("price", foodPrice);
-      formData.append("description", foodDetail);
-      formData.append("menuOptionGroups", JSON.stringify(optionGroups));
-      formData.append("categoryId", foodCategory);
-      const res = await axios.post("/restaurant/" + id + "/addMenu", formData);
-      setOptionGroups([]);
-      setFoodImage("");
-      setFoodName("");
-      setFoodDetail("");
-      setFoodPrice("");
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
   return (
-    <form onSubmit={handleCreateFood}>
+    <form onSubmit={() => navigate("/restaurant/checkfoodoption")}>
       <input
         ref={inputFileRef}
         onChange={(e) => setFoodImage(e.target.files[0])}
@@ -145,7 +120,7 @@ function CreateFoodInput() {
           title="Create Option"
           px="103px"
         />
-        <ButtonGreenGradiant type="submit" title="Create Food" px="112px" />
+        <ButtonGreenGradiant type="submit" title="Check Food" px="112px" />
       </Box>
     </form>
   );

@@ -53,6 +53,7 @@ import CategoryFoodPage from "../pages/restaurant/CategoryFoodPage";
 import ToastError from "../components/ui/ToastError";
 import ToastSuccess from "../components/ui/ToastSuccess";
 import { useSuccess } from "../contexts/SuccessContext";
+import ConfirmFoodPage from "../pages/restaurant/ConfirmFoodPage";
 
 function Router() {
   const dispatch = useDispatch();
@@ -205,6 +206,7 @@ function Router() {
       <Route path="restaurant/food" element={<CreateFood />} />
       <Route path="restaurant/food/option" element={<CreateFoodOption />} />
       <Route path="restaurant/category/:id" element={<CategoryFoodPage />} />
+      <Route path="restaurant/checkfoodoption" element={<ConfirmFoodPage />} />
       <Route path="*" element={<Navigate to="/restaurant/" />} />
     </>
   );

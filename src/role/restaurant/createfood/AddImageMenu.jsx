@@ -34,7 +34,7 @@ function AddImageMenu({ icon, title, subTitle, onClick, onDelete }) {
         </Typography>
         <Typography sx={{ color: "grey" }}>{subTitle}</Typography>
       </Box>
-      <Box onClick={onDelete} className="text-2xl">
+      <Box onClick={onDelete} className="text-2xl text-[#c85c5c]">
         <MdDeleteForever />
       </Box>
     </Box>
