@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { useCustomer } from "../../../contexts/CustomerContext";
 
 function SearchHome() {
-  const { search, setSearch, getMenus } = useCustomer();
+  const { search, setSearch, getMenus, menus } = useCustomer();
   const userInfo = useSelector((state) => state.user.info);
   const { latitude, longitude } = userInfo;
 
@@ -33,10 +33,8 @@ function SearchHome() {
         list="search"
       />
       <datalist id="search" className="">
-        {}
-        <option value="Test" />
+        {menus && menus?.map((el) => <option value={el?.name} />)}
       </datalist>
-      {/* <span className="text-sm font-light">กินอะไรดี?</span> */}
     </div>
   );
 }

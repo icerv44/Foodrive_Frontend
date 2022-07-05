@@ -29,8 +29,6 @@ function AllRestaurant() {
     }
   }, [role]);
 
-  console.log(restaurants);
-
   return (
     <Box sx={{}}>
       <Typography
