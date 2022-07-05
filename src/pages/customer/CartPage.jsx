@@ -19,6 +19,7 @@ function CartPage() {
       console.log(err);
     }
   }, [pathname]);
+  console.log(allCart);
 
   return (
     <Box className="flex flex-col ">
@@ -39,6 +40,7 @@ function CartPage() {
               <CardCartRes
                 name={el.Restaurant.name}
                 image={el.Restaurant.image}
+                status={el.Restaurant.status}
                 id={el.id}
               />
             </Link>

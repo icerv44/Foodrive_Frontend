@@ -189,7 +189,15 @@ function FoodDetail() {
           {/* BTN - Decrease */}
           <Box className="flex justify-center items-center gap-3">
             <IconButton
-              sx={{ bgcolor: "#f9a94d22", color: "green" }}
+              sx={{
+                background: "#dcf5eb",
+                color: "#53E88B",
+                "&:hover": {
+                  background:
+                    "linear-gradient(98.81deg, #53E88B -0.82%, #15BE77 101.53%)",
+                  color: "white",
+                },
+              }}
               onClick={handleClickDecreaseAmount}
             >
               <AiOutlineMinus />
@@ -200,9 +208,13 @@ function FoodDetail() {
             {/* BTN - Increase */}
             <IconButton
               sx={{
-                background:
-                  "linear-gradient(98.81deg, #53E88B -0.82%, #15BE77 101.53%)",
-                color: "white",
+                background: "#dcf5eb",
+                color: "#53E88B",
+                "&:hover": {
+                  background:
+                    "linear-gradient(98.81deg, #53E88B -0.82%, #15BE77 101.53%)",
+                  color: "white",
+                },
               }}
               onClick={handleClickIncreaseAmount}
             >

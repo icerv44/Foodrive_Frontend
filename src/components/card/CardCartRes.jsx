@@ -5,13 +5,13 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useCustomer } from "../../contexts/CustomerContext";
 
-function CardCartRes({ image, name, id }) {
+function CardCartRes({ image, name, status }) {
   return (
     <Card
       variant="outlined"
       row="true"
       sx={{
-        maxWidth: "300px",
+        minWidth: "300px",
         gap: 2,
         boxShadow: "0 3px 10px rgba(90, 108, 234, 0.1)",
         "&:hover": {
@@ -31,11 +31,13 @@ function CardCartRes({ image, name, id }) {
 
           <Chip
             variant="outlined"
-            color="primary"
+            color={status === "close" ? "danger" : "primary"}
             size="sm"
-            sx={{ pointerEvents: "none" }}
+            sx={{
+              pointerEvents: "none",
+            }}
           >
-            Cool weather all day long
+            {status}
           </Chip>
         </Box>
       </Box>

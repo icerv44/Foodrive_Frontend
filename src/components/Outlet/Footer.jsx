@@ -5,8 +5,12 @@ import { Box, Typography } from "@mui/joy";
 import { Link } from "react-router-dom";
 
 const customerFooterBar = [
+  { title: "HOME", icon: <MdHomeFilled />, to: "/customer" },
+  { title: "CART", icon: <BsFillCartDashFill />, to: "/customer/cart" },
   {
-    to: "",
+    title: "CHAT",
+    icon: <AiFillMessage />,
+    to: "/customer/chat",
   },
 ];
 
@@ -22,84 +26,50 @@ export default function Footer() {
       <Box
         sx={{
           width: 355,
-          height: 74,
+          height: 80,
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
-          padding: "0px 45px",
+          padding: "10px 45px",
           borderRadius: "22px",
           mx: "auto",
           boxShadow: "0px 0px 50px rgba(90, 108, 234, 0.1)",
           zIndex: 20,
         }}
       >
-        <Link to={"/customer"}>
-          <Box
-            role="button"
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              justifyContent: "center",
-              color: "#3B3B3B",
-              fontSize: "26px",
-            }}
-          >
-            <MdHomeFilled />
-            <Typography>home</Typography>
-          </Box>
-        </Link>
-
-        <Link to="/customer/profile">
-          <Box
-            role="button"
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              justifyContent: "center",
-              color: "#3B3B3B",
-              fontSize: "26px",
-            }}
-          >
-            <MdAccountCircle />
-            <Typography>account</Typography>
-          </Box>
-        </Link>
-
-        <Link to="/customer/cart">
-          <Box
-            role="button"
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              justifyContent: "center",
-              color: "#3B3B3B",
-              fontSize: "26px",
-            }}
-          >
-            <BsFillCartDashFill />
-            <Typography>cart</Typography>
-          </Box>
-        </Link>
-
-        <Link to="/customer/chat">
-          <Box
-            role="button"
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              justifyContent: "center",
-              color: "#3B3B3B",
-              fontSize: "26px",
-            }}
-          >
-            <AiFillMessage />
-            <Typography>message</Typography>
-          </Box>
-        </Link>
+        {customerFooterBar.map((el) => (
+          <>
+            <Link to={el.to}>
+              <Box
+                role="button"
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  color: "#3B3B3B",
+                  fontSize: "26px",
+                  "&:hover": {
+                    color: "#15BE77",
+                  },
+                }}
+              >
+                {el.icon}
+                <Box
+                  sx={{
+                    my: "4px",
+                    fontSize: "16px",
+                    "&:hover": {
+                      color: "#15BE77",
+                    },
+                  }}
+                >
+                  {el.title}
+                </Box>
+              </Box>
+            </Link>
+          </>
+        ))}
       </Box>
     </Box>
   );

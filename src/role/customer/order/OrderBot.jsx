@@ -83,6 +83,7 @@ function OrderBot() {
           </Typography>
         </Box>
       </Box>
+
       <Box sx={{ marginTop: "12px" }}>
         <ButtonWhite
           title="Order Now"

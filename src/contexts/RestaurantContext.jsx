@@ -5,8 +5,9 @@ import axios from "../config/axios";
 const RestaurantContext = createContext();
 
 function RestaurantContextProvider({ children }) {
-  const [categoryData, setCategoryData] = useState([]);
   const role = useSelector((state) => state.user.info.role);
+  const [categoryData, setCategoryData] = useState([]);
+  const [pendingOrderData, setPendingOrderData] = useState([]);
 
   const [foodImage, setFoodImage] = useState("");
   const [foodName, setFoodName] = useState("");
@@ -34,6 +35,20 @@ function RestaurantContextProvider({ children }) {
     fetchCategory();
   }, [role]);
 
+  const fetchPendingOrder = async () => {
+    try {
+      if (role !== "restaurant") return;
+      const res = await axios.get("restaurant/pendingOrders");
+      setPendingOrderData(res.data.order);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    fetchPendingOrder();
+  }, []);
+
   const handleDeleteCategory = async (categoryId) => {
     try {
       await axios.delete("restaurant/deleteCategory/" + categoryId);
@@ -46,6 +61,8 @@ function RestaurantContextProvider({ children }) {
   return (
     <RestaurantContext.Provider
       value={{
+        pendingOrderData,
+        setPendingOrderData,
         handleDeleteCategory,
         categoryData,
         foodImage,

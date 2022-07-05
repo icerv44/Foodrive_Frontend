@@ -64,7 +64,7 @@ function ModalVertical({ ref, children, onAction, btnName, title, content }) {
                   onAction();
                   setIsOpen(false);
                 }}
-                className="bg-[#DA6317] text-white rounded-xl p-3 w-full"
+                className="bg-red hover:bg-dark-red text-white rounded-xl p-3 w-full"
               >
                 {btnName}
               </button>
