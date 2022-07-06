@@ -1,7 +1,6 @@
 import { Button } from "@mui/joy";
 import { Box } from "@mui/material";
 import Modal from "react-modal";
-import { useRestaurant } from "../../../contexts/RestaurantContext";
 import ModalForCreateFoodOption from "../modal/ModalForCreateFoodOption";
 import OptionalFood from "./OptionalFood";
 
@@ -25,7 +24,6 @@ function CreateOptionInput({
     setOptionCart(cloneOptionCart);
   };
 
-  console.log(optionCart);
   const formatOptinCart = (optionCart) => {
     let cloneOptionCart = [...optionCart];
     let optionCartFormatted = [];
@@ -37,8 +35,6 @@ function CreateOptionInput({
     });
     return optionCartFormatted;
   };
-
-  console.log(formatOptinCart(optionCart));
 
   const handleSubmitCreateOption = (e) => {
     e.preventDefault();

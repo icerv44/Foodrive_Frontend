@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Input } from "@mui/joy";
 import { Autocomplete, Box } from "@mui/material";
 import ButtonBackNew from "../../../components/button/ButtonBackNew";
@@ -6,8 +7,8 @@ import { BsSearch } from "react-icons/bs";
 import { useCustomer } from "../../../contexts/CustomerContext";
 import { getAddressFromLatLng } from "../../../services/getAddress";
 import { useError } from "../../../contexts/ErrorContext";
-import ModalUi from "../../../components/ui/ModalUi";
 import Modal from "react-modal";
+import { ModalUi } from "../../../components/ui/ModalUi";
 
 function HeaderMenuList({ searchMenu, setSearchMenu }) {
   const { restaurant } = useCustomer();

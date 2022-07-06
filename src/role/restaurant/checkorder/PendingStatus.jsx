@@ -4,7 +4,7 @@ import NoOrderForNow from "./NoOrderForNow";
 function PendingStatus({ pendingOrderData }) {
   return (
     <div className="mx-auto px-6">
-      {pendingOrderData.map((el) => {
+      {pendingOrderData.map((el, idx) => {
         if (el.length === 0) {
           return <NoOrderForNow />;
         } else {
@@ -18,6 +18,8 @@ function PendingStatus({ pendingOrderData }) {
               amountOrder={el?.OrderMenus?.length}
               updatedAt={el?.updatedAt}
               totalPrice={el?.price}
+              customerId={el?.customerId}
+              driverId={el?.driverId}
             />
           );
         }

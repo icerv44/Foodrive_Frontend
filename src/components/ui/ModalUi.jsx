@@ -1,5 +1,5 @@
 import { Box } from "@mui/joy";
-import React from "react";
+import React, { useState } from "react";
 import Modal from "react-modal";
 
 export function ModalUi({ ref, children, onAction, btnName, title, content }) {
