@@ -24,6 +24,7 @@ function SearchHome() {
       >
         <RiSearch2Line className="text-2xl " />
       </div>
+
       <input
         type="text"
         placeholder="กินอะไรดี?"

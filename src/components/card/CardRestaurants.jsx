@@ -8,7 +8,7 @@ import Bg_Gray from "../../assets/images/bg-gray.jpeg";
 
 function CardRestaurants({ id, name, image, distance }) {
   return (
-    <Card sx={{ minWidth: 350, minHeight: 200 }}>
+    <Card sx={{ minWidth: 350, minHeight: 200, zIndex: 0 }}>
       <CardCover>
         <img src={image || Bg_Gray} alt={name || "default-pic"} />
       </CardCover>
@@ -19,7 +19,7 @@ function CardRestaurants({ id, name, image, distance }) {
         }}
       />
       {/* //CardContent */}
-      <CardContent sx={{ justifyContent: "flex-end", zIndex: 10000 }}>
+      <CardContent sx={{ justifyContent: "flex-end" }}>
         <Typography level="h2" fontSize="lg" textColor="#fff" mb={1}>
           {name}
         </Typography>

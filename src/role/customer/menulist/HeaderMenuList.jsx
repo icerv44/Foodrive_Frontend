@@ -19,7 +19,7 @@ function HeaderMenuList({ searchMenu, setSearchMenu }) {
       <Box className="w-full h-[76px] px-5 flex justify-between items-center">
         <ButtonBackNew />
         <Box className="text-[#53E88B] text-lg font-semibold">
-          {restaurant?.name}
+          {restaurant?.restaurant?.name}
         </Box>
         <ButtonLocation />
       </Box>

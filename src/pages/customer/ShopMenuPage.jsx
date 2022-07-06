@@ -33,7 +33,7 @@ function ShopMenuPage() {
     <>
       <HeaderMenuList setSearchMenu={setSearchMenu} searchMenu={searchMenu} />
       <Box className="overflow-auto h-[74vh]">
-        {restaurant?.Categories?.map((el) => (
+        {restaurant?.restaurant?.Categories?.map((el) => (
           <FoodList
             key={el?.id}
             categoriesName={el?.name}
