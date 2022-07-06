@@ -14,6 +14,7 @@ function HeaderMenuList({ searchMenu, setSearchMenu }) {
   const { restaurant } = useCustomer();
   const { setError } = useError();
   const [isOpen, setIsOpen] = useState(false);
+  const [restaurantLocation, setRestaurantLocation] = useState("");
 
   Modal.setAppElement("#root");
 
@@ -22,9 +23,10 @@ function HeaderMenuList({ searchMenu, setSearchMenu }) {
 
   const getAddressRestaurant = async () => {
     setIsOpen(true);
+    console.log(isOpen);
     if (latitude !== null && longitude !== null) {
       const res = await getAddressFromLatLng(latitude, longitude);
-      console.log(res);
+      setRestaurantLocation(res);
     } else {
       setError("This restaurant not set address");
     }
@@ -44,7 +46,13 @@ function HeaderMenuList({ searchMenu, setSearchMenu }) {
         </Box>
 
         <ButtonLocation onClick={getAddressRestaurant} />
-        <ModalUi isOpen={isOpen} setIsOpen={setIsOpen} />
+        <ModalUi
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
+          title={"Restaurant Location"}
+        >
+          {restaurantLocation}
+        </ModalUi>
       </Box>
       <Box
         sx={{

@@ -2,8 +2,17 @@ import { Box } from "@mui/joy";
 import React, { useState } from "react";
 import Modal from "react-modal";
 
-export function ModalUi({ ref, children, onAction, btnName, title, content }) {
-  const [isOpen, setIsOpen] = useState(false);
+export function ModalUi({
+  ref,
+  children,
+  onAction,
+  btnName,
+  title,
+  content,
+  isOpen,
+  setIsOpen,
+}) {
+  console.log(isOpen);
 
   return (
     <Modal
@@ -20,8 +29,10 @@ export function ModalUi({ ref, children, onAction, btnName, title, content }) {
       isOpen={isOpen}
       onRequestClose={() => setIsOpen(false)}
     >
-      {/* MODAL CONTENT */}
-      <Box>test</Box>
+      <Box className="px-2">
+        <Box className="text-2xl font-bold mb-4 ">{title}</Box>
+        <Box className="flex justify-content text-gray">{children}</Box>
+      </Box>
     </Modal>
   );
 }
