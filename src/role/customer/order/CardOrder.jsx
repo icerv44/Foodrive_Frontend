@@ -1,8 +1,5 @@
 import { Box, Typography } from "@mui/material";
-import IconButton from "@mui/joy/IconButton";
-import { AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
 import { useState } from "react";
-import { Chip } from "@mui/joy";
 import CardOverflow from "@mui/joy/CardOverflow";
 import { useCustomer } from "../../../contexts/CustomerContext";
 import { useParams } from "react-router-dom";
@@ -10,29 +7,11 @@ import ModalVertical from "../../../components/ui/ModalVertical";
 import Modal from "react-modal";
 import AspectRatio from "@mui/joy/AspectRatio";
 
-function CardOrder({
-  id,
-  src,
-  price,
-  foodName,
-  foodDetail,
-  orderMenuOptionGroups,
-}) {
+function CardOrder({ id, src, price, foodName, orderMenuOptionGroups }) {
   const { deleteMenu, getCartById } = useCustomer();
   const [count, setCount] = useState(1);
   const { cartId } = useParams();
   Modal.setAppElement("#root");
-
-  const handleClickIncreaseAmount = () => {
-    if (count <= 8) {
-      setCount(count + 1);
-    }
-  };
-  const handleClickDecreaseAmount = () => {
-    if (count > 0) {
-      setCount(count - 1);
-    }
-  };
 
   const handleRemove = async () => {
     try {

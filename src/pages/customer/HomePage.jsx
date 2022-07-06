@@ -18,18 +18,18 @@ function HomePage() {
   const { pathname } = useLocation();
 
   useEffect(() => {
-    try {
-      setLoading(true);
-      if ((longitude, latitude)) {
-        const fetchMenus = async () => {
+    if ((longitude, latitude)) {
+      const fetchMenus = async () => {
+        try {
+          setLoading(true);
           await getMenus(latitude, longitude, "");
-        };
-        fetchMenus();
-      }
-    } catch (err) {
-      console.log(err);
-    } finally {
-      setLoading(false);
+        } catch (err) {
+          console.log(err);
+        } finally {
+          setLoading(false);
+        }
+      };
+      fetchMenus();
     }
   }, [pathname, latitude, longitude]);
 

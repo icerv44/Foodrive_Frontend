@@ -15,25 +15,25 @@ function ShopMenuPage() {
   const [showMenus, setShowMenus] = useState([]);
 
   useEffect(() => {
-    try {
-      const fetchRestaurant = async () => {
+    const fetchRestaurant = async () => {
+      try {
         setLoading(true);
         await getRestaurantById(+restaurantId);
-      };
+      } catch (err) {
+        console.log(err);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-      fetchRestaurant();
-    } catch (err) {
-      console.log(err);
-    } finally {
-      setLoading(false);
-    }
+    fetchRestaurant();
   }, [restaurantId]);
 
   return (
     <>
       <HeaderMenuList setSearchMenu={setSearchMenu} searchMenu={searchMenu} />
       <Box className="overflow-auto h-[74vh]">
-        {restaurant?.Categories?.map((el) => (
+        {restaurant?.restaurant?.Categories?.map((el) => (
           <FoodList
             key={el?.id}
             categoriesName={el?.name}

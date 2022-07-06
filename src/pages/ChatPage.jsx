@@ -89,7 +89,7 @@ function ChatPage() {
           <InputChat chatId={chatId} senderId={userId} />
         </>
       ) : (
-        <Box className="mt-24 flex justify-center">
+        <Box className="flex justify-center absolute  bottom-1/2 left-1/2 right-1/2">
           <Box color="#858786" fontSize="24px" className="mt-[auto] mb-[auto] ">
             No chat available for now.
           </Box>

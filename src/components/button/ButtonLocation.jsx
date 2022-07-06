@@ -1,4 +1,5 @@
 import { TiLocation } from "react-icons/ti";
+import { Link } from "react-router-dom";
 
 function ButtonLocation({ onClick }) {
   return (

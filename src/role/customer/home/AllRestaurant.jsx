@@ -15,21 +15,19 @@ function AllRestaurant() {
   const { latitude, longitude, role } = useSelector((state) => state.user.info);
 
   useEffect(() => {
-    try {
-      const fetchRestaurants = async () => {
+    const fetchRestaurants = async () => {
+      try {
         const res = await axios.post("/customer/allRestaurants", {
           latitude,
           longitude,
         });
         setRestaurants(res.data.restaurants);
-      };
-      fetchRestaurants();
-    } catch (err) {
-      console.log(err);
-    }
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchRestaurants();
   }, [role]);
-
-  console.log(restaurants);
 
   return (
     <Box sx={{}}>
