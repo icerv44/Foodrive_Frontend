@@ -39,7 +39,6 @@ function AccountPage() {
   ];
 
   const findRole = () => profileList.find((el) => el.role === role);
-  console.log(findRole());
 
   const handleLogout = () => {
     removeToken();

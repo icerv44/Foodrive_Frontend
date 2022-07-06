@@ -16,19 +16,16 @@ function OfflineOnlineBar() {
   const handleSwitchStatus = async () => {
     try {
       if (driverStatus === "UNAVAILABLE") {
-        dispatch(setDriverStatus("AVAILABLE"));
         await axios.patch("/driver/updateStatus", {
           status: "AVAILABLE",
         });
+        dispatch(setDriverStatus("AVAILABLE"));
       } else if (driverStatus === "AVAILABLE") {
-        dispatch(setDriverStatus("UNAVAILABLE"));
         await axios.patch("/driver/updateStatus", {
           status: "UNAVAILABLE",
         });
+        dispatch(setDriverStatus("UNAVAILABLE"));
       }
-
-      console.log("!!!!!!! ");
-      console.log(driverStatus);
     } catch (err) {
       console.log(err);
       setError(err.response.data.message);
