@@ -19,6 +19,7 @@ import {
   getDocs,
 } from "firebase/firestore";
 import { db } from "../../config/firebaseConfig";
+import { useSocket } from "../../contexts/SocketContext";
 
 function OrderRequestPage() {
   const {
@@ -26,7 +27,7 @@ function OrderRequestPage() {
     longitude,
     id: driverId,
   } = useSelector((state) => state.user.info);
-
+  const { socket } = useSocket();
   const [order, setOrder] = useState([]);
 
   useEffect(() => {
@@ -89,12 +90,13 @@ function OrderRequestPage() {
       ],
     },
   ];
-  const clickOrderAccepted = async (id, customerId) => {
+  const clickOrderAccepted = async (id, customerId, restaurantId) => {
     const resOrder = await axios.post(`driver/deliveringStatus/${id}`);
 
     const newChatId = `driver${driverId}_customer${customerId}`;
     const chatRef = doc(db, "chats", newChatId);
     const messagesRef = collection(db, "chats", newChatId, "messages");
+    socket.emit("driverAcceptOrder", { restaurantId });
     await setDoc(chatRef, {
       users: ["driver" + driverId, "customer" + customerId],
     });
@@ -142,7 +144,7 @@ function OrderRequestPage() {
           <>
             <Box
               onClick={() => {
-                clickOrderAccepted(el.id, el.customerId);
+                clickOrderAccepted(el.id, el.customerId, el.Restaurant.id);
               }}
             >
               <CardOrderReq

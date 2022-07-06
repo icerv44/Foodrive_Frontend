@@ -105,6 +105,9 @@ function Router() {
       socket?.on("restaurantReceiveOrder", ({ message }) => {
         alert(message);
       });
+      socket?.on("notifyAcceptOrder", ({ message }) => {
+        alert(message);
+      });
     }
     if (userInfo.role === "driver") {
       socket?.on("notifyDriverOrder", ({ message }) => {
