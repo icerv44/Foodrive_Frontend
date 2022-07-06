@@ -1,7 +1,13 @@
-import { Box } from "@mui/material";
 import { useState } from "react";
 import Modal from "react-modal";
 import CardMenuList from "./CardMenuList";
+import AspectRatio from "@mui/joy/AspectRatio";
+import Box from "@mui/joy/Box";
+import Button from "@mui/joy/Button";
+import Card from "@mui/joy/Card";
+import IconButton from "@mui/joy/IconButton";
+import Typography from "@mui/joy/Typography";
+import BookmarkAdd from "@mui/icons-material/BookmarkAddOutlined";
 
 function CardDeliveryCheck({
   onClick,
@@ -18,8 +24,6 @@ function CardDeliveryCheck({
   orderMenus,
 }) {
   const [isOpen, setIsOpen] = useState(false);
-
-  // console.log(typeof orderMenus);
 
   let orderPrice = +totalPrice + +deliveryFee;
   let customerName = customerFirstName + " " + customerLastName;
@@ -38,6 +42,16 @@ function CardDeliveryCheck({
 
   return (
     <>
+      {/* <Box
+        onClick={() => setIsOpen(true)}
+        sx={{
+          width: "100%",
+          boxShadow: "12px 26px 50px rgba(90, 108, 234, 0.07)",
+          borderRadius: "20px",
+          px: "20px",
+          py: "12px",
+        }}
+      >
       <Box
         onClick={() => setIsOpen(true)}
         sx={{
@@ -63,15 +77,43 @@ function CardDeliveryCheck({
             <Box>{orderPrice.toFixed(2)} ฿</Box>
           </Box>
         </Box>
-      </Box>
+      </Box> */}
+      <Card variant="outlined" sx={{ minWidth: "300px" }}>
+        <Box sx={{ display: "flex", flexDirection: "column", gap: 0.5 }}>
+          <Typography level="h2" fontSize="lg" sx={{ alignSelf: "flex-start" }}>
+            Driver : {driverName}
+          </Typography>
+          <Typography level="body2" fontSize="md">
+            Customer : {customerName}
+          </Typography>
+          <Typography level="body2">{address}</Typography>
+        </Box>
+        <Box sx={{ display: "flex" }}>
+          <div>
+            <Typography level="body3">Total price:</Typography>
+            <Typography fontSize="lg" fontWeight="lg">
+              {orderPrice?.toFixed(2)} ฿
+            </Typography>
+          </div>
+          <Button
+            onClick={() => setIsOpen(true)}
+            variant="soft"
+            size="sm"
+            color="success"
+            sx={{ ml: "auto", fontWeight: 600 }}
+          >
+            Order
+          </Button>
+        </Box>
+      </Card>
       <Modal
         style={{
           overlay: { backgroundColor: "rgba(0,0,0,0.5)" },
           content: {
             borderRadius: "18px",
             boxShadow: "12px 26px 50px rgba(90, 108, 234, 0.07)",
-            height: "56vh",
-            top: "20%",
+            height: "44vh",
+            top: "25%",
             overflow: "auto",
           },
         }}

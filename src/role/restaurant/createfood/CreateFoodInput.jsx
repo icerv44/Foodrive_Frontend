@@ -27,6 +27,12 @@ function CreateFoodInput() {
     setOptionGroups,
   } = useRestaurant();
 
+  const disabledButton =
+    foodName === "" ||
+    foodDetail === "" ||
+    foodPrice === "" ||
+    foodImage === "";
+
   const inputFileRef = useRef(null);
 
   return (
@@ -120,7 +126,12 @@ function CreateFoodInput() {
           title="Create Option"
           px="103px"
         />
-        <ButtonGreenGradiant type="submit" title="Check Food" px="112px" />
+        <ButtonGreenGradiant
+          disabled={disabledButton ? true : false}
+          type="submit"
+          title="Check Food"
+          px="112px"
+        />
       </Box>
     </form>
   );
