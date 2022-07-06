@@ -91,7 +91,7 @@ function OrderRequestPage() {
     },
   ];
   const clickOrderAccepted = async (id, customerId, restaurantId) => {
-    const resOrder = await axios.post(`driver/deliveringStatus/${id}`);
+    const resOrder = await axios.patch(`driver/deliveringStatus/${id}`);
 
     const newChatId = `driver${driverId}_customer${customerId}`;
     const chatRef = doc(db, "chats", newChatId);

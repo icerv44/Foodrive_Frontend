@@ -17,17 +17,19 @@ function AllRestaurant() {
   useEffect(() => {
     const fetchRestaurants = async () => {
       try {
+        if (latitude === null || longitude === null) return;
         const res = await axios.post("/customer/allRestaurants", {
           latitude,
           longitude,
         });
+        console.log(res.data.restaurants);
         setRestaurants(res.data.restaurants);
       } catch (err) {
         console.log(err);
       }
     };
     fetchRestaurants();
-  }, [role]);
+  }, [role, latitude, longitude]);
 
   return (
     <Box sx={{}}>
