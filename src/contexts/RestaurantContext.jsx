@@ -25,7 +25,7 @@ function RestaurantContextProvider({ children }) {
   const fetchCategory = async () => {
     try {
       if (role !== "restaurant") return;
-      const res = await axios.get("restaurant/getAllCategory");
+      const res = await axios.get("/restaurant/getAllCategory");
       setCategoryData(res.data.category);
     } catch (error) {
       console.log(error);

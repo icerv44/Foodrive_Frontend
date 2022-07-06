@@ -7,7 +7,7 @@ function CustomerContainer() {
   return (
     <Box>
       <Outlet />
-      <Box className="flex justify-center items-end">
+      <Box className="flex justify-center items-end z-50">
         <Box className="fixed bottom-5">
           <Footer />
         </Box>

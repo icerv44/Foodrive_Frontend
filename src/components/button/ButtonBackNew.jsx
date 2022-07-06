@@ -8,7 +8,10 @@ function ButtonBackNew({ onClick }) {
 
   return (
     <>
-      <IconButton onClick={onClick || handleBack} sx={{ bgcolor: "#f9a94d22" }}>
+      <IconButton
+        onClick={onClick || handleBack}
+        sx={{ bgcolor: "#f9a94d22", "&:hover": { bgcolor: "#f5d8b8" } }}
+      >
         <BiChevronLeft className="text-[#DA6317] text-3xl " />
       </IconButton>
     </>

@@ -8,6 +8,7 @@ import { useCustomer } from "../../../contexts/CustomerContext";
 import { useParams } from "react-router-dom";
 import ModalVertical from "../../../components/ui/ModalVertical";
 import Modal from "react-modal";
+import AspectRatio from "@mui/joy/AspectRatio";
 
 function CardOrder({
   id,
@@ -50,41 +51,50 @@ function CardOrder({
           width: "348px",
           display: "flex",
           justifyContent: "space-between",
-          alignItems: "center",
+          // alignItems: "center",
           px: "14px",
           py: "14px",
           boxShadow: "12px 26px 50px rgba(90, 108, 234, 0.07)",
         }}
       >
-        <img src={src} className="w-[66px]" alt="" />
-        <Box sx={{ flexGrow: "1" }} className="flex flex-col px-4">
-          <Box className="flex justify-end"></Box>
+        <CardOverflow sx={{ width: "100px" }}>
+          <AspectRatio ratio="1">
+            <img src={src} className="w-[66px] rounded-lg" alt="" />
+          </AspectRatio>
+        </CardOverflow>
 
-          <Box>
-            <Typography sx={{ fontWeight: 700 }}>{foodName}</Typography>
-            <Typography sx={{ color: "#3B3B3B" }}>
-              {orderMenuOptionGroups.length >= 0 &&
-                orderMenuOptionGroups.map(
-                  (el) => el.name + " : " + el.options.map((el) => el.name)
-                )}
+        <Box sx={{ flexGrow: "1" }} className="flex px-4 items-center">
+          <Box sx={{ flexGrow: "1" }} className="flex flex-col px-4">
+            <Box className="flex justify-end"></Box>
+
+            <Box>
+              <Typography sx={{ fontWeight: 700 }}>{foodName}</Typography>
+              <div className="flex flex-col py-2">
+                {orderMenuOptionGroups.length >= 0 &&
+                  orderMenuOptionGroups.map((el) => (
+                    <Typography color="gray">
+                      {el.name} : {el.options.map((el) => el.name)}
+                    </Typography>
+                  ))}
+              </div>
+            </Box>
+            <Typography
+              sx={{ fontWeight: 800, color: "#15BE77", fontSize: "20px" }}
+            >
+              {price} ฿
             </Typography>
           </Box>
-          <Typography
-            sx={{ fontWeight: 800, color: "#15BE77", fontSize: "20px" }}
-          >
-            {price} ฿
-          </Typography>
-        </Box>
 
-        <ModalVertical
-          onAction={handleRemove}
-          id={id}
-          title={"REMOVE MENU"}
-          content={"This menu will be remove from cart."}
-          btnName={"REMOVE"}
-        >
-          Remove
-        </ModalVertical>
+          <ModalVertical
+            onAction={handleRemove}
+            id={id}
+            title={"REMOVE MENU"}
+            content={"This menu will be remove from cart."}
+            btnName={"REMOVE"}
+          >
+            Remove
+          </ModalVertical>
+        </Box>
       </Box>
     </Box>
   );

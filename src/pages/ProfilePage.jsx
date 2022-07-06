@@ -122,14 +122,6 @@ function ProfilePage() {
       );
   };
 
-  // const showImage = () => {
-  //   if (role === "restaurant") {
-  //     return user.image;
-  //   } else if (role === "customer") {
-  //   } else {
-  //   }
-  // };
-
   const handleUpdate = async () => {
     try {
       setLoading(true);
