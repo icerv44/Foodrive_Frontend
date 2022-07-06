@@ -13,8 +13,8 @@ function CreateOptionInput({
   setOptionName,
   optionPrice,
   setOptionPrice,
-  optionGroups,
   setOptionGroups,
+  disabled,
 }) {
   Modal.setAppElement("#root");
 
@@ -107,6 +107,7 @@ function CreateOptionInput({
           </Box>
         </Box>
         <Button
+          disabled={disabled}
           color="success"
           sx={{ width: "100%" }}
           onClick={handleSubmitCreateOption}
