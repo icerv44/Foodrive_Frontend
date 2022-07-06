@@ -53,7 +53,7 @@ function GoogleMapDriver() {
           //await fetch driver position
           customerLocation = { lat: 14, lng: 100.5 };
         }
-        console.log(driverLocation, customerLocation);
+
         setDriverPosition(driverLocation);
         setCustomerPosition(customerLocation);
         setCenter({ lat: latitude, lng: longitude });

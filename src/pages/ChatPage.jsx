@@ -10,6 +10,7 @@ import { db } from "../config/firebaseConfig";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import axios from "../config/axios";
+import { Typography } from "@mui/joy";
 
 function ChatPage() {
   const role = useSelector((state) => state.user.info.role);
@@ -21,6 +22,7 @@ function ChatPage() {
     const getIds = async () => {
       if (role === "driver") {
         const res = await axios.get("/driver/currentOrder");
+        if (res.data.order === null) return;
         setCustomerId(res.data.order.customerId);
         setDriverId(res.data.order.driverId);
         console.log(res.data.order);
@@ -31,6 +33,7 @@ function ChatPage() {
       } else if (role === "customer") {
         //fetch order with customer role
         const res = await axios.get("/customer/currentOrder");
+        if (res.data === null) return;
         setCustomerId(res.data.order.customerId);
         setDriverId(res.data.order.driverId);
         setCollocutorInfo({
@@ -43,7 +46,6 @@ function ChatPage() {
   }, [role]);
 
   const chatId = `driver${driverId}_customer${customerId}`;
-  console.log(chatId);
 
   const chatsRef = collection(db, "chats");
   const messagesRef = collection(db, "chats", chatId, "messages");
@@ -67,7 +69,8 @@ function ChatPage() {
   return (
     <Container className="bg-[#FEFEFF]">
       <ButtonBack />
-      {driverId && customerId && (
+
+      {driverId && customerId ? (
         <>
           <UserCard
             name={collocutorInfo.firstName + " " + collocutorInfo.lastName}
@@ -85,6 +88,12 @@ function ChatPage() {
           </Box>
           <InputChat chatId={chatId} senderId={userId} />
         </>
+      ) : (
+        <Box className="mt-24 flex justify-center">
+          <Box color="#858786" fontSize="24px" className="mt-[auto] mb-[auto] ">
+            No chat available for now.
+          </Box>
+        </Box>
       )}
     </Container>
   );

@@ -1,6 +1,8 @@
 import axios from "../../../config/axios";
 import { Button } from "@mui/joy";
 import { Box } from "@mui/material";
+import { useSocket } from "../../../contexts/SocketContext";
+import { useSelector } from "react-redux";
 
 function CardPendingOrder({
   orderId,
@@ -13,14 +15,22 @@ function CardPendingOrder({
   customerId,
   driverId,
 }) {
+  const { restaurantLatitude, restaurantLongitude } = useSelector(
+    (state) => state.user.info
+  );
   let customerName = firstName + " " + lastName;
   let orderPrice = totalPrice;
   let dateTime = new Date(updatedAt).toString();
+  const { socket } = useSocket();
 
   const handleAcceptedOrder = async () => {
     try {
       await axios.patch("restaurant/pendingOrders/" + orderId, {
         status: "DRIVER_PENDING",
+      });
+      socket.emit("restaurantAccept", {
+        restaurantLatitude,
+        restaurantLongitude,
       });
     } catch (err) {
       console.log(err);
