@@ -7,15 +7,17 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import ButtonBackNew from "../components/button/ButtonBackNew";
 import ButtonBack from "../components/button/ButtonBack";
 import CardProfile from "../components/card/CardProfile";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { clearUserInfo } from "../slices/userSlice";
 import { useSocket } from "../contexts/SocketContext";
+import OnlineOfflineButton from "../components/restaurant/OnlineOfflineButton";
 
 function AccountPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { pathname } = useLocation();
   const { socket, setSocket } = useSocket();
+  const user = useSelector((state) => state.user.info);
   const role = pathname.split("/")[1];
 
   const profileList = [
@@ -53,6 +55,7 @@ function AccountPage() {
       <ButtonBack />
 
       <Box sx={{ mt: "100px" }}>
+        {user.role === "restaurant" && <OnlineOfflineButton />}
         <Typography
           sx={{
             mx: 2,

@@ -13,6 +13,8 @@ function CreateCategory() {
   const [category, setCategory] = useState("");
   const navigate = useNavigate();
 
+  console.log(categoryData);
+
   return (
     <Box
       sx={{
@@ -64,14 +66,18 @@ function CreateCategory() {
           borderRadius: "16px",
           p: "16px",
           display: "flex",
-          flexDirection: "column",
+          flexDirection: "column-reverse",
           gap: "20px",
           overflow: "scroll",
           maxHeight: "40vh",
         }}
       >
-        {categoryData.map((el) => (
-          <CategoryList key={el.id} categoryName={el.name} categoryId={el.id} />
+        {categoryData?.map((el) => (
+          <CategoryList
+            key={el?.id}
+            categoryName={el?.name}
+            categoryId={el?.id}
+          />
         ))}
       </Box>
     </Box>
