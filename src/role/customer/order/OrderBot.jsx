@@ -15,7 +15,7 @@ function OrderBot() {
     <Box
       sx={{
         width: "348px",
-        height: "204px",
+        height: "120px",
         padding: "12px",
         display: "flex",
         flexDirection: "column",
@@ -49,22 +49,7 @@ function OrderBot() {
             alignItems: "center",
             width: "100%",
           }}
-        >
-          {/* <Typography sx={{ fontWeight: "700" }}>Total Price</Typography>
-          <Typography sx={{ fontWeight: "700" }}>999฿</Typography>
-        </Box>
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "space-between",
-            alignItems: "center",
-            width: "100%",
-          }}
-        >
-          <Typography sx={{ fontWeight: "700" }}>Delivery fee</Typography>
-          <Typography sx={{ fontWeight: "700" }}>10฿</Typography> */}
-        </Box>
+        ></Box>
       </Box>
       <Box
         sx={{
@@ -84,14 +69,21 @@ function OrderBot() {
             width: "100%",
           }}
         >
-          <Typography sx={{ fontWeight: "700", fontSize: "20px" }}>
-            Total Price
+          <Typography
+            color="white"
+            sx={{ fontWeight: "700", fontSize: "20px" }}
+          >
+            Total Price :
           </Typography>
-          <Typography sx={{ fontWeight: "700", fontSize: "20px" }}>
+          <Typography
+            color="white"
+            sx={{ fontWeight: "700", fontSize: "20px" }}
+          >
             {cart?.cartItems && getTotalFromCart(cart?.cartItems?.cart) + "฿"}
           </Typography>
         </Box>
       </Box>
+
       <Box sx={{ marginTop: "12px" }}>
         <ButtonWhite
           title="Order Now"

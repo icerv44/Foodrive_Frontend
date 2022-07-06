@@ -8,7 +8,7 @@ import { useDelivery } from "../../contexts/DeliveryContext";
 // import { IoIosCall } from "react-icons/io";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Place } from "@mui/icons-material";
-
+import axios from "../../config/axios";
 const listMenu = [
   {
     icon: <MdCall />,
@@ -30,7 +30,7 @@ const listMenu = [
 
 function DeliveryBar() {
   const navigate = useNavigate();
-  const { setPlace, btnTitle } = useDelivery();
+  const { setPlace, btnTitle, order } = useDelivery();
   const { pathname } = useLocation();
   const path = pathname.split("/")[3] === "direction";
   const delivery = "/driver/delivery/";
@@ -40,6 +40,12 @@ function DeliveryBar() {
   const handleBar = () => {
     if (path) {
     }
+  };
+  const updateDriver = async () => {
+    const updateStatus = await axios.patch(
+      `/driver/deliveringStatus/${order.id}`
+    );
+    console.log("updateDriver customerLocation: ", updateStatus);
   };
 
   const handleBtn = () => {
@@ -51,6 +57,7 @@ function DeliveryBar() {
       navigate(`/driver/completed`);
     } else {
       setPlace("customerLocation");
+      updateDriver();
       navigate(`/driver/delivery/confirmOrder`);
     }
 

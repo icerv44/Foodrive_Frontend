@@ -13,7 +13,11 @@ import { MdOutlineLocationOn } from "react-icons/md";
 import ModalOrderReq from "../../components/ui/ModalOrderReq";
 
 function OrderRequestPage() {
-  const { latitude, longitude } = useSelector((state) => state.user.info);
+  const {
+    latitude,
+    longitude,
+    id: driverId,
+  } = useSelector((state) => state.user.info);
 
   const [order, setOrder] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
@@ -58,19 +62,17 @@ function OrderRequestPage() {
       </Typography>
       <Box className="flex flex-col items-center">
         {order.map((el, idx) => (
-          <>
-            <CardOrderReq
-              key={idx}
-              id={el.id}
-              restaurantName={el.Restaurant.name}
-              distance={el.distance}
-              driverIncome={el.deliveryFee}
-              orderList={el.OrderMenus}
-              restaurantLatitude={el.Restaurant.latitude}
-              restaurantLongtitude={el.Restaurant.longitude}
-              customerAddress={el.addressName}
-            />
-          </>
+          <CardOrderReq
+            key={idx}
+            id={el.id}
+            restaurantName={el.Restaurant.name}
+            distance={el.distance}
+            driverIncome={el.deliveryFee}
+            orderList={el.OrderMenus}
+            restaurantLatitude={el.Restaurant.latitude}
+            restaurantLongtitude={el.Restaurant.longitude}
+            customerAddress={el.addressName}
+          />
         ))}
       </Box>
     </Box>

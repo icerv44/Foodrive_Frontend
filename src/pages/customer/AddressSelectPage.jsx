@@ -49,15 +49,15 @@ function AddressSelectPage() {
   return (
     <Container>
       <ButtonBack />
-      <Box className="mt-24">
-        <Box className="ml-5 py-5 font-bold text-3xl">Select your address</Box>
+      <Box className="mt-28">
+        <Box className="ml-5  font-bold text-3xl">My Location</Box>
         <Box className="flex flex-col justify-center items-center gap-5">
-          <OtherAddress />
+          {/* <OtherAddress /> */}
           <SelectedAddress
             onClick={selectCurrentAddress}
             address={addressLabel}
           />
-          <AddAddress />
+          {/* <AddAddress /> */}
         </Box>
       </Box>
     </Container>

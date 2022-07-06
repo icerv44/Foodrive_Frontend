@@ -11,7 +11,7 @@ function ModalVertical({ ref, children, onAction, btnName, title, content }) {
     <div>
       <button ref={ref} onClick={() => setIsOpen(true)}>
         <Chip
-          variant="outlined"
+          variant="solid"
           color="danger"
           sx={{
             px: 0.2,
@@ -60,8 +60,11 @@ function ModalVertical({ ref, children, onAction, btnName, title, content }) {
               </button>
 
               <button
-                onClick={onAction}
-                className="bg-[#DA6317] text-white rounded-xl p-3 w-full"
+                onClick={() => {
+                  onAction();
+                  setIsOpen(false);
+                }}
+                className="bg-red hover:bg-dark-red text-white rounded-xl p-3 w-full"
               >
                 {btnName}
               </button>

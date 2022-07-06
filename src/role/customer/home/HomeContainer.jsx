@@ -3,6 +3,7 @@ import HomeHeader from "./HomeHeader";
 import SearchHome from "./SearchHome";
 import Categories from "./Categories";
 import { Box } from "@mui/joy";
+import AllRestaurant from "./AllRestaurant";
 
 function HomeContainer() {
   return (
@@ -10,6 +11,7 @@ function HomeContainer() {
       <HomeHeader />
       <SearchHome />
       <Categories />
+      <AllRestaurant />
     </Box>
   );
 }

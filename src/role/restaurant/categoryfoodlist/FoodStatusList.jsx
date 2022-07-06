@@ -1,30 +1,41 @@
-import { useState } from "react";
-import { BsToggleOff, BsToggleOn } from "react-icons/bs";
+import * as React from "react";
+import AspectRatio from "@mui/joy/AspectRatio";
+import Card from "@mui/joy/Card";
+import CardOverflow from "@mui/joy/CardOverflow";
+import Typography from "@mui/joy/Typography";
+import ModalForCardFood from "../modal/ModalForCardFood";
+import Modal from "react-modal";
+import { Box } from "@mui/joy";
 
-function FoodStatusList({ title, price }) {
-  const [isFoodAvailable, setIsFoodAvailable] = useState(true);
-
+export default function FoodStatusList({ src, title, price, id, fetch }) {
   let netPrice = price;
 
-  const handleSetFoodAvailable = () => {
-    setIsFoodAvailable(!isFoodAvailable);
-  };
+  Modal.setAppElement("#root");
 
   return (
-    <div className="flex justify-between items-center">
-      <div>
-        <h6 className="font-semibold">{title}</h6>
-        <h6 className="text-gray text-sm">{netPrice?.toFixed(2)} ฿</h6>
-      </div>
-      <div onClick={handleSetFoodAvailable} className="text-3xl">
-        {isFoodAvailable ? (
-          <BsToggleOn className="text-[#37C989]" />
-        ) : (
-          <BsToggleOff className="text-red-700" />
-        )}
-      </div>
-    </div>
+    <Card
+      row
+      variant="outlined"
+      sx={{
+        minWidth: "260px",
+        gap: 2,
+        bgcolor: "background.body",
+      }}
+    >
+      <CardOverflow>
+        <AspectRatio ratio="1" sx={{ width: 90 }}>
+          <img src={src} alt="" />
+        </AspectRatio>
+      </CardOverflow>
+      <Box>
+        <Typography fontWeight="md" textColor="success.plainColor" mb={0.5}>
+          {title}
+        </Typography>
+        <Typography level="body2">{netPrice.toFixed(2)} ฿</Typography>
+      </Box>
+      <Box className="ml-auto">
+        <ModalForCardFood fetch={fetch} title={title} id={id} />
+      </Box>
+    </Card>
   );
 }
-
-export default FoodStatusList;

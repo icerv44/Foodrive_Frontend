@@ -7,10 +7,17 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import ButtonBackNew from "../components/button/ButtonBackNew";
 import ButtonBack from "../components/button/ButtonBack";
 import CardProfile from "../components/card/CardProfile";
+import { useDispatch, useSelector } from "react-redux";
+import { clearUserInfo } from "../slices/userSlice";
+import { useSocket } from "../contexts/SocketContext";
+import OnlineOfflineButton from "../components/restaurant/OnlineOfflineButton";
 
 function AccountPage() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { pathname } = useLocation();
+  const { socket, setSocket } = useSocket();
+  const user = useSelector((state) => state.user.info);
   const role = pathname.split("/")[1];
 
   const profileList = [
@@ -19,27 +26,46 @@ function AccountPage() {
       menu: [
         { title: "Edit my profile", to: "/customer/editProfile" },
         { title: "My address", to: "/customer/myLocation" },
-        { title: "My payment method", to: "/customer/payment" },
       ],
     },
     {
       role: "driver",
       menu: [{ title: "Edit my profile", to: "/driver/editProfile" }],
     },
+    {
+      role: "restaurant",
+      menu: [
+        { title: "Edit restaurant profile", to: "/restaurant/editProfile" },
+      ],
+    },
   ];
 
   const findRole = () => profileList.find((el) => el.role === role);
-  console.log(findRole());
 
   const handleLogout = () => {
     removeToken();
+    dispatch(clearUserInfo());
+    socket?.emit("forceDisconnect");
+    setSocket(null);
     navigate("/customer/login");
   };
 
   return (
     <Box className="flex justify-center gap-5 h-[100vh] ">
       <ButtonBack />
+
       <Box sx={{ mt: "100px" }}>
+        {user.role === "restaurant" && <OnlineOfflineButton />}
+        <Typography
+          sx={{
+            mx: 2,
+            display: "flex",
+            fontWeight: "700",
+            fontSize: "18px",
+          }}
+        >
+          Account
+        </Typography>
         {findRole().menu.map((el, idx) => (
           <Box key={idx}>
             <Link to={el.to}>

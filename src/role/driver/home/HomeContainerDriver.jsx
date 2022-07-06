@@ -4,16 +4,18 @@ import { useDispatch, useSelector } from "react-redux";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import ButtonLogout from "../../../components/button/ButtonLogout";
 import { removeToken } from "../../../services/localstorage";
-import { setDriverStatus } from "../../../slices/userSlice";
+import { clearUserInfo, setDriverStatus } from "../../../slices/userSlice";
 import DriverContainer from "./DriverContainer";
 
 function HomeContainerDriver() {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const role = pathname.split("/")[1];
+  const dispatch = useDispatch();
 
   const handleLogOut = async () => {
     removeToken();
+    dispatch(clearUserInfo());
     navigate("/" + role + "/login");
   };
 

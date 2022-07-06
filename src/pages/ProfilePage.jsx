@@ -16,7 +16,6 @@ import { fetchUser } from "../slices/userSlice";
 function ProfilePage() {
   const user = useSelector((state) => state.user.info);
   const dispatch = useDispatch();
-  console.log(user);
   const { setLoading } = useLoading();
   const { setError } = useError();
   const { setSuccess } = useSuccess();
@@ -122,14 +121,6 @@ function ProfilePage() {
         (driverImage && URL.createObjectURL(driverImage)) || user.driverImage
       );
   };
-
-  // const showImage = () => {
-  //   if (role === "restaurant") {
-  //     return user.image;
-  //   } else if (role === "customer") {
-  //   } else {
-  //   }
-  // };
 
   const handleUpdate = async () => {
     try {

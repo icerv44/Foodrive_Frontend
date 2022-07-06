@@ -8,8 +8,6 @@ import { useCustomer } from "../../contexts/CustomerContext";
 import { Link, useNavigate } from "react-router-dom";
 
 function CardHome({ el }) {
-  // const { menus } = useCustomer();
-
   const cutLetter = (name = "", length) => {
     if (name.length > length) {
       const cutName = name.substring(0, length) + "...";

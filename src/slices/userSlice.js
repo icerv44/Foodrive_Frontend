@@ -12,21 +12,23 @@ const fetchUser = createAsyncThunk("user/fetch", async (payload, api) => {
   }
 });
 
+const INITIAL_STATE = {
+  info: {
+    name: "",
+    firstName: "",
+    lastName: "",
+    latitude: null,
+    longitude: null,
+    role: "",
+    driverStatus: "", // or "ONLINE"
+  },
+  isLoading: "",
+  error: "",
+};
+
 const userSlice = createSlice({
   name: "user",
-  initialState: {
-    info: {
-      name: "",
-      firstName: "",
-      lastName: "",
-      latitude: null,
-      longitude: null,
-      role: "",
-      driverStatus: "UNAVAILABLE", // or "ONLINE"
-    },
-    isLoading: "",
-    error: "",
-  },
+  initialState: INITIAL_STATE,
   reducers: {
     setPosition: (state, action) => {
       state.info.latitude = action.payload.latitude;
@@ -34,6 +36,10 @@ const userSlice = createSlice({
     },
     setDriverStatus: (state, action) => {
       state.info.driverStatus = action.payload;
+    },
+    clearUserInfo: (state, action) => {
+      state = INITIAL_STATE;
+      return state;
     },
   },
   extraReducers: (builder) => {
@@ -43,6 +49,7 @@ const userSlice = createSlice({
         state.error = "";
       })
       .addCase(fetchUser.fulfilled, (state, action) => {
+        console.log(action.payload.role, action.payload.status);
         state.info = {
           ...state.info,
           name: action.payload.name,
@@ -51,10 +58,20 @@ const userSlice = createSlice({
           role: action.payload.role,
           email: action.payload.email,
           id: action.payload.id,
-          driverStatus: action.payload.status,
+          driverStatus:
+            action.payload.role === "driver" ? action.payload.status : null,
+          status: action.payload.status,
           driverImage: action.payload.driverImage,
           profileImage: action.payload.profileImage,
           image: action.payload.image,
+          restaurantLatitude:
+            action.payload.role === "restaurant"
+              ? action.payload.latitude
+              : null,
+          restaurantLongitude:
+            action.payload.role === "restaurant"
+              ? action.payload.longitude
+              : null,
         };
         state.isLoading = false;
         state.error = false;
@@ -69,6 +86,7 @@ const userSlice = createSlice({
 
 export { fetchUser };
 
-export const { setPosition, setDriverStatus } = userSlice.actions;
+export const { setPosition, setDriverStatus, clearUserInfo } =
+  userSlice.actions;
 
 export default userSlice.reducer;

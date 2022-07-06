@@ -1,13 +1,13 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
-// import { FaBeer } from "react-icons/fa";
 import { MdLocationOn } from "react-icons/md";
 import { Box } from "@mui/material";
-import ButtonFavorite from "../../../components/button/ButtonFavorite";
-import { useCustomer } from "../../../contexts/CustomerContext";
+import UserAvatar from "../../../components/imglogo/UserAvatar";
+import { useSelector } from "react-redux";
 
 function HomeHeader() {
-  const { getMenuById } = useCustomer();
+  const user = useSelector((state) => state.user.info);
+  // console.log(user);
 
   // useEffect(() => {
   //   const searchMenus = async () => {};
@@ -19,15 +19,20 @@ function HomeHeader() {
       sx={{ boxShadow: "0px -1px 5px rgba(0, 0, 0, 0.25)" }}
     >
       <Link to="/customer/myLocation">
-        <div className="flex items-center text-green text-20 font-bold">
-          <div className="rounded-full bg-light-green w-7 h-7 flex items-center justify-center mr-4">
+        <div className="flex items-center  text-20 font-bold text-light-from-green hover:text-dark-green">
+          <div className="rounded-full bg-light-green w-7 h-7 flex items-center justify-center mr-4 ">
             <MdLocationOn className="" />
           </div>
           <span className="">My Location</span>
         </div>
       </Link>
 
-      <ButtonFavorite />
+      <Link to={"/customer/profile"}>
+        <UserAvatar
+          alt={user.firstName + " " + user.lastName}
+          src={user.profileImage}
+        />
+      </Link>
     </Box>
   );
 }

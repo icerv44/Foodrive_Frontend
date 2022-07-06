@@ -8,10 +8,12 @@ import CategoryList from "../../role/restaurant/createcategory/CategoryList";
 import { useRestaurant } from "../../contexts/RestaurantContext";
 
 function CreateCategory() {
-  const { categoryData } = useRestaurant();
+  const { categoryData, fetchCategory } = useRestaurant();
 
   const [category, setCategory] = useState("");
   const navigate = useNavigate();
+
+  console.log(categoryData);
 
   return (
     <Box
@@ -50,6 +52,7 @@ function CreateCategory() {
           subTitle="add or edit food"
         />
         <AddCategory
+          fetch={fetchCategory}
           category={category}
           setCategory={setCategory}
           title="Add more Category"
@@ -63,14 +66,18 @@ function CreateCategory() {
           borderRadius: "16px",
           p: "16px",
           display: "flex",
-          flexDirection: "column",
+          flexDirection: "column-reverse",
           gap: "20px",
           overflow: "scroll",
           maxHeight: "40vh",
         }}
       >
-        {categoryData.map((el) => (
-          <CategoryList key={el.id} categoryName={el.name} categoryId={el.id} />
+        {categoryData?.map((el) => (
+          <CategoryList
+            key={el?.id}
+            categoryName={el?.name}
+            categoryId={el?.id}
+          />
         ))}
       </Box>
     </Box>

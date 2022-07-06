@@ -7,6 +7,8 @@ import ButtonBackNewPlus from "../../components/button/ButtonBackNewPlus";
 import { Button } from "@mui/joy";
 import axios from "../../config/axios";
 import Modal from "react-modal";
+import { useRestaurant } from "../../contexts/RestaurantContext";
+import NoFoodForNow from "../../role/restaurant/categoryfoodlist/NoFoodForNow";
 
 function CategoryFoodPage() {
   const [categoryFoodData, setCategoryFoodData] = useState([]);
@@ -15,17 +17,15 @@ function CategoryFoodPage() {
 
   Modal.setAppElement("#root");
 
-  console.log(categoryFoodData);
-
+  const fetchCategoryById = async () => {
+    try {
+      const res = await axios.get("restaurant/getCategory/" + categoryId.id);
+      setCategoryFoodData(res.data.category);
+    } catch (err) {
+      console.log(error);
+    }
+  };
   useEffect(() => {
-    const fetchCategoryById = async () => {
-      try {
-        const res = await axios.get("restaurant/getCategory/" + categoryId.id);
-        setCategoryFoodData(res.data.category);
-      } catch (err) {
-        console.log(error);
-      }
-    };
     fetchCategoryById();
   }, []);
 
@@ -44,23 +44,12 @@ function CategoryFoodPage() {
         {/* categoryName */}
         <Box className="flex justify-between items-center">
           <Typography sx={{ fontWeight: 700, fontSize: "25px" }}>
-            {categoryFoodData.name === "other"
-              ? "Other"
-              : categoryFoodData.name}
+            {categoryFoodData?.name}
           </Typography>
-          {categoryFoodData.name === "other" ? "" : <ModalForDelete />}
+          {/* {categoryFoodData?.name === "other" ? "" : <ModalForDelete />} */}
         </Box>
       </Box>
-      {/* Picture
-      <Box className="w-full overflow-hidden mx-auto my-6">
-        <img
-          //   onClick={onPictureClick}
-          src="https://thestandard.co/wp-content/uploads/2022/01/KFC.jpg"
-          alt=""
-          className="w-full h-full object-cover"
-        />
-      </Box> */}
-      {/* foodList */}
+      {/* MAP CARD */}
       <Box
         sx={{
           mx: "20px",
@@ -71,15 +60,37 @@ function CategoryFoodPage() {
           display: "flex",
           flexDirection: "column",
           gap: "20px",
+          height: "76vh",
+          overflowY: "scroll",
         }}
       >
-        {categoryFoodData.Menus?.map((el) => (
-          <FoodStatusList title={el?.name} price={el?.price} />
-        ))}
+        {categoryFoodData.Menus?.length === 0 ? (
+          <NoFoodForNow />
+        ) : (
+          categoryFoodData?.Menus?.map((el) => (
+            <FoodStatusList
+              key={el?.id}
+              title={el?.name}
+              price={el?.price}
+              src={el?.menuImage}
+              id={el?.id}
+              fetch={fetchCategoryById}
+            />
+          ))
+        )}
       </Box>
-      <Box className="mt-5 flex justify-center items-center px-4">
-        <Button sx={{ bgcolor: "#37C989", width: "100%", py: "16px" }}>
-          Submit
+      <Box className="mx-auto px-4">
+        <Button
+          onClick={() => navigate("/restaurant/food")}
+          sx={{
+            bgcolor: "#37C989",
+            width: "100%",
+            py: "16px",
+            fontSize: "18px",
+            fontWeight: "bold",
+          }}
+        >
+          Add more Food
         </Button>
       </Box>
     </>

@@ -11,8 +11,6 @@ function RestaurantContainer() {
   const { getRestaurantById, restaurant } = useCustomer();
   const { restaurantId } = useParams();
 
-  console.log(restaurant);
-
   useEffect(() => {
     try {
       const fetchRestaurant = async () => {

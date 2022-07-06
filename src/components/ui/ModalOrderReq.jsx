@@ -54,12 +54,12 @@ function ModalOrderReq({
   };
 
   const handleAccepted = async () => {
-    // const accepted = await axios.patch(`/driver/orderAccepted/${id}`);
-    // console.log("Accepted Ordder : ", accepted);
-    // const updateStatus = await axios.patch("/driver/updateStatus", {
-    //   status: "UNAVAILABLE",
-    // });
-    // console.log("updateStatus : ", updateStatus);
+    const accepted = await axios.patch(`/driver/orderAccepted/${id}`);
+    console.log("Accepted Ordder : ", accepted);
+    const updateStatus = await axios.patch("/driver/updateStatus", {
+      status: "BUSY",
+    });
+    console.log("updateStatus : ", updateStatus);
     navigate(`/driver/delivery/${id}`);
   };
 
