@@ -25,10 +25,6 @@ function ChatPage() {
 
   const [messages = []] = useCollectionData(q);
 
-  console.log(messages);
-
-  // if (true) return <Box>test</Box>;
-
   return (
     <Container className="bg-[#FEFEFF]">
       <ButtonBack />

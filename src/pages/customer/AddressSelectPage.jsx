@@ -13,6 +13,7 @@ import { useNavigate } from "react-router-dom";
 function AddressSelectPage() {
   const { latitude, longitude } = useSelector((state) => state.user.info);
   const { setAddress, setLatitude, setLongitude } = useCustomerAddress();
+  const { setError } = useError();
   const [addressLabel, setAddressLabel] = useState("");
   const navigate = useNavigate();
 
@@ -43,7 +44,7 @@ function AddressSelectPage() {
         setAddressLabel(newAddressLabel);
       }
     };
-    fetchLocation();
+    fetchLocation().catch((err) => setError(err.response.data.message));
   }, [latitude, longitude]);
 
   return (

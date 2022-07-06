@@ -15,18 +15,18 @@ function ShopMenuPage() {
   const [showMenus, setShowMenus] = useState([]);
 
   useEffect(() => {
-    try {
-      const fetchRestaurant = async () => {
+    const fetchRestaurant = async () => {
+      try {
         setLoading(true);
         await getRestaurantById(+restaurantId);
-      };
+      } catch (err) {
+        console.log(err);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-      fetchRestaurant();
-    } catch (err) {
-      console.log(err);
-    } finally {
-      setLoading(false);
-    }
+    fetchRestaurant();
   }, [restaurantId]);
 
   return (

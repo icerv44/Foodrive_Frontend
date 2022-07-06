@@ -9,17 +9,15 @@ function DetailFoodPage() {
   const { getMenuById, menu } = useCustomer();
 
   useEffect(() => {
-    try {
-      console.log("fetch");
-
-      const fetchMenu = async () => {
+    const fetchMenu = async () => {
+      try {
         await getMenuById(menuId);
-      };
+      } catch (err) {
+        console.log(err);
+      }
+    };
 
-      fetchMenu();
-    } catch (err) {
-      console.log(err);
-    }
+    fetchMenu();
   }, [menuId]);
 
   return (
