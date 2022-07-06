@@ -77,17 +77,16 @@ function Router() {
   const token = getAccessToken();
 
   const role = pathname.split("/")[1];
-  const userRole = userInfo.role;
 
   useEffect(() => {
     const getUser = async () => {
       if (token) {
-        if (!role) return;
+        if (!role) return removeToken();
         const res = await dispatch(fetchUser({ role }));
-        console.log(res);
+
         if (res.error) {
           removeToken();
-          navigate("/customer/login");
+          return navigate("/customer/login");
         }
         const newSocket = io(SOCKET_ENDPOINT_URL);
         setSocket(newSocket);
@@ -108,7 +107,7 @@ function Router() {
       });
     }
     if (userInfo.role === "driver") {
-      socket?.on("incomingOrder", ({ message }) => {
+      socket?.on("notifyDriverOrder", ({ message }) => {
         alert(message);
       });
     }
@@ -126,8 +125,6 @@ function Router() {
 
     if (pathNamesToNotTrack.includes(pathname)) return;
 
-    console.log(pathname);
-
     getCurrentPosition().then((res) => {
       dispatch(
         setPosition({ latitude: res.latitude, longitude: res.longitude })
@@ -141,32 +138,36 @@ function Router() {
         latitude: lat,
         longitude: lng,
       });
-      console.log(res);
     }
   };
 
   useEffect(() => {
     let recordingInterval;
-    if (driverStatus === "ONLINE") {
-      recordingInterval = setInterval(async () => {
-        console.log("updating position...");
-        const pos = await getCurrentPosition();
-        await updateDriver(pos.latitude, pos.longitude);
-        dispatch(
-          setPosition({ latitude: pos.latitude, longitude: pos.longitude })
-        );
-      }, 10000);
+
+    const updatePosition = async () => {
+      console.log("updating position...");
+      const pos = await getCurrentPosition();
+      await updateDriver(pos.latitude, pos.longitude);
+      dispatch(
+        setPosition({ latitude: pos.latitude, longitude: pos.longitude })
+      );
+
+      socket?.emit("updateDriverPosition", userInfo);
+    };
+
+    if (driverStatus === "AVAILABLE" || driverStatus === "BUSY") {
+      updatePosition().then(() => {
+        recordingInterval = setInterval(updatePosition, 20000);
+      });
     }
 
     return () => {
       clearInterval(recordingInterval);
     };
-  }, [driverStatus]);
+  }, [driverStatus, socket]);
 
   const customerRoutes = (
     <>
-      <Route path="/customer/register" element={<RegisterPage />} />
-      <Route path="/customer/login" element={<LoginPage />} />
       <Route path="/customer" element={<CustomerPage />}>
         <Route path="" element={<HomePage />} />
         <Route path="restaurant/:restaurantId" element={<RestaurantPage />} />
@@ -177,6 +178,9 @@ function Router() {
           <Route path=":cartId" element={<OrderPage />} />
           <Route path="menuOrder/:menuOrderId" element={<MenuOrderPage />} />
         </Route>
+        <Route path="restaurant/:restaurantId" element={<RestaurantPage />} />
+        <Route path="shop/:restaurantId" element={<ShopMenuPage />} />
+        <Route path="menuDetail/:menuId" element={<DetailFoodPage />} />
         <Route path="payment" element={<PaymentPage />} />
         <Route path="myLocation" element={<AddressSelectPage />} />
       </Route>
@@ -194,8 +198,6 @@ function Router() {
 
   const restaurantRoutes = (
     <>
-      <Route path="/restaurant/register" element={<RegisterPage />} />
-      <Route path="/restaurant/login" element={<LoginPage />} />
       <Route path="/restaurant" element={<RestaurantContainer />}>
         <Route path="category" element={<CreateCategory />} />
         <Route path="checkorder" element={<CheckDeliveryOrder />} />
@@ -225,6 +227,7 @@ function Router() {
       <Route path="/driver/orderSummary" element={<OrderSummary />} />
       <Route path="/driver/completed" element={<DeliveryCompleted />} />
       <Route path="/driver/orderRequest" element={<OrderRequestPage />} />
+      <Route path="/driver/chat" element={<ChatPage />} />
       <Route path="*" element={<Navigate to="/driver/" />} />
     </>
   );
@@ -248,11 +251,11 @@ function Router() {
       {error && <ToastError>{error}</ToastError>}
       {/* CUSTOMER */}
       <Routes>
-        {role === "restaurant" && email ? (
+        {userInfo.role === "restaurant" && email ? (
           restaurantRoutes
-        ) : role === "customer" && email ? (
+        ) : userInfo.role === "customer" && email ? (
           customerRoutes
-        ) : role === "driver" && email ? (
+        ) : userInfo.role === "driver" && email ? (
           driverRoutes
         ) : token ? (
           <Route path="*" element={<Spinner />} />

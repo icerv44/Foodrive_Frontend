@@ -2,8 +2,6 @@ import { Box, Typography, Grid } from "@mui/material";
 import { Link } from "react-router-dom";
 
 function CardMenuRestaurant({ menu }) {
-  // console.log(menu);
-
   return (
     <>
       <Link to={"/customer/menuDetail/" + menu?.id}>

@@ -13,7 +13,6 @@ import { setDriverStatus } from "../../../slices/userSlice";
 function DriverContainer() {
   return (
     <Box className="flex justify-center items-end">
-      {/* <Box className="fixed bottom-0  width-[375px] m-[auto] insert-x-0 "> */}
       <Box className="fixed bottom-5">
         <Card
           sx={{

@@ -10,8 +10,6 @@ function CheckDeliveryOrder() {
   const { pendingOrderData } = useRestaurant();
   const [status, setStatus] = useState("pending");
 
-  console.log(pendingOrderData);
-
   return (
     <>
       <ButtonBackNewPlus />

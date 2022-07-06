@@ -3,9 +3,13 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        "dark-red": "#8a0c0c",
+        red: "#bd1515",
         heart: "#FF1D1D",
         "light-red": "#fcd7d4",
+        "dark-green": "#0c965c",
         green: "#15BE77",
+        "light-from-green": "#15BE77",
         "light-green": "#dcf5eb",
         brown: "#DA6317",
         cream: "#f5d8b8",

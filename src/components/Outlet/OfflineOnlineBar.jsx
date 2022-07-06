@@ -16,19 +16,16 @@ function OfflineOnlineBar() {
   const handleSwitchStatus = async () => {
     try {
       if (driverStatus === "UNAVAILABLE") {
-        dispatch(setDriverStatus("AVAILABLE"));
         await axios.patch("/driver/updateStatus", {
           status: "AVAILABLE",
         });
+        dispatch(setDriverStatus("AVAILABLE"));
       } else if (driverStatus === "AVAILABLE") {
-        dispatch(setDriverStatus("UNAVAILABLE"));
         await axios.patch("/driver/updateStatus", {
           status: "UNAVAILABLE",
         });
+        dispatch(setDriverStatus("UNAVAILABLE"));
       }
-
-      console.log("!!!!!!! ");
-      console.log(driverStatus);
     } catch (err) {
       console.log(err);
       setError(err.response.data.message);
@@ -51,7 +48,7 @@ function OfflineOnlineBar() {
         <div
           role={"button"}
           className={
-            "rounded-2xl p-2 items-center flex mr-2" + changeDotColor()
+            "rounded-2xl p-2 items-center flex mr-2 " + changeDotColor()
           }
         />
         <span className="text-lg " onClick={() => alert("hiiiii")}>
@@ -60,7 +57,7 @@ function OfflineOnlineBar() {
       </div>
 
       <ButtonShutdown
-        status={status}
+        driverStatus={driverStatus}
         onClick={handleSwitchStatus}
         disabled={driverStatus === "BUSY"}
       />

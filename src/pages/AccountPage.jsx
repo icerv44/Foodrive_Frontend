@@ -41,7 +41,6 @@ function AccountPage() {
   ];
 
   const findRole = () => profileList.find((el) => el.role === role);
-  console.log(findRole());
 
   const handleLogout = () => {
     removeToken();
@@ -54,8 +53,19 @@ function AccountPage() {
   return (
     <Box className="flex justify-center gap-5 h-[100vh] ">
       <ButtonBack />
+
       <Box sx={{ mt: "100px" }}>
         {user.role === "restaurant" && <OnlineOfflineButton />}
+        <Typography
+          sx={{
+            mx: 2,
+            display: "flex",
+            fontWeight: "700",
+            fontSize: "18px",
+          }}
+        >
+          Account
+        </Typography>
         {findRole().menu.map((el, idx) => (
           <Box key={idx}>
             <Link to={el.to}>

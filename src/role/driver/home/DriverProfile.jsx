@@ -1,20 +1,22 @@
 import { Box, Button, Typography } from "@mui/joy";
 import AspectRatio from "@mui/joy/AspectRatio";
 import React from "react";
-import { FiBarChart2 } from "react-icons/fi";
+import { MdFastfood } from "react-icons/md";
+import { AiFillMessage } from "react-icons/ai";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function DriverProfile() {
   const user = useSelector((state) => state.user.info);
+  const navigate = useNavigate();
 
   return (
     <Box
       sx={{ background: "white", marginTop: "1rem" }}
-      className="shadow-md shadow-blue-100 p-2 flex justify-between"
+      className="shadow-md shadow-blue-100 p-2 flex justify-between items-center"
     >
       <Link to={"/driver/profile"}>
-        <Box className="flex gap-5">
+        <Box className="flex gap-5 items-center">
           <AspectRatio ratio="1" sx={{ width: 50 }}>
             <img
               src={
@@ -25,42 +27,54 @@ function DriverProfile() {
             />
           </AspectRatio>
 
-          <div className="flex flex-col ">
-            <Typography level="h2" fontSize="lg" id="card-description" mb={0.5}>
-              {user.firstName}
-            </Typography>
-            <Typography
-              fontSize="sm"
-              aria-describedby="card-description"
-              mb={1}
-              sx={{ color: "text.tertiary" }}
-            >
-              รับส่งอาหาร
-            </Typography>
-          </div>
+          <Typography level="h2" fontSize="lg" id="card-description" mb={0.5}>
+            {user.firstName}
+          </Typography>
         </Box>
       </Link>
 
-      <Box
-        // overlay
-        // underline="none"
-        // to="#interactive-card"
-        sx={{ color: "text.tertiary" }}
-      >
+      <Box>
         <Button
+          onClick={() => navigate("/driver/orderRequest")}
           variant="plain"
           sx={{
-            color: "#15BE77",
             display: "flex",
-            alignContent: "center",
-            alignItems: "center",
-            paddingX: "1px",
+            color: "#15BE77",
+            paddingX: 1,
+            gap: 1,
+            "&:hover": { bgcolor: "#dcf5eb" },
           }}
         >
-          <FiBarChart2 />
-          <Typography fontSize="sm" aria-describedby="card-description" mb={1}>
-            Revenue
-          </Typography>
+          <MdFastfood />
+          <span
+            fontSize="sm"
+            color="#15BE77"
+            aria-describedby="card-description"
+          >
+            ORDER
+          </span>
+        </Button>
+
+        {/* TODO : route => chat */}
+        <Button
+          onClick={() => navigate("/driver/chat")}
+          variant="plain"
+          sx={{
+            display: "flex",
+            color: "#15BE77",
+            paddingX: 1,
+            gap: 1,
+            "&:hover": { bgcolor: "#dcf5eb" },
+          }}
+        >
+          <AiFillMessage />
+          <span
+            fontSize="sm"
+            color="#15BE77"
+            aria-describedby="card-description"
+          >
+            CHAT
+          </span>
         </Button>
       </Box>
     </Box>
