@@ -152,12 +152,12 @@ function FoodDetail() {
 
   return (
     <Box>
-      <Box className="mx-6 mt-5 overflow-auto h-[26vh]">
-        <Box className="flex justify-between items-center my-5">
-          <Typography sx={{ fontWeight: 700, fontSize: "26px" }}>
+      <Box className="overflow-auto h-[38vh]">
+        <Box className="flex justify-between items-center my-2 px-6">
+          <Typography sx={{ fontWeight: 600, fontSize: "24px" }}>
             {menu?.name}
           </Typography>
-          <Typography sx={{ fontWeight: 700, fontSize: "26px" }}>
+          <Typography sx={{ fontWeight: 600, fontSize: "24px" }}>
             {menu?.price} ฿
           </Typography>
         </Box>
@@ -165,14 +165,21 @@ function FoodDetail() {
         {menuOptionGroup.map(
           (el, idx) =>
             el?.status === "ACTIVE" && (
-              <FoodOption
-                el={el}
-                parentid={el?.id}
+              <Box
                 key={el?.id}
-                name={el?.name}
-                MenuOptions={el?.MenuOptions}
-                onChange={handleOptionChange}
-              />
+                className="rounded-lg px-6 py-1"
+                sx={{
+                  boxShadow: "10px 10px 10px 10px rgba(20, 20, 20, 0.04)",
+                }}
+              >
+                <FoodOption
+                  el={el}
+                  parentid={el?.id}
+                  name={el?.name}
+                  MenuOptions={el?.MenuOptions}
+                  onChange={handleOptionChange}
+                />
+              </Box>
             )
         )}
       </Box>
@@ -182,7 +189,15 @@ function FoodDetail() {
           {/* BTN - Decrease */}
           <Box className="flex justify-center items-center gap-3">
             <IconButton
-              sx={{ bgcolor: "#f9a94d22", color: "green" }}
+              sx={{
+                background: "#dcf5eb",
+                color: "#53E88B",
+                "&:hover": {
+                  background:
+                    "linear-gradient(98.81deg, #53E88B -0.82%, #15BE77 101.53%)",
+                  color: "white",
+                },
+              }}
               onClick={handleClickDecreaseAmount}
             >
               <AiOutlineMinus />
@@ -193,9 +208,13 @@ function FoodDetail() {
             {/* BTN - Increase */}
             <IconButton
               sx={{
-                background:
-                  "linear-gradient(98.81deg, #53E88B -0.82%, #15BE77 101.53%)",
-                color: "white",
+                background: "#dcf5eb",
+                color: "#53E88B",
+                "&:hover": {
+                  background:
+                    "linear-gradient(98.81deg, #53E88B -0.82%, #15BE77 101.53%)",
+                  color: "white",
+                },
               }}
               onClick={handleClickIncreaseAmount}
             >

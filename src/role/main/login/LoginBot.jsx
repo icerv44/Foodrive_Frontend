@@ -36,10 +36,10 @@ function LoginBot() {
 
   return (
     <div>
-      <div className="flex flex-col justify-center items-center gap-5">
+      {/* <div className="flex flex-col justify-center items-center gap-5">
         <ButtonGoogle />
         <div className="underline text-green">Forgot Your Password?</div>
-      </div>
+      </div> */}
 
       <div className="flex justify-center items-center mt-5">
         <ButtonGreenGradiant onClick={onClick} title="Login" px="30px" />

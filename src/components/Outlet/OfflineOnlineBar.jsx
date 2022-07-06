@@ -51,7 +51,7 @@ function OfflineOnlineBar() {
         <div
           role={"button"}
           className={
-            "rounded-2xl p-2 items-center flex mr-2" + changeDotColor()
+            "rounded-2xl p-2 items-center flex mr-2 " + changeDotColor()
           }
         />
         <span className="text-lg " onClick={() => alert("hiiiii")}>
@@ -60,7 +60,7 @@ function OfflineOnlineBar() {
       </div>
 
       <ButtonShutdown
-        status={status}
+        driverStatus={driverStatus}
         onClick={handleSwitchStatus}
         disabled={driverStatus === "BUSY"}
       />

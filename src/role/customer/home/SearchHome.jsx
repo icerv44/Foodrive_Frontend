@@ -30,7 +30,12 @@ function SearchHome() {
         className="flex grow appearance-none bg-light-brown placeholder-brown placeholder-opacity-25 outline-0"
         value={search}
         onChange={handleSearchChange}
+        list="search"
       />
+      <datalist id="search" className="">
+        {}
+        <option value="Test" />
+      </datalist>
       {/* <span className="text-sm font-light">กินอะไรดี?</span> */}
     </div>
   );

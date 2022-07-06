@@ -1,4 +1,5 @@
 import { createContext, useEffect, useState, useContext } from "react";
+import { useSelector } from "react-redux";
 import axios from "../config/axios";
 import { useError } from "./ErrorContext";
 import { useLoading } from "./LoadingContext";
@@ -6,6 +7,7 @@ import { useLoading } from "./LoadingContext";
 export const CustomerContext = createContext();
 
 export function CustomerContextProvider({ children }) {
+  const { latitude, longitude } = useSelector((state) => state.user.info);
   const { setLoading } = useLoading();
   const { setError } = useError();
   const [search, setSearch] = useState("");
@@ -40,8 +42,11 @@ export function CustomerContextProvider({ children }) {
   const getRestaurantById = async (restaurantId) => {
     try {
       setLoading(true);
-      const res = await axios.get("/customer/restaurant/" + restaurantId);
-      setRestaurant(res.data.restaurant);
+      const res = await axios.post("/customer/restaurant/" + restaurantId, {
+        latitude,
+        longitude,
+      });
+      setRestaurant(res.data);
     } catch (err) {
       console.log(err);
       setError(err.response.data.message);

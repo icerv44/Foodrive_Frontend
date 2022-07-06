@@ -176,6 +176,9 @@ function Router() {
           <Route path=":cartId" element={<OrderPage />} />
           <Route path="menuOrder/:menuOrderId" element={<MenuOrderPage />} />
         </Route>
+        <Route path="restaurant/:restaurantId" element={<RestaurantPage />} />
+        <Route path="shop/:restaurantId" element={<ShopMenuPage />} />
+        <Route path="menuDetail/:menuId" element={<DetailFoodPage />} />
         <Route path="payment" element={<PaymentPage />} />
         <Route path="myLocation" element={<AddressSelectPage />} />
       </Route>

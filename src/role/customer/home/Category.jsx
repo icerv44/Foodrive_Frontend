@@ -28,7 +28,7 @@ function Category() {
           gap: 1,
           py: 1,
           overflow: "auto",
-          width: 370,
+          minWidth: 370,
           scrollSnapType: "x mandatory",
           "& > *": {
             scrollSnapAlign: "center",

@@ -3,6 +3,10 @@ import IconButton from "@mui/joy/IconButton";
 import { Box } from "@mui/material";
 
 function ButtonBackNewPlus({ onClick }) {
+  const handleBack = () => {
+    window.history.back();
+  };
+
   return (
     <Box
       sx={{
@@ -14,7 +18,10 @@ function ButtonBackNewPlus({ onClick }) {
       }}
     >
       <Box>
-        <IconButton onClick={onClick} sx={{ bgcolor: "#f9a94d22" }}>
+        <IconButton
+          onClick={onClick || handleBack}
+          sx={{ bgcolor: "#f9a94d22" }}
+        >
           <BiChevronLeft className="text-[#DA6317] text-3xl " />
         </IconButton>
       </Box>
