@@ -19,6 +19,8 @@ function CreateFoodOption() {
     setOptionGroups,
   } = useRestaurant();
 
+  const disabledButton = optionTitle === "" || optionCart.length === 0;
+
   return (
     <Box
       sx={{
@@ -47,6 +49,7 @@ function CreateFoodOption() {
         setOptionPrice={setOptionPrice}
         optionGroups={optionGroups}
         setOptionGroups={setOptionGroups}
+        disabled={disabledButton ? true : false}
       />
     </Box>
   );

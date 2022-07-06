@@ -18,10 +18,8 @@ function DeliveryStatus() {
     fetchDeliveryOrder();
   }, []);
 
-  console.log(getDeliveryOrder);
-
   return (
-    <div className="px-7 flex flex-col gap-2 h-[70vh] overflow-auto">
+    <div className="px-7 flex flex-col gap-3 h-[70vh] overflow-auto">
       {getDeliveryOrder.map((el) => (
         <CardDeliveryCheck
           key={el?.id}

@@ -13,8 +13,6 @@ function CreateCategory() {
   const [category, setCategory] = useState("");
   const navigate = useNavigate();
 
-  console.log(categoryData);
-
   return (
     <Box
       sx={{

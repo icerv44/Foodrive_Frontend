@@ -1,15 +1,17 @@
 import { Button } from "@mui/joy";
 
-function ButtonGreenGradiant({ title, px, onClick, type }) {
+function ButtonGreenGradiant({ title, px, onClick, type, disabled }) {
   return (
     <Button
+      disabled={disabled}
       type={type}
       onClick={onClick}
       sx={{
         height: "57px",
         borderRadius: "15px",
-        background:
-          "linear-gradient(98.81deg, #53E88B -0.82%, #15BE77 101.53%)",
+        background: disabled
+          ? "linear-gradient(98.81deg, #DADADA -0.82%, #DADADA 101.53%)"
+          : "linear-gradient(98.81deg, #53E88B -0.82%, #15BE77 101.53%)",
         color: "white",
         fontSize: "18px",
         fontWeight: "700",

@@ -3,7 +3,7 @@ import NoOrderForNow from "./NoOrderForNow";
 
 function PendingStatus({ pendingOrderData }) {
   return (
-    <div className="mx-auto px-6">
+    <div className="mx-auto px-6 flex flex-col gap-4">
       {pendingOrderData.map((el, idx) => {
         if (el.length === 0) {
           return <NoOrderForNow />;

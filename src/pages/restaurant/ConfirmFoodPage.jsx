@@ -3,12 +3,25 @@ import { useSelector } from "react-redux";
 import ButtonBackNewPlus from "../../components/button/ButtonBackNewPlus";
 import ButtonGreenGradiant from "../../components/button/ButtonGreenGradiant";
 import { useRestaurant } from "../../contexts/RestaurantContext";
-import OptionDetail from "../../role/restaurant/confirmfood/OptionDetail";
 import OptionGroupMap from "../../role/restaurant/confirmfood/OptionGroupMap";
 import Spinner from "../../components/ui/Spinner";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { useError } from "../../contexts/ErrorContext";
+import { useSuccess } from "../../contexts/SuccessContext";
+import AspectRatio from "@mui/joy/AspectRatio";
+import Box from "@mui/joy/Box";
+import Card from "@mui/joy/Card";
+import CardOverflow from "@mui/joy/CardOverflow";
+import Typography from "@mui/joy/Typography";
+import IconButton from "@mui/joy/IconButton";
+// import Favorite from "@mui/icons-material/Favorite";
 
 function ConfirmFoodPage() {
   const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
+  const { setError } = useError();
+  const { setSuccess } = useSuccess();
 
   const { id } = useSelector((state) => state.user.info);
 
@@ -23,12 +36,9 @@ function ConfirmFoodPage() {
     foodPrice,
     setFoodPrice,
     foodCategory,
-    setFoodCategory,
     optionGroups,
     setOptionGroups,
   } = useRestaurant();
-
-  console.log(categoryData);
 
   const handleCreateFood = async () => {
     setIsLoading(true);
@@ -41,6 +51,8 @@ function ConfirmFoodPage() {
       formData.append("menuOptionGroups", JSON.stringify(optionGroups));
       formData.append("categoryId", foodCategory);
       const res = await axios.post("/restaurant/" + id + "/addMenu", formData);
+      setSuccess(res.data.message);
+      navigate("/restaurant/category/" + foodCategory);
       setOptionGroups([]);
       setFoodImage("");
       setFoodName("");
@@ -48,6 +60,7 @@ function ConfirmFoodPage() {
       setFoodPrice("");
     } catch (err) {
       console.log(err);
+      setError(err.response.data.message);
     } finally {
       setIsLoading(false);
     }
@@ -57,31 +70,77 @@ function ConfirmFoodPage() {
     (el) => el.id === +foodCategory
   )?.name;
 
+  const itemPrice = +foodPrice;
+
   return (
     <>
       {isLoading && <Spinner />}
       <ButtonBackNewPlus onClick={() => window.history.back()} />
       <div className="p-4 px-8">
-        {/* FoodName */}
-        <div className="text-4xl font-bold text-center pb-4">{foodName}</div>
-        {/* Image */}
-        <div className="flex justify-center items-center h-56 w-56 rounded-[20%] mx-auto">
-          <img
-            src={foodImage ? URL.createObjectURL(foodImage) : ""}
-            alt="foodImage"
-            className="w-full h-full object-cover rounded-[20%] mx-auto"
-          />
-        </div>
+        {/* ----------------------------------------------------------------- */}
+        <Card variant="outlined" sx={{ minWidth: 320 }}>
+          <CardOverflow>
+            <AspectRatio ratio="2">
+              <img
+                src={foodImage ? URL.createObjectURL(foodImage) : ""}
+                alt="Food Image"
+              />
+            </AspectRatio>
+            {/* <IconButton
+              size="md"
+              variant="solid"
+              color="danger"
+              sx={{
+                position: "absolute",
+                zIndex: 2,
+                borderRadius: "50%",
+                right: "1rem",
+                bottom: 0,
+                transform: "translateY(50%)",
+              }}
+            >
+              <Favorite />
+            </IconButton> */}
+          </CardOverflow>
+          <Typography
+            level="h2"
+            sx={{ fontSize: "xl", fontWeight: 700, mt: 1 }}
+          >
+            {foodName}
+          </Typography>
+          <Typography level="body2" sx={{ mt: 0.5, mb: 1 }}>
+            {itemPrice.toFixed(2) + " ฿"}
+          </Typography>
+          <CardOverflow
+            variant="soft"
+            sx={{
+              display: "flex",
+              gap: 1.5,
+              py: 1.5,
+              px: "var(--Card-padding)",
+              borderTop: "1px solid",
+              borderColor: "neutral.outlinedBorder",
+              bgcolor: "background.level1",
+            }}
+          >
+            <Typography
+              level="body3"
+              sx={{ fontWeight: "md", color: "text.secondary" }}
+            >
+              {foodCategoryMap}
+            </Typography>
+            <Box sx={{ width: 2, bgcolor: "divider" }} />
+            <Typography
+              level="body3"
+              sx={{ fontWeight: "md", color: "text.secondary" }}
+            >
+              {foodDetail}
+            </Typography>
+          </CardOverflow>
+        </Card>
+        {/* ------------------------------------------------------------- */}
+        {/* Food Option Map */}
         <div className="overflow-auto h-[44vh]">
-          {/* Food Detail */}
-          <div>
-            <OptionDetail
-              price={foodPrice}
-              detail={foodDetail}
-              category={foodCategoryMap}
-            />
-          </div>
-          {/* Food Option Map */}
           <div>
             {optionGroups?.map((el, idx) => (
               <OptionGroupMap
