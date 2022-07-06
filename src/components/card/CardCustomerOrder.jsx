@@ -36,7 +36,7 @@ function CardCustomerOrder({
                 <Typography variant="h6">{menuPrice} ฿</Typography>
               </Box>
             </Box>
-            <Typography sx={{ fontWeight: 700 }}> x {menuQuantity}</Typography>
+            <Typography sx={{ fontWeight: 700 }}> {menuQuantity}</Typography>
 
             <Box sx={{}}>
               <Typography
