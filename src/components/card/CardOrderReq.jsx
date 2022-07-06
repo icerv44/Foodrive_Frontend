@@ -43,7 +43,7 @@ function CardOrderReq({
     <>
       <Box onClick={() => setIsOpen(true)}>
         <Card
-          className="shadow-lg shadow-blue-100 rounded-lg my-3 "
+          className="shadow-lg shadow-blue-100 rounded-lg my-2 "
           sx={{
             width: "320px",
             background: "#fafdff",
@@ -54,23 +54,25 @@ function CardOrderReq({
           }}
         >
           <CardContent className="flex justify-between items-center">
-            <Box className="flex flex-col  gap-2">
+            <Box className="flex flex-col  gap-1">
               {/* Distance */}
               <Typography
-                className="pl-10 text-20 font-bold text-gray"
-                fontSize={14}
+                className="pl-10 text-20 font-bold text-green"
+                fontSize={11}
                 // fontWeight="bold"
+                textColor="#3B3B3B"
               >
                 far from you {distance} km.
               </Typography>
 
               {/* Restaurant name */}
               <Box className="flex items-center">
-                <MdOutlineLocationOn className="text-green text-2xl" />
+                <MdOutlineLocationOn className="text-green text-4xl mr-[4px]" />
                 <Typography
                   //   className=" text-20 font-bold"
                   fontSize={27}
                   fontWeight="bold"
+                  textColor="#09051C"
                 >
                   {cutRestaurantName(restaurantName)}
                 </Typography>
@@ -83,7 +85,7 @@ function CardOrderReq({
                     <Box key={idx} className="">
                       <Typography
                         className=" text-20 font-bold flex justify-start "
-                        fontSize={14}
+                        fontSize={12}
                       >
                         {el.name} x {}
                       </Typography>
@@ -102,8 +104,9 @@ function CardOrderReq({
               {/* Driver Income */}
               <Typography
                 className="pl-10 text-20 font-bold text-green"
-                fontSize={20}
+                fontSize={17}
                 fontWeight="bold"
+                textColor="#30D07F"
               >
                 Income {driverIncome} ฿
               </Typography>

@@ -21,7 +21,7 @@ import {
 import { db } from "../../config/firebaseConfig";
 
 function DeliveryCompleted() {
-  const { order } = useDelivery();
+  const { order, setOrder } = useDelivery();
   const navigate = useNavigate();
 
   // const clickOrderAccepted = async (id, customerId) => {
@@ -47,9 +47,13 @@ function DeliveryCompleted() {
       status: "AVAILABLE",
     });
     console.log("confirmOrder updateStatus : ", updateStatus);
-    const res = await axios.get("/driver/currentOrder");
-    const customerId = res.data.order.customerId;
-    const chatId = `driver${driverId}_customer${customerId}`;
+    const completed = await axios.patch(`/driver/deliveredStatus/${order.id}`);
+    console.log("confirmOrder completed : ", completed);
+
+    // const res = await axios.get("/driver/currentOrder");
+    // const customerId = res.data.order.customerId;
+    const customerId = order.customerId;
+    const chatId = `driver${order.driverId}_customer${customerId}`;
     const docRef = doc(db, "chats", chatId);
     const mq = query(collection(db, "chats", chatId, "messages"));
     const querySnapshot = await getDocs(mq);
@@ -63,7 +67,8 @@ function DeliveryCompleted() {
     const newDoc = await getDoc(docRef);
 
     deleteDoc(docRef);
-
+    setOrder(null);
+    console.log("confirmOrder completed setOrder : ", order);
     navigate(`/driver`);
   };
 

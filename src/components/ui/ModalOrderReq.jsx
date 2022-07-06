@@ -54,7 +54,7 @@ function ModalOrderReq({
   };
 
   const handleAccepted = async () => {
-    const accepted = await axios.patch(`/driver/orderAccepted/${id}`);
+    const accepted = await axios.patch(`/driver/deliveringStatus/${id}`);
     console.log("Accepted Ordder : ", accepted);
     const updateStatus = await axios.patch("/driver/updateStatus", {
       status: "BUSY",
