@@ -78,6 +78,7 @@ const userSlice = createSlice({
       })
       .addCase(fetchUser.rejected, (state, action) => {
         console.log("handled rejected promise. Do not panic.");
+        console.log(action.payload);
         state.error = action.payload;
         state.isLoading = false;
       });

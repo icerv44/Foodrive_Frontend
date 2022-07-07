@@ -2,17 +2,23 @@ import CardOverflow from "@mui/joy/CardOverflow";
 import axios from "axios";
 import { useState } from "react";
 import Modal from "react-modal";
+import { useError } from "../../../contexts/ErrorContext";
 
 // Modal.setAppElement("#ใส่ไอดีของโมดัลอันนี้ในหน้าที่เอาไปใช้");
 // Import Modal ไปในไฟล์ที่จะใช้ด้วย
 
 function ModalForCardFood({ title, id, fetch }) {
   const [isOpen, setIsOpen] = useState(false);
+  const { setError } = useError();
 
   const handleDeleteMenu = async () => {
-    const res = await axios.delete("/restaurant/menu/" + id);
-    setIsOpen(false);
-    fetch();
+    try {
+      const res = await axios.delete("/restaurant/menu/" + id);
+      setIsOpen(false);
+      fetch();
+    } catch (err) {
+      setError(err.response.data.message);
+    }
   };
 
   return (

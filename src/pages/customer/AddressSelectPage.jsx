@@ -9,19 +9,14 @@ import { useEffect, useState } from "react";
 import axios from "../../config/axios";
 import { GOOGLE_MAP_KEY } from "../../config/env";
 import { useNavigate } from "react-router-dom";
+import { getAddressFromLatLng } from "../../services/getAddress";
 
 function AddressSelectPage() {
   const { latitude, longitude } = useSelector((state) => state.user.info);
   const { setAddress, setLatitude, setLongitude } = useCustomerAddress();
+  const { setError } = useError();
   const [addressLabel, setAddressLabel] = useState("");
   const navigate = useNavigate();
-
-  const getAddressFromLatLng = async (lat, lng) => {
-    const res = await axios.get(
-      `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${GOOGLE_MAP_KEY}`
-    );
-    return res.data.results[0].formatted_address;
-  };
 
   const selectCurrentAddress = async () => {
     try {
@@ -43,7 +38,7 @@ function AddressSelectPage() {
         setAddressLabel(newAddressLabel);
       }
     };
-    fetchLocation();
+    fetchLocation().catch((err) => setError(err.response.data.message));
   }, [latitude, longitude]);
 
   return (

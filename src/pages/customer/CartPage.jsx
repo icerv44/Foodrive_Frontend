@@ -10,16 +10,15 @@ function CartPage() {
   const { pathname } = useLocation();
 
   useEffect(() => {
-    try {
-      const fetchCarts = async () => {
+    const fetchCarts = async () => {
+      try {
         await getAllCart();
-      };
-      fetchCarts();
-    } catch (err) {
-      console.log(err);
-    }
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchCarts();
   }, [pathname]);
-  console.log(allCart);
 
   return (
     <Box className="flex flex-col ">

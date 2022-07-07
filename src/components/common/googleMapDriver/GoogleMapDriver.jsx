@@ -2,6 +2,7 @@ import { DirectionsRenderer, GoogleMap, Marker } from "@react-google-maps/api";
 import axios from "axios";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
+import { useError } from "../../../contexts/ErrorContext";
 
 function GoogleMapDriver() {
   const [center, setCenter] = useState(null);
@@ -16,6 +17,7 @@ function GoogleMapDriver() {
   const [direction, setDirection] = useState(null);
   const mapRef = useRef(null);
   const { latitude, longitude, role } = useSelector((state) => state.user.info);
+  const { setError } = useError();
 
   const onLoad = useCallback((map) => (mapRef.current = map));
 
@@ -81,6 +83,7 @@ function GoogleMapDriver() {
       }
     } catch (err) {
       console.log(err);
+      setError(err.response.data.message);
     }
   };
 

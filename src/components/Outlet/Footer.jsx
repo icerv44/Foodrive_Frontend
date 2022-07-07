@@ -43,8 +43,8 @@ export default function Footer() {
         }}
       >
         {customerFooterBar?.map((el, idx) => (
-          <Box>
-            <CardContent key={idx} sx={{ zIndex: 100 }}>
+          <Box key={idx}>
+            <CardContent sx={{ zIndex: 100 }}>
               <Link to={el.to}>
                 <Box
                   role="button"

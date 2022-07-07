@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
+import { useSelector } from "react-redux";
 import CardDeliveryCheck from "./CardDeliveryCheck";
 
 function DeliveryStatus() {
   const [getDeliveryOrder, setDeliveryOrder] = useState([]);
+  const email = useSelector((state) => state.user.info.email);
 
   const fetchDeliveryOrder = async () => {
     try {
@@ -15,8 +15,9 @@ function DeliveryStatus() {
   };
 
   useEffect(() => {
+    if (!email) return;
     fetchDeliveryOrder();
-  }, []);
+  }, [email]);
 
   return (
     <div className="px-7 flex flex-col gap-3 h-[70vh] overflow-auto">

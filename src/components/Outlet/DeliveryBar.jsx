@@ -9,6 +9,7 @@ import { useDelivery } from "../../contexts/DeliveryContext";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Place } from "@mui/icons-material";
 import axios from "../../config/axios";
+import { useError } from "../../contexts/ErrorContext";
 const listMenu = [
   {
     icon: <MdCall />,
@@ -30,6 +31,7 @@ const listMenu = [
 
 function DeliveryBar() {
   const navigate = useNavigate();
+  const { setError } = useError();
   const { setPlace, btnTitle, order } = useDelivery();
   const { pathname } = useLocation();
   const path = pathname.split("/")[3] === "direction";
@@ -48,17 +50,21 @@ function DeliveryBar() {
     console.log("updateDriver customerLocation: ", updateStatus);
   };
 
-  const handleBtn = () => {
-    if (pathname.split("/")[3] === "confirmOrder") {
-      setPlace("OrderSummary");
-      navigate(`/driver/delivery/orderSummary`);
-    } else if (pathname.split("/")[3] === "orderSummary") {
-      console.log("confirmOrder : ", Place);
-      navigate(`/driver/completed`);
-    } else {
-      setPlace("customerLocation");
-      updateDriver();
-      navigate(`/driver/delivery/confirmOrder`);
+  const handleBtn = async () => {
+    try {
+      if (pathname.split("/")[3] === "confirmOrder") {
+        setPlace("OrderSummary");
+        navigate(`/driver/delivery/orderSummary`);
+      } else if (pathname.split("/")[3] === "orderSummary") {
+        console.log("confirmOrder : ", Place);
+        navigate(`/driver/completed`);
+      } else {
+        setPlace("customerLocation");
+        updateDriver();
+        navigate(`/driver/delivery/confirmOrder`);
+      }
+    } catch (err) {
+      setError(err.response.data.message);
     }
 
     console.log("DeliveryBar 1 : ", pathname);

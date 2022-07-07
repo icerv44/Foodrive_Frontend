@@ -2,7 +2,12 @@ import { Box, Typography } from "@mui/material";
 import CardMenuRestaurant from "../../../components/card/CardMenuRestaurant";
 import { useCustomer } from "../../../contexts/CustomerContext";
 
-function FoodList({ categoriesName, categoriesMenu, searchMenu }) {
+function FoodList({
+  categoriesName,
+  categoriesMenu,
+  searchMenu,
+  setSearchMenu,
+}) {
   const found = categoriesMenu?.filter((el) =>
     el.name.toLowerCase().includes(searchMenu.toLowerCase())
   );
