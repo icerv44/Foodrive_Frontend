@@ -46,6 +46,7 @@ function DeliveryContextProvider({ children }) {
         btnTitle,
         getOrderDetailById,
         order,
+        setOrder,
       }}
     >
       {children}

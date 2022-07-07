@@ -15,6 +15,7 @@ import { fetchUser } from "../slices/userSlice";
 
 function ProfilePage() {
   const user = useSelector((state) => state.user.info);
+
   const dispatch = useDispatch();
   const { setLoading } = useLoading();
   const { setError } = useError();

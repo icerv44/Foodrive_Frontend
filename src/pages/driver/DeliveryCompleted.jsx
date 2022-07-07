@@ -22,7 +22,7 @@ import { db } from "../../config/firebaseConfig";
 import { useError } from "../../contexts/ErrorContext";
 
 function DeliveryCompleted() {
-  const { order } = useDelivery();
+  const { order, setOrder } = useDelivery();
   const { setError } = useError();
   const navigate = useNavigate();
 
@@ -62,6 +62,9 @@ function DeliveryCompleted() {
       await Promise.all(deletePromise);
 
       const newDoc = await getDoc(docRef);
+
+      deleteDoc(docRef);
+      setOrder(null);
 
       deleteDoc(docRef);
 

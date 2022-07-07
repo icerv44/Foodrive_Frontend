@@ -40,6 +40,7 @@ function OrderRequestPage() {
   useEffect(() => {
     if (latitude === null || longitude == null) return;
     fetchOrder();
+    console.log("OrderRequestPage useEffect");
   }, [latitude, longitude]);
 
   useEffect(() => {
@@ -157,7 +158,7 @@ function OrderRequestPage() {
       <ButtonBackNewPlus />
       <Typography
         className="pl-10 text-20 font-bold"
-        fontSize={25}
+        fontSize="25px"
         fontWeight="bold"
       >
         Order request
