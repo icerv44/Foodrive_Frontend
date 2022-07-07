@@ -3,6 +3,7 @@ import axios from "axios";
 import { useState } from "react";
 import Modal from "react-modal";
 import { useError } from "../../../contexts/ErrorContext";
+import { useSuccess } from "../../../contexts/SuccessContext";
 
 // Modal.setAppElement("#ใส่ไอดีของโมดัลอันนี้ในหน้าที่เอาไปใช้");
 // Import Modal ไปในไฟล์ที่จะใช้ด้วย
@@ -10,11 +11,13 @@ import { useError } from "../../../contexts/ErrorContext";
 function ModalForCardFood({ title, id, fetch }) {
   const [isOpen, setIsOpen] = useState(false);
   const { setError } = useError();
+  const { setSuccess } = useSuccess();
 
   const handleDeleteMenu = async () => {
     try {
       const res = await axios.delete("/restaurant/menu/" + id);
       setIsOpen(false);
+      setSuccess(res.data.message);
       fetch();
     } catch (err) {
       setError(err.response.data.message);
