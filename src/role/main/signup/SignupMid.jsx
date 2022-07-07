@@ -2,6 +2,13 @@ import { Box } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import InputLogin from "../../../components/input/InputLogin";
+import { RiLockPasswordFill } from "react-icons/ri";
+import { MdEmail, MdDriveFileRenameOutline } from "react-icons/md";
+import {
+  BsFillPhoneFill,
+  BsFillPeopleFill,
+  BsPeopleFill,
+} from "react-icons/bs";
 import {
   changeConfirmPassword,
   changeEmail,
@@ -11,10 +18,7 @@ import {
   changePassword,
   changePhoneNumber,
 } from "../../../slices/registerSlice";
-import { MdEmail } from "react-icons/md";
-import { RiLockPasswordFill } from "react-icons/ri";
 import { AiFillPhone } from "react-icons/ai";
-import { BsPeopleFill } from "react-icons/bs";
 import { MdRestaurantMenu } from "react-icons/md";
 
 function SignupMid() {
@@ -80,6 +84,7 @@ function SignupMid() {
             <InputLogin
               icon={<BsPeopleFill className="ml-4" />}
               placeholder="Last Name"
+              // icon={<MdDriveFileRenameOutline />}
               onChange={handleLastNameChange}
               value={lastName}
             />

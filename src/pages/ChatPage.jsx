@@ -11,12 +11,14 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import axios from "../config/axios";
 import { Typography } from "@mui/joy";
+import { useError } from "../contexts/ErrorContext";
 
 function ChatPage() {
   const role = useSelector((state) => state.user.info.role);
   const [driverId, setDriverId] = useState("");
   const [customerId, setCustomerId] = useState("");
   const [collocutorInfo, setCollocutorInfo] = useState(null);
+  const { setError } = useError();
 
   useEffect(() => {
     const getIds = async () => {
@@ -33,7 +35,8 @@ function ChatPage() {
       } else if (role === "customer") {
         //fetch order with customer role
         const res = await axios.get("/customer/currentOrder");
-        if (res.data === null) return;
+        console.log(res.data);
+        if (res.data.order === null) return;
         setCustomerId(res.data.order.customerId);
         setDriverId(res.data.order.driverId);
         setCollocutorInfo({
@@ -42,7 +45,10 @@ function ChatPage() {
         });
       }
     };
-    getIds();
+    getIds().catch((err) => {
+      console.log(err);
+      setError(err.response?.data?.message || err.message);
+    });
   }, [role]);
 
   const chatId = `driver${driverId}_customer${customerId}`;
@@ -53,7 +59,6 @@ function ChatPage() {
   const [messages = []] = useCollectionData(q);
 
   let userId;
-  console.log(collocutorInfo?.image);
 
   let senderId;
   if (role === "driver") {
@@ -89,7 +94,7 @@ function ChatPage() {
           <InputChat chatId={chatId} senderId={userId} />
         </>
       ) : (
-        <Box className="mt-24 flex justify-center">
+        <Box className="flex justify-center absolute  bottom-1/2 left-1/2 right-1/2">
           <Box color="#858786" fontSize="24px" className="mt-[auto] mb-[auto] ">
             No chat available for now.
           </Box>

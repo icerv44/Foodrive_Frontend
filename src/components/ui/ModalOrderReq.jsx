@@ -8,6 +8,12 @@ import { MdOutlineLocationOn } from "react-icons/md";
 import { async } from "@firebase/util";
 import { GOOGLE_MAP_KEY } from "../../config/env";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { doc, collection, Timestamp, addDoc, setDoc } from "firebase/firestore";
+import { db } from "../../config/firebaseConfig";
+import { useSocket } from "../../contexts/SocketContext";
+import { getAddressFromLatLng } from "../../services/getAddress";
+import { useError } from "../../contexts/ErrorContext";
 
 function ModalOrderReq({
   ref,
@@ -19,23 +25,28 @@ function ModalOrderReq({
   restaurantName,
   isOpen,
   setIsOpen,
+  customerId,
+  restaurantId,
 }) {
   // const [isOpen, setIsOpen] = useState(false);
   const cutLetter = 14;
   const cutOrder = 1;
   const [resAddress, setResAddress] = useState("");
+  const { setError } = useError();
+  const driverId = useSelector((state) => state.user.info.id);
+  const { socket } = useSocket();
   const navigate = useNavigate();
   useEffect(() => {
-    getAddressFromLatLng(restaurantLatitude, restaurantLongtitude);
+    if (restaurantLatitude === null || restaurantLongtitude === null) return;
+    resAdd();
   }, [restaurantLatitude, restaurantLongtitude]);
 
-  const getAddressFromLatLng = async (lat, lng) => {
-    const res = await axios.get(
-      `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${GOOGLE_MAP_KEY}`
+  const resAdd = async () => {
+    let resAd = await getAddressFromLatLng(
+      restaurantLatitude,
+      restaurantLongtitude
     );
-    // console.log("SET address : ", res.data.results[0].formatted_address);
-    setResAddress(res.data.results[0].formatted_address);
-    return res.data.results[0].formatted_address;
+    setResAddress(resAd);
   };
 
   const cutRestaurantName = (name) => {
@@ -46,6 +57,8 @@ function ModalOrderReq({
     return name;
   };
 
+  console.log("modal custoemrID", customerId);
+
   const handleClose = () => {
     if (isOpen === true) {
       setIsOpen(false);
@@ -53,14 +66,34 @@ function ModalOrderReq({
     } else console.log("first");
   };
 
-  const handleAccepted = async () => {
-    const accepted = await axios.patch(`/driver/orderAccepted/${id}`);
-    console.log("Accepted Ordder : ", accepted);
-    const updateStatus = await axios.patch("/driver/updateStatus", {
-      status: "BUSY",
-    });
-    console.log("updateStatus : ", updateStatus);
-    navigate(`/driver/delivery/${id}`);
+  const handleAccepted = async (id, customerId, restaurantId) => {
+    try {
+      const accepted = await axios.patch(`/driver/deliveringStatus/${id}`);
+
+      const newChatId = `driver${driverId}_customer${customerId}`;
+      const chatRef = doc(db, "chats", newChatId);
+
+      const messagesRef = collection(db, "chats", newChatId, "messages");
+
+      const updateStatus = await axios.patch("/driver/updateStatus", {
+        status: "BUSY",
+      });
+
+      await setDoc(chatRef, {
+        users: ["driver" + driverId, "customer" + customerId],
+      });
+      await addDoc(messagesRef, {
+        text: "I am your driver. I will be communicating with you here.",
+        createdAt: Timestamp.fromDate(new Date()),
+        senderId: "driver" + driverId,
+      });
+      socket.emit("driverAcceptOrder", { restaurantId });
+
+      console.log("updateStatus : ", updateStatus);
+      navigate(`/driver/delivery/${id}`);
+    } catch (err) {
+      setError(err.response?.data?.message || err.message);
+    }
   };
 
   // console.log(isOpen);
@@ -75,7 +108,7 @@ function ModalOrderReq({
           content: {
             borderRadius: "18px",
             boxShadow: "12px 26px 50px rgba(90, 108, 234, 0.07)",
-            height: "56vh",
+            height: "45vh",
             width: "320px",
             position: "absolute",
             marginRight: "20px",
@@ -123,6 +156,7 @@ function ModalOrderReq({
                     {`${resAddress} `}
                     {/* {`113 ซอย จรัสเมือง Khwaeng Rong Muang, Khet Pathum Wan, Krung Thep Maha Nakhon 10330, Thailand`} */}
                   </Typography>
+                  <Typography></Typography>
                 </Box>
                 {/* Customer address */}
                 <Box className="flex items-center">
@@ -132,9 +166,9 @@ function ModalOrderReq({
                     fontSize={15}
                     fontWeight="bold"
                   >
-                    {`Customer Address`} <br />
-                    {`113 ซอย จรัสเมือง Khwaeng Rong Muang, Khet Pathum Wan, Krung Thep Maha Nakhon 10330, Thailand`}
-                    {/* {customerAddress} */}
+                    {/* {`Customer Address`} <br /> */}
+                    {/* {`113 ซอย จรัสเมือง Khwaeng Rong Muang, Khet Pathum Wan, Krung Thep Maha Nakhon 10330, Thailand`} */}
+                    {customerAddress}
                   </Typography>
                 </Box>
               </Box>
@@ -149,7 +183,7 @@ function ModalOrderReq({
             </button>
 
             <button
-              onClick={handleAccepted}
+              onClick={() => handleAccepted(id, customerId, restaurantId)}
               className="bg-[#DA6317] text-white rounded-xl p-3 w-full"
             >
               {`Accepted`}

@@ -11,15 +11,14 @@ function OrderPage() {
   const { cartId } = useParams();
 
   useEffect(() => {
-    try {
-      console.log(cartId);
-      const fetchCart = async () => {
+    const fetchCart = async () => {
+      try {
         await getCartById(cartId);
-      };
-      fetchCart();
-    } catch (err) {
-      console.log(err);
-    }
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchCart();
   }, [cartId]);
 
   return (

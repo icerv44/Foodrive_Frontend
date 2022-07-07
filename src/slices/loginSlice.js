@@ -18,6 +18,9 @@ const login = createAsyncThunk("customer/login", async (payload, thunkApi) => {
     const token = res.data.token;
     setAccessToken(token);
 
+    // const tokenGoogle = resGoogle.data.token;
+    // setAccessToken(tokenGoogle);
+
     return thunkApi.fulfillWithValue(null); // or just return normally
   } catch (err) {
     console.log(err);
@@ -32,6 +35,7 @@ const loginSlice = createSlice({
     password: "",
     isLoading: false,
     error: "",
+    // googleData: "",
   },
   reducers: {
     changeEmail: (state, action) => {
@@ -40,6 +44,9 @@ const loginSlice = createSlice({
     changePassword: (state, action) => {
       state.password = action.payload;
     },
+    // changeGoogleData: (state, action) => {
+    //   state.googleData = action.payload;
+    // },
   },
   extraReducers: (builder) => {
     builder
@@ -52,12 +59,14 @@ const loginSlice = createSlice({
         state.error = "";
         state.email = "";
         state.password = "";
+        // state.googleData = "";
       })
       .addCase(login.rejected, (state, action) => {
         state.error = action.payload;
         state.isLoading = false;
         state.email = "";
         state.password = "";
+        // state.googleData = "";
       });
   },
 });
@@ -66,7 +75,11 @@ const loginSlice = createSlice({
 // const changeEmail =  loginSlice.actions.changeEmail;
 // const changePassword = loginSlice.actions.changePassword;
 
-export const { changeEmail, changePassword } = loginSlice.actions;
+export const {
+  changeEmail,
+  changePassword,
+  //  changeGoogleData
+} = loginSlice.actions;
 export { login };
 const loginReducer = loginSlice.reducer;
 

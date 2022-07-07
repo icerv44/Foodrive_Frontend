@@ -4,8 +4,9 @@ import { useDispatch } from "react-redux";
 import { login } from "../../../slices/loginSlice";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { fetchUser } from "../../../slices/userSlice";
-import { Box, Button, Typography } from "@mui/joy";
+import { Box } from "@mui/joy";
 import ModalForgetPassword from "../../restaurant/modal/ModalForgetPassword";
+import GoogleLogin from "../../../components/GoogleLogin";
 
 function LoginBot() {
   const navigate = useNavigate();
@@ -37,9 +38,9 @@ function LoginBot() {
 
   return (
     <div>
-      <div className="flex flex-col justify-center items-center mt-8 gap-5">
-        <ButtonGoogle />
-        <div className="underline text-green">
+      <div className="flex flex-col justify-center items-center mt-10 gap-5">
+        <GoogleLogin />
+        <div className="underline text-green mt-3">
           <ModalForgetPassword />
         </div>
       </div>
@@ -54,7 +55,7 @@ function LoginBot() {
         </Box>
       </Link>
 
-      <Box className="flex flex-col items-center gap-5 my-5">
+      <Box className="flex flex-col items-center gap-5 mt-6">
         {roleLogin.map((el, idx) => (
           <Box key={idx}>
             <Link to={el.to} className={role === el.role ? "hidden" : ""}>

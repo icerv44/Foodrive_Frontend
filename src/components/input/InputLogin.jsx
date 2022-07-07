@@ -11,7 +11,7 @@ function InputLogin({ placeholder, onChange, value, type, icon }) {
         <input
           type={type || "text"}
           placeholder={placeholder}
-          className="flex grow appearance-none placeholder-black placeholder-opacity-25 outline-0 text-gray"
+          className="flex grsow appearance-none placeholder-black placeholder-opacity-25 outline-0 text-gray"
           value={value}
           onChange={onChange}
           list="search"

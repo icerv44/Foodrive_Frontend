@@ -20,6 +20,7 @@ function CreateFoodInput() {
     setFoodDetail,
     foodPrice,
     setFoodPrice,
+    foodCategory,
     setFoodCategory,
     categoryData,
   } = useRestaurant();
@@ -28,7 +29,8 @@ function CreateFoodInput() {
     foodName === "" ||
     foodDetail === "" ||
     foodPrice === "" ||
-    foodImage === "";
+    foodImage === "" ||
+    foodCategory === "";
 
   const inputFileRef = useRef(null);
 
@@ -59,8 +61,11 @@ function CreateFoodInput() {
         >
           <select
             onChange={(e) => setFoodCategory(e.target.value)}
-            className="flex flex-row-reverse rounded-xl w-full py-2 px-3 border border-teal-200"
+            className="rounded-xl w-full py-2 px-3 border border-teal-200"
           >
+            <option value="" selected disabled hidden>
+              Choose Category
+            </option>
             {categoryData.map((el, idx) => (
               <option key={idx} value={el.id}>
                 {el.name}

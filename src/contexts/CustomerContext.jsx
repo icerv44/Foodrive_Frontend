@@ -47,6 +47,7 @@ export function CustomerContextProvider({ children }) {
         longitude,
       });
       setRestaurant(res.data);
+      console.log(res.data);
     } catch (err) {
       console.log(err);
       setError(err.response.data.message);

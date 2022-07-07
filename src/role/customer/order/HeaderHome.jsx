@@ -1,8 +1,18 @@
+import { Typography } from "@mui/joy";
 import { Box } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 import ButtonBackNew from "../../../components/button/ButtonBackNew";
 import ButtonLocation from "../../../components/button/ButtonLocation";
+import { useCustomerAddress } from "../../../contexts/CustomerAddressContext.jsx";
 
 function HeaderHome() {
+  const navigate = useNavigate();
+  const { address } = useCustomerAddress();
+
+  const redirectToMyLocation = () => {
+    navigate("/customer/myLocation");
+  };
+
   return (
     <Box
       sx={{
@@ -12,8 +22,10 @@ function HeaderHome() {
       className="w-full h-[76px] px-5 flex justify-between items-center"
     >
       <ButtonBackNew />
-      <Box className="text-[#53E88B] text-lg font-semibold">Mint Tower 100</Box>
-      <ButtonLocation />
+      <Typography sx={{ maxHeight: 50, overflow: "auto" }}>
+        {address}
+      </Typography>
+      <ButtonLocation onClick={redirectToMyLocation} />
     </Box>
   );
 }

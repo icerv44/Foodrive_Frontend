@@ -3,9 +3,11 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { GOOGLE_MAP_KEY } from "../../../config/env";
 import axios from "../../../config/axios";
+import { useError } from "../../../contexts/ErrorContext";
 
 function GoogleMapInput({ address, setAddress, position, setPosition }) {
   const [center, setCenter] = useState(null);
+  const { setError } = useError();
   const { latitude, longitude, role } = useSelector((state) => state.user.info);
 
   const mapRef = useRef(null);
@@ -44,17 +46,19 @@ function GoogleMapInput({ address, setAddress, position, setPosition }) {
   };
 
   useEffect(() => {
-    initPosition();
+    initPosition().catch((err) => {
+      setError(err.response.data.message);
+    });
   }, [latitude, longitude]);
 
   return (
     <div
       className="driver-map-container"
-      style={{ width: "70%", height: "50vh" }}
+      style={{ width: "100%", height: "80%" }}
     >
       <GoogleMap
         mapContainerClassName="driver-map"
-        mapContainerStyle={{ width: "70%", height: "50vh" }}
+        mapContainerStyle={{ width: "100%", height: "50vh" }}
         zoom={16}
         center={center}
         onLoad={onLoad}

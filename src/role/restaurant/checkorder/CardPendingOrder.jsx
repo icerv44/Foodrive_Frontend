@@ -7,6 +7,7 @@ import Card from "@mui/joy/Card";
 import IconButton from "@mui/joy/IconButton";
 import Typography from "@mui/joy/Typography";
 import { GrFormClose } from "react-icons/gr";
+import { useError } from "../../../contexts/ErrorContext";
 
 function CardPendingOrder({
   orderId,
@@ -22,6 +23,7 @@ function CardPendingOrder({
   const { restaurantLatitude, restaurantLongitude } = useSelector(
     (state) => state.user.info
   );
+  const { setError } = useError();
   let customerName = firstName + " " + lastName;
   let orderPrice = totalPrice;
   let dateTime = new Date(updatedAt).toString();
@@ -38,6 +40,7 @@ function CardPendingOrder({
       });
     } catch (err) {
       console.log(err);
+      setError(err.response?.data?.message || err.message);
     }
   };
 
@@ -48,6 +51,7 @@ function CardPendingOrder({
       });
     } catch (err) {
       console.log(err);
+      setError(err.response?.data?.message || err.message);
     }
   };
 

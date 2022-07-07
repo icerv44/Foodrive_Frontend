@@ -1,45 +1,24 @@
-import CardOverflow from "@mui/joy/CardOverflow";
-import axios from "axios";
 import { useState } from "react";
 import Modal from "react-modal";
-import { useError } from "../../../contexts/ErrorContext";
+import { RiDeleteBin6Line } from "react-icons/ri";
 
 // Modal.setAppElement("#ใส่ไอดีของโมดัลอันนี้ในหน้าที่เอาไปใช้");
 // Import Modal ไปในไฟล์ที่จะใช้ด้วย
 
-function ModalForCardFood({ title, id, fetch }) {
+function ModalForDeleteCategory({ itemName, onClick }) {
   const [isOpen, setIsOpen] = useState(false);
-  const { setError } = useError();
-
-  const handleDeleteMenu = async () => {
-    try {
-      const res = await axios.delete("/restaurant/menu/" + id);
-      setIsOpen(false);
-      fetch();
-    } catch (err) {
-      setError(err.response.data.message);
-    }
-  };
 
   return (
     <>
-      <CardOverflow
+      {/* BUTTON FOR OPEN */}
+      <div
+        className="absolute top-9 right-11 bg-[#e60000] text-white p-2 text-xl rounded-lg text-center"
+        role="button"
         onClick={() => setIsOpen(true)}
-        variant="solid"
-        color="danger"
-        sx={{
-          px: 0.2,
-          py: "21px",
-          writingMode: "vertical-rl",
-          textAlign: "center",
-          fontSize: "xs2",
-          fontWeight: "xl2",
-          letterSpacing: "1px",
-          textTransform: "uppercase",
-        }}
       >
-        REMOVE
-      </CardOverflow>
+        <RiDeleteBin6Line />
+      </div>
+
       <Modal
         style={{
           overlay: { backgroundColor: "rgba(0,0,0,0.5)" },
@@ -47,16 +26,20 @@ function ModalForCardFood({ title, id, fetch }) {
             borderRadius: "18px",
             boxShadow: "12px 26px 50px rgba(90, 108, 234, 0.07)",
             height: "26vh",
-            top: "32%",
+            top: "33%",
           },
         }}
         id="root"
         isOpen={isOpen}
         onRequestClose={() => setIsOpen(false)}
       >
+        {/* MODAL CONTENT */}
         <div>
-          <div className="px-2 text-2xl font-bold mb-4">{title}</div>
-          <div className="flex flex-col gap-6">
+          <div className="px-2 text-2xl font-bold mb-4">Delete {itemName}</div>
+          <form
+            onSubmit={(e) => e.preventDefault()}
+            className="flex flex-col gap-6"
+          >
             <div>
               <div className="text-[#3B3B3B] opacity-[0.3] m-2">
                 This item will be delete
@@ -71,17 +54,17 @@ function ModalForCardFood({ title, id, fetch }) {
                 Cancel
               </button>
               <button
-                onClick={handleDeleteMenu}
+                onClick={onClick}
                 className="bg-[#DA6317] text-white rounded-xl p-3 w-full"
               >
                 Delete
               </button>
             </div>
-          </div>
+          </form>
         </div>
       </Modal>
     </>
   );
 }
 
-export default ModalForCardFood;
+export default ModalForDeleteCategory;

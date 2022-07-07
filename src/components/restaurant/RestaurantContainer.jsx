@@ -8,22 +8,22 @@ import RestaurantTop from "./RestaurantTop";
 
 function RestaurantContainer() {
   const { setLoading } = useLoading();
-  const { getRestaurantById, restaurant } = useCustomer();
+  const { getRestaurantById } = useCustomer();
   const { restaurantId } = useParams();
 
   useEffect(() => {
-    try {
-      const fetchRestaurant = async () => {
+    const fetchRestaurant = async () => {
+      try {
         setLoading(true);
         await getRestaurantById(+restaurantId);
-      };
+      } catch (err) {
+        console.log(err);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-      fetchRestaurant();
-    } catch (err) {
-      console.log(err);
-    } finally {
-      setLoading(false);
-    }
+    fetchRestaurant();
   }, [restaurantId]);
 
   return (

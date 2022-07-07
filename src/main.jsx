@@ -10,18 +10,21 @@ import { RestaurantContextProvider } from "./contexts/RestaurantContext";
 import firebaseApp from "./config/firebaseConfig";
 import GoogleMapDriverLoader from "./components/common/googleMapDriver/GoogleMapDriverLoader";
 import { ErrorContextProvider } from "./contexts/ErrorContext";
+import { SocketContextProvider } from "./contexts/SocketContext";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <Provider store={store}>
     <ErrorContextProvider>
-      <RestaurantContextProvider>
-        <BrowserRouter>
-          {/* เอาstrict mode ออกไม่งั้นไม่เห็น marker */}
-          {/* <React.StrictMode> */}
-          <App />
-          {/* </React.StrictMode> */}
-        </BrowserRouter>
-      </RestaurantContextProvider>
+      <SocketContextProvider>
+        <RestaurantContextProvider>
+          <BrowserRouter>
+            {/* เอาstrict mode ออกไม่งั้นไม่เห็น marker */}
+            {/* <React.StrictMode> */}
+            <App />
+            {/* </React.StrictMode> */}
+          </BrowserRouter>
+        </RestaurantContextProvider>
+      </SocketContextProvider>
     </ErrorContextProvider>
   </Provider>
 );

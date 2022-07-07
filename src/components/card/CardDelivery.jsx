@@ -7,16 +7,17 @@ import { useDelivery } from "../../contexts/DeliveryContext";
 import { useParams } from "react-router-dom";
 import { GOOGLE_MAP_KEY } from "../../config/env";
 import axios from "../../config/axios";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { getAddressFromLatLng } from "../../services/getAddress";
 
 function CardDelivery() {
   const { getOrderDetailById, order, textColor } = useDelivery();
+  const { pathname } = useLocation();
   console.log("CardDetail order: ", order);
   const { orderId } = useParams();
-  console.log("CardDetail orderId: ", orderId);
-  const header = "รับจาก";
   const cutLetter = 18;
-
   const [location, setLocation] = useState("");
+
   const cutRestaurantName = (name = "") => {
     if (name.length > cutLetter) {
       const cutName = name.substring(0, cutLetter) + "...";
@@ -25,24 +26,41 @@ function CardDelivery() {
     return name;
   };
 
-  const getAddressFromLatLng = async (lat, lng) => {
-    const res = await axios.get(
-      `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${GOOGLE_MAP_KEY}`
+  // console.log("CardDetail orderId: ", orderId);
+  let header = "";
+  if (pathname.split("/")[3] === "orderSummary") {
+    header = "ส่งที่";
+  } else {
+    header = "รับจาก";
+  }
+
+  let name = "";
+  if (header === "รับจาก") {
+    name = cutRestaurantName(order?.Restaurant?.name);
+  } else {
+    name = "Home";
+  }
+
+  const resAddress = async () => {
+    let resAd = await getAddressFromLatLng(
+      +order?.Restaurant?.latitude,
+      +order?.Restaurant?.longitude
     );
-    // console.log("SET address : ", res.data.results[0].formatted_address);
-    setLocation(res.data.results[0].formatted_address);
-    return res.data.results[0].formatted_address;
+    setLocation(resAd);
   };
 
   useEffect(() => {
-    if (order) {
-      getAddressFromLatLng(
-        +order?.Restaurant?.latitude,
-        +order?.Restaurant?.longitude
-      );
-    } else {
-      getOrderDetailById(Number(orderId));
-    }
+    console.log("CardDelivery : ", order);
+    try {
+      if (order && header === "รับจาก") {
+        resAddress();
+        console.log("CardDelivery resAdress: ", location);
+      } else if (order && header === "ส่งที่") {
+        setLocation(order.addressName);
+      } else {
+        getOrderDetailById(Number(orderId));
+      }
+    } catch (err) {}
 
     console.log("location : ", location);
   }, [order]);
@@ -63,23 +81,23 @@ function CardDelivery() {
       }}
     >
       <CardContent className="flex justify-between items-center">
-        <Box className="flex flex-col gap-2">
+        <Box className="flex flex-col gap-1">
           {/* Distance */}
-          <span className={"pl-10 text-[15px] font-bold  " + textColor}>
+          <span className={"pl-3 text-[17px] font-bold  " + textColor}>
             {header}
           </span>
 
           {/* Restaurant name */}
           <Box className="flex items-center">
-            <MdOutlineLocationOn className={"text-2xl mr-4" + textColor} />
-            <Typography fontSize={18} fontWeight="bold">
-              {cutRestaurantName(order?.Restaurant?.name)}
+            <MdOutlineLocationOn className={"text-3xl mr-2 mt-2" + textColor} />
+            <Typography fontSize={20} fontWeight="bold">
+              {name}
             </Typography>
           </Box>
 
           {/* Restaurant location */}
-          <Box className="flex items-center pl-10">
-            <Typography fontSize={16}>{location}</Typography>
+          <Box className="flex items-center pl-10 ">
+            <Typography fontSize={14}>{location}</Typography>
           </Box>
         </Box>
       </CardContent>

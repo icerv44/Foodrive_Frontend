@@ -8,13 +8,16 @@ import axios from "../../config/axios";
 import Modal from "react-modal";
 import NoFoodForNow from "../../role/restaurant/categoryfoodlist/NoFoodForNow";
 import { useRestaurant } from "../../contexts/RestaurantContext";
-import { RiDeleteBin6Line } from "react-icons/ri";
+import { useError } from "../../contexts/ErrorContext";
+import ModalForDeleteCategory from "../../role/restaurant/modal/ModalForDeleteCategory";
 
 function CategoryFoodPage() {
   const [categoryFoodData, setCategoryFoodData] = useState([]);
   const navigate = useNavigate();
   const { id } = useParams();
   const { handleDeleteCategory } = useRestaurant();
+  const { setError } = useError();
+  const categoryId = useParams();
 
   Modal.setAppElement("#root");
 
@@ -23,7 +26,8 @@ function CategoryFoodPage() {
       const res = await axios.get("restaurant/getCategory/" + id);
       setCategoryFoodData(res.data.category);
     } catch (err) {
-      console.log(err);
+      console.log(error);
+      setError(error.response.data.message);
     }
   };
   useEffect(() => {
@@ -33,9 +37,17 @@ function CategoryFoodPage() {
   return (
     <>
       <ButtonBackNewPlus onClick={() => navigate("/restaurant/category")} />{" "}
-      <Box className="absolute top-9 right-11 bg-[#e60000] text-white p-2 text-xl rounded-lg text-center">
-        <RiDeleteBin6Line />
-      </Box>
+      {categoryFoodData?.name !== "other" ? (
+        <ModalForDeleteCategory
+          onClick={() => {
+            handleDeleteCategory(categoryId.id);
+            navigate("/restaurant/category");
+          }}
+          itemName={categoryFoodData?.name}
+        />
+      ) : (
+        ""
+      )}
       <Box
         sx={{
           display: "flex",
