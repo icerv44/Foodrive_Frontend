@@ -13,10 +13,12 @@ import { useCustomer } from "../../contexts/CustomerContext";
 import { useSelector } from "react-redux";
 import { TiArrowSortedDown } from "react-icons/ti";
 import { Typography } from "@mui/joy";
+import { getAddressFromLatLng } from "../../services/getAddress";
 
 const OmiseCard = window.OmiseCard;
 
 function PaymentPage() {
+  const { setError } = setError();
   const { socket } = useSocket();
   const navigate = useNavigate();
   const { cart } = useCustomer();
@@ -38,13 +40,6 @@ function PaymentPage() {
     socket.emit("notifyRestaurant", {
       restaurantId,
     });
-  };
-
-  const getAddressFromLatLng = async (lat, lng) => {
-    const res = await axios.get(
-      `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${GOOGLE_MAP_KEY}`
-    );
-    return res.data.results[0].formatted_address;
   };
 
   const selectCurrentAddress = async () => {
@@ -104,6 +99,7 @@ function PaymentPage() {
           notifyRestaurant();
         } catch (err) {
           console.log(err);
+          setError(err.response.data.message);
         }
       },
     });

@@ -24,6 +24,7 @@ import Card from "@mui/joy/Card";
 import { CardContent } from "@mui/material";
 import { MdOutlineLocationOn } from "react-icons/md";
 import ModalOrderReq from "../../components/ui/ModalOrderReq";
+import { useError } from "../../contexts/ErrorContext";
 
 function OrderRequestPage() {
   const {
@@ -34,6 +35,7 @@ function OrderRequestPage() {
   const { socket } = useSocket();
   const [order, setOrder] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
+  const { setError } = useError();
 
   useEffect(() => {
     fetchOrder();
@@ -53,6 +55,7 @@ function OrderRequestPage() {
       // console.log("Fetch Order : " + JSON.stringify(resOrder));
     } catch (err) {
       console.log(err);
+      setError(err.response.data.message);
     }
   };
 

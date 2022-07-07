@@ -11,12 +11,14 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import axios from "../config/axios";
 import { Typography } from "@mui/joy";
+import { useError } from "../contexts/ErrorContext";
 
 function ChatPage() {
   const role = useSelector((state) => state.user.info.role);
   const [driverId, setDriverId] = useState("");
   const [customerId, setCustomerId] = useState("");
   const [collocutorInfo, setCollocutorInfo] = useState(null);
+  const { setError } = useError();
 
   useEffect(() => {
     const getIds = async () => {
@@ -42,7 +44,9 @@ function ChatPage() {
         });
       }
     };
-    getIds();
+    getIds().catch((err) => {
+      setError(err.response.data.message);
+    });
   }, [role]);
 
   const chatId = `driver${driverId}_customer${customerId}`;
@@ -53,7 +57,6 @@ function ChatPage() {
   const [messages = []] = useCollectionData(q);
 
   let userId;
-  console.log(collocutorInfo?.image);
 
   let senderId;
   if (role === "driver") {

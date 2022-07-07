@@ -1,11 +1,13 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import axios from "../config/axios";
+import { useError } from "./ErrorContext";
 
 const RestaurantContext = createContext();
 
 function RestaurantContextProvider({ children }) {
   const role = useSelector((state) => state.user.info.role);
+  const { setError } = useError();
   const [categoryData, setCategoryData] = useState([]);
   const [pendingOrderData, setPendingOrderData] = useState([]);
   const [optionGroups, setOptionGroups] = useState([]);
@@ -29,6 +31,7 @@ function RestaurantContextProvider({ children }) {
       setCategoryData(res.data.category);
     } catch (error) {
       console.log(error);
+      setError(err.response.data.message);
     }
   };
 
@@ -43,6 +46,7 @@ function RestaurantContextProvider({ children }) {
       setPendingOrderData(res.data.order);
     } catch (err) {
       console.log(err);
+      setError(err.response.data.message);
     }
   };
 
@@ -56,6 +60,7 @@ function RestaurantContextProvider({ children }) {
       fetchCategory();
     } catch (error) {
       console.log(error);
+      setError(err.response.data.message);
     }
   };
 

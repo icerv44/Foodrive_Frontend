@@ -8,6 +8,12 @@ import { MdOutlineLocationOn } from "react-icons/md";
 import { async } from "@firebase/util";
 import { GOOGLE_MAP_KEY } from "../../config/env";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { doc, collection, Timestamp, addDoc, setDoc } from "firebase/firestore";
+import { db } from "../../config/firebaseConfig";
+import { useSocket } from "../../contexts/SocketContext";
+import { getAddressFromLatLng } from "../../services/getAddress";
+import { useError } from "../../contexts/ErrorContext";
 
 function ModalOrderReq({
   ref,
@@ -26,19 +32,14 @@ function ModalOrderReq({
   const cutLetter = 14;
   const cutOrder = 1;
   const [resAddress, setResAddress] = useState("");
+  const { setError } = useError();
+  const driverId = useSelector((state) => state.user.info.id);
+  const { socket } = useSocket();
   const navigate = useNavigate();
   useEffect(() => {
+    if (restaurantLatitude === null || restaurantLongtitude === null) return;
     getAddressFromLatLng(restaurantLatitude, restaurantLongtitude);
   }, [restaurantLatitude, restaurantLongtitude]);
-
-  const getAddressFromLatLng = async (lat, lng) => {
-    const res = await axios.get(
-      `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${GOOGLE_MAP_KEY}`
-    );
-    // console.log("SET address : ", res.data.results[0].formatted_address);
-    setResAddress(res.data.results[0].formatted_address);
-    return res.data.results[0].formatted_address;
-  };
 
   const cutRestaurantName = (name) => {
     if (name.length > cutLetter) {
@@ -55,47 +56,34 @@ function ModalOrderReq({
     } else console.log("first");
   };
 
-  const clickOrderAccepted = async (id, customerId, restaurantId) => {
-    const resOrder = await axios.patch(`driver/deliveringStatus/${id}`);
-
-    const newChatId = `driver${driverId}_customer${customerId}`;
-    const chatRef = doc(db, "chats", newChatId);
-    const messagesRef = collection(db, "chats", newChatId, "messages");
-    socket.emit("driverAcceptOrder", { restaurantId });
-    await setDoc(chatRef, {
-      users: ["driver" + driverId, "customer" + customerId],
-    });
-    await addDoc(messagesRef, {
-      text: "I am your driver. I will be communicating with you here.",
-      createdAt: Timestamp.fromDate(new Date()),
-      senderId: driverId,
-    });
-  };
-
   const handleAccepted = async (id, customerId, restaurantId) => {
-    const accepted = await axios.patch(`/driver/deliveringStatus/${id}`);
+    try {
+      const accepted = await axios.patch(`/driver/deliveringStatus/${id}`);
 
-    const newChatId = `driver${driverId}_customer${customerId}`;
-    const chatRef = doc(db, "chats", newChatId);
+      const newChatId = `driver${driverId}_customer${customerId}`;
+      const chatRef = doc(db, "chats", newChatId);
 
-    const messagesRef = collection(db, "chats", newChatId, "messages");
-    socket.emit("driverAcceptOrder", { restaurantId });
+      const messagesRef = collection(db, "chats", newChatId, "messages");
 
-    const updateStatus = await axios.patch("/driver/updateStatus", {
-      status: "BUSY",
-    });
+      const updateStatus = await axios.patch("/driver/updateStatus", {
+        status: "BUSY",
+      });
 
-    await setDoc(chatRef, {
-      users: ["driver" + driverId, "customer" + customerId],
-    });
-    await addDoc(messagesRef, {
-      text: "I am your driver. I will be communicating with you here.",
-      createdAt: Timestamp.fromDate(new Date()),
-      senderId: driverId,
-    });
+      await setDoc(chatRef, {
+        users: ["driver" + driverId, "customer" + customerId],
+      });
+      await addDoc(messagesRef, {
+        text: "I am your driver. I will be communicating with you here.",
+        createdAt: Timestamp.fromDate(new Date()),
+        senderId: driverId,
+      });
+      socket.emit("driverAcceptOrder", { restaurantId });
 
-    console.log("updateStatus : ", updateStatus);
-    navigate(`/driver/delivery/${id}`);
+      console.log("updateStatus : ", updateStatus);
+      navigate(`/driver/delivery/${id}`);
+    } catch (err) {
+      setError(err.response?.data?.message || err.message);
+    }
   };
 
   // console.log(isOpen);
@@ -184,7 +172,7 @@ function ModalOrderReq({
             </button>
 
             <button
-              onClick={() => handleAccepted(id)}
+              onClick={() => handleAccepted(id, customerId, restaurantId)}
               className="bg-[#DA6317] text-white rounded-xl p-3 w-full"
             >
               {`Accepted`}

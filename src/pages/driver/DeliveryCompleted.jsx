@@ -19,9 +19,11 @@ import {
   getDocs,
 } from "firebase/firestore";
 import { db } from "../../config/firebaseConfig";
+import { useError } from "../../contexts/ErrorContext";
 
 function DeliveryCompleted() {
   const { order } = useDelivery();
+  const { setError } = useError();
   const navigate = useNavigate();
 
   // const clickOrderAccepted = async (id, customerId) => {
@@ -42,29 +44,31 @@ function DeliveryCompleted() {
 
   //Test Function
   const confirmOrder = async () => {
-    console.log("confirmOrder Complete : ", order);
-    const updateStatus = await axios.patch("/driver/updateStatus", {
-      status: "AVAILABLE",
-    });
-    console.log("confirmOrder updateStatus : ", updateStatus);
-    const res = await axios.get("/driver/currentOrder");
-    const customerId = res.data.order.customerId;
-    const chatId = `driver${driverId}_customer${customerId}`;
-    const docRef = doc(db, "chats", chatId);
-    const mq = query(collection(db, "chats", chatId, "messages"));
-    const querySnapshot = await getDocs(mq);
-    const deletePromise = [];
-    querySnapshot.forEach((doc) => {
-      deletePromise.push(deleteDoc(doc.ref));
-    });
+    try {
+      const updateStatus = await axios.patch("/driver/updateStatus", {
+        status: "AVAILABLE",
+      });
+      const res = await axios.get("/driver/currentOrder");
+      const customerId = res.data.order.customerId;
+      const chatId = `driver${driverId}_customer${customerId}`;
+      const docRef = doc(db, "chats", chatId);
+      const mq = query(collection(db, "chats", chatId, "messages"));
+      const querySnapshot = await getDocs(mq);
+      const deletePromise = [];
+      querySnapshot.forEach((doc) => {
+        deletePromise.push(deleteDoc(doc.ref));
+      });
 
-    await Promise.all(deletePromise);
+      await Promise.all(deletePromise);
 
-    const newDoc = await getDoc(docRef);
+      const newDoc = await getDoc(docRef);
 
-    deleteDoc(docRef);
+      deleteDoc(docRef);
 
-    navigate(`/driver`);
+      navigate(`/driver`);
+    } catch (err) {
+      setError(err.response?.data?.message || err.message);
+    }
   };
 
   return (

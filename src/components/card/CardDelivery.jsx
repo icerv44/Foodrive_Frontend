@@ -7,6 +7,7 @@ import { useDelivery } from "../../contexts/DeliveryContext";
 import { useParams } from "react-router-dom";
 import { GOOGLE_MAP_KEY } from "../../config/env";
 import axios from "../../config/axios";
+import { getAddressFromLatLng } from "../../services/getAddress";
 
 function CardDelivery() {
   const { getOrderDetailById, order, textColor } = useDelivery();
@@ -25,21 +26,12 @@ function CardDelivery() {
     return name;
   };
 
-  const getAddressFromLatLng = async (lat, lng) => {
-    const res = await axios.get(
-      `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${GOOGLE_MAP_KEY}`
-    );
-    // console.log("SET address : ", res.data.results[0].formatted_address);
-    setLocation(res.data.results[0].formatted_address);
-    return res.data.results[0].formatted_address;
-  };
-
   useEffect(() => {
     if (order) {
       getAddressFromLatLng(
         +order?.Restaurant?.latitude,
         +order?.Restaurant?.longitude
-      );
+      ).catch((err) => {});
     } else {
       getOrderDetailById(Number(orderId));
     }

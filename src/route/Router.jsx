@@ -69,7 +69,7 @@ function Router() {
   const navigate = useNavigate();
   const { setSocket, socket } = socketCtx;
   const { loading } = useLoading();
-  const { error } = useError();
+  const { error, setError } = useError();
   const { success } = useSuccess();
 
   const { pathname } = useLocation();
@@ -136,11 +136,15 @@ function Router() {
   }, [pathname]);
 
   const updateDriver = async (lat, lng) => {
-    if (latitude && longitude) {
-      const res = await axios.patch("/driver/updateLocation", {
-        latitude: lat,
-        longitude: lng,
-      });
+    try {
+      if (latitude && longitude) {
+        const res = await axios.patch("/driver/updateLocation", {
+          latitude: lat,
+          longitude: lng,
+        });
+      }
+    } catch (err) {
+      setError(err.response.data.message);
     }
   };
 
