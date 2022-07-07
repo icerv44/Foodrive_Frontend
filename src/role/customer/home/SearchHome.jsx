@@ -34,7 +34,8 @@ function SearchHome() {
         list="search"
       />
       <datalist id="search" className="">
-        {menus && menus?.map((el) => <option value={el?.name} />)}
+        {menus &&
+          menus?.map((el, idx) => <option key={idx} value={el?.name} />)}
       </datalist>
     </div>
   );

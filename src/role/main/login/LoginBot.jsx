@@ -5,6 +5,7 @@ import { login } from "../../../slices/loginSlice";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { fetchUser } from "../../../slices/userSlice";
 import { Box, Button, Typography } from "@mui/joy";
+import GoogleLogin from "../../../components/GoogleLogin";
 
 function LoginBot() {
   const navigate = useNavigate();
@@ -36,10 +37,14 @@ function LoginBot() {
 
   return (
     <div>
-      {/* <div className="flex flex-col justify-center items-center gap-5">
+      <div className="flex flex-col justify-center items-center gap-5">
+        <div className="">
+          <GoogleLogin />
+        </div>
         <ButtonGoogle />
+
         <div className="underline text-green">Forgot Your Password?</div>
-      </div> */}
+      </div>
 
       <div className="flex justify-center items-center mt-5">
         <ButtonGreenGradiant onClick={onClick} title="Login" px="30px" />
