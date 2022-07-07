@@ -20,11 +20,14 @@ import {
 } from "firebase/firestore";
 import { db } from "../../config/firebaseConfig";
 import { useError } from "../../contexts/ErrorContext";
+import { fetchUser } from "../../slices/userSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 function DeliveryCompleted() {
   const { order, setOrder } = useDelivery();
   const { setError } = useError();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   // const clickOrderAccepted = async (id, customerId) => {
   //   const resOrder = await axios.post(`driver/deliveredStatus/${id}`);
@@ -48,9 +51,11 @@ function DeliveryCompleted() {
       const updateStatus = await axios.patch("/driver/updateStatus", {
         status: "AVAILABLE",
       });
+      await axios.patch(`/driver/deliveredStatus/${order.id}`);
+
       const res = await axios.get("/driver/currentOrder");
       const customerId = res.data.order.customerId;
-      const chatId = `driver${driverId}_customer${customerId}`;
+      const chatId = `driver${res.data.order.driverId}_customer${customerId}`;
       const docRef = doc(db, "chats", chatId);
       const mq = query(collection(db, "chats", chatId, "messages"));
       const querySnapshot = await getDocs(mq);
@@ -60,7 +65,7 @@ function DeliveryCompleted() {
       });
 
       await Promise.all(deletePromise);
-
+      await dispatch(fetchUser({ role: "driver" }));
       const newDoc = await getDoc(docRef);
 
       deleteDoc(docRef);

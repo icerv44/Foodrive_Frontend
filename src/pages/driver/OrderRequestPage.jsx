@@ -57,7 +57,7 @@ function OrderRequestPage() {
         longitude: longitude,
       };
 
-      // console.log("Lat Long : ", latLong);
+      console.log("Lat Long : ", latLong);
       const resOrder = await axios.post("/driver/searchOrder", latLong);
       setOrder([...resOrder.data.order]);
       console.log(resOrder.data.order);
@@ -67,46 +67,6 @@ function OrderRequestPage() {
       setError(err.response.data.message);
     }
   };
-
-  const orderRequest = [
-    {
-      restaurantName: "Starbucks Coffee",
-      distance: 19,
-      driverIncome: 20,
-      orderList: [{ menuTitle: "Late", pieces: 2 }],
-    },
-    {
-      restaurantName: "Starbucks Coffee",
-      distance: 19,
-      driverIncome: 20,
-      orderList: [
-        { menuTitle: "Late", pieces: 2 },
-        { menuTitle: "Green Tea", pieces: 1 },
-      ],
-    },
-    {
-      restaurantName: "Starbucks Coffee",
-      distance: 19,
-      driverIncome: 20,
-      orderList: [
-        { menuTitle: "Late", pieces: 2 },
-        { menuTitle: "Green Tea", pieces: 1 },
-        { menuTitle: "Milk Tea", pieces: 3 },
-      ],
-    },
-    {
-      restaurantName: "Starbucks Coffee",
-      distance: 19,
-      driverIncome: 20,
-      orderList: [
-        { menuTitle: "Late", pieces: 2 },
-        { menuTitle: "Green Tea", pieces: 1 },
-        { menuTitle: "Milk Tea", pieces: 3 },
-        { menuTitle: "Milk Tea", pieces: 3 },
-        { menuTitle: "Milk Tea", pieces: 3 },
-      ],
-    },
-  ];
 
   const clickOrderAccepted = async (id, customerId, restaurantId) => {
     const resOrder = await axios.patch(`driver/deliveringStatus/${id}`);
@@ -175,7 +135,7 @@ function OrderRequestPage() {
             restaurantLatitude={el.Restaurant.latitude}
             restaurantLongtitude={el.Restaurant.longitude}
             customerAddress={el.addressName}
-            customerId={el.Customer.id}
+            customerId={el.customerId}
             restaurantId={el.Restaurant.id}
           />
         ))}
