@@ -20,7 +20,7 @@ function DeliveryStatus() {
 
   return (
     <div className="px-7 flex flex-col gap-3 h-[70vh] overflow-auto">
-      {getDeliveryOrder.map((el) => (
+      {getDeliveryOrder.map((el, idx) => (
         <CardDeliveryCheck
           key={el?.id}
           customerFirstName={el?.Customer?.firstName}

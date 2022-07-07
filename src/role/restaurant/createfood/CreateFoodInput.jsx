@@ -20,11 +20,8 @@ function CreateFoodInput() {
     setFoodDetail,
     foodPrice,
     setFoodPrice,
-    foodCategory,
     setFoodCategory,
     categoryData,
-    optionGroups,
-    setOptionGroups,
   } = useRestaurant();
 
   const disabledButton =
@@ -62,7 +59,7 @@ function CreateFoodInput() {
         >
           <select
             onChange={(e) => setFoodCategory(e.target.value)}
-            className="my-select-menu rounded-xl w-full py-2 px-3 border border-teal-200"
+            className="flex flex-row-reverse rounded-xl w-full py-2 px-3 border border-teal-200"
           >
             {categoryData.map((el, idx) => (
               <option key={idx} value={el.id}>

@@ -5,6 +5,7 @@ import { login } from "../../../slices/loginSlice";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { fetchUser } from "../../../slices/userSlice";
 import { Box, Button, Typography } from "@mui/joy";
+import ModalForgetPassword from "../../restaurant/modal/ModalForgetPassword";
 
 function LoginBot() {
   const navigate = useNavigate();
@@ -36,22 +37,21 @@ function LoginBot() {
 
   return (
     <div>
-      {/* <div className="flex flex-col justify-center items-center gap-5">
+      <div className="flex flex-col justify-center items-center mt-8 gap-5">
         <ButtonGoogle />
-        <div className="underline text-green">Forgot Your Password?</div>
-      </div> */}
+        <div className="underline text-green">
+          <ModalForgetPassword />
+        </div>
+      </div>
 
-      <div className="flex justify-center items-center mt-5">
-        <ButtonGreenGradiant onClick={onClick} title="Login" px="30px" />
+      <div className="flex justify-center items-center mt-8">
+        <ButtonGreenGradiant onClick={onClick} title="Login" px="36px" />
       </div>
 
       <Link to={`/${role}/register`}>
-        <Typography
-          sx={{ marginY: "20px" }}
-          className="text-center underline text-green"
-        >
+        <Box className="text-center mt-8 underline text-green">
           Don't have account?
-        </Typography>
+        </Box>
       </Link>
 
       <Box className="flex flex-col items-center gap-5 my-5">

@@ -49,7 +49,7 @@ const userSlice = createSlice({
         state.error = "";
       })
       .addCase(fetchUser.fulfilled, (state, action) => {
-        console.log(action.payload.role, action.payload.status);
+        // console.log(action.payload.role, action.payload.status);
         state.info = {
           ...state.info,
           name: action.payload.name,

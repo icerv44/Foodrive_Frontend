@@ -59,7 +59,6 @@ function ConfirmFoodPage() {
       setFoodDetail("");
       setFoodPrice("");
     } catch (err) {
-      console.log(err);
       setError(err.response.data.message);
     } finally {
       setIsLoading(false);
@@ -127,7 +126,7 @@ function ConfirmFoodPage() {
               level="body3"
               sx={{ fontWeight: "md", color: "text.secondary" }}
             >
-              {foodCategoryMap}
+              {foodCategoryMap ? foodCategoryMap : "other"}
             </Typography>
             <Box sx={{ width: 2, bgcolor: "divider" }} />
             <Typography
