@@ -10,6 +10,8 @@ const googleLogin = createAsyncThunk(
 
       const googleData = thunkApi.getState().googleLogin.googleData;
 
+      console.log(role);
+
       const resGoogle = await axios.post(
         "/auth/login/google/" + role,
         googleData

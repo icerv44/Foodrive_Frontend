@@ -37,13 +37,18 @@ function LoginBot() {
 
   return (
     <div>
-      <div className="flex flex-col justify-center items-center gap-5">
-        <div className="">
+      <div className="flex flex-col justify-center items-center mt-10 gap-5">
+        <span className="text-green-400 text-gray">or sign in with</span>
+
+        <div className="relative top-5 opacity-0">
           <GoogleLogin />
         </div>
-        <ButtonGoogle />
 
-        <div className="underline text-green">Forgot Your Password?</div>
+        <div className="absolute ">
+          <ButtonGoogle />
+        </div>
+
+        <div className="underline text-green mt-10">Forgot Your Password?</div>
       </div>
 
       <div className="flex justify-center items-center mt-5">

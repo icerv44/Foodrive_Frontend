@@ -11,12 +11,16 @@ function GoogleLogin() {
   const dispatch = useDispatch();
   const role = pathname.split("/")[1];
 
-  const handleCallbackResponse = async (response) => {
-    const resRole = await dispatch(googleLogin({ role }));
+  console.log(role);
 
+  const handleCallbackResponse = async (response) => {
     const res = await dispatch(
       changeGoogleData({ googleData: response.credential })
     );
+
+    console.log(role);
+
+    const resRole = await dispatch(googleLogin({ role }));
 
     if (resRole?.error?.message !== "Rejected") {
       navigate("/" + role);
