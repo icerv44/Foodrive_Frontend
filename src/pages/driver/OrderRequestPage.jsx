@@ -39,7 +39,7 @@ function OrderRequestPage() {
 
   useEffect(() => {
     fetchOrder();
-    // console.log("lat : ", latitude, "long : ", longitude);
+    console.log("OrderRequestPage useEffect");
   }, [latitude, longitude]);
 
   const fetchOrder = async () => {
@@ -52,6 +52,7 @@ function OrderRequestPage() {
       // console.log("Lat Long : ", latLong);
       const resOrder = await axios.post("/driver/searchOrder", latLong);
       setOrder(resOrder.data.order);
+      // console.log("OrderRequestPage fetchOrder");
       // console.log("Fetch Order : " + JSON.stringify(resOrder));
     } catch (err) {
       console.log(err);
@@ -146,7 +147,7 @@ function OrderRequestPage() {
       <ButtonBackNewPlus />
       <Typography
         className="pl-10 text-20 font-bold"
-        fontSize={25}
+        fontSize="25px"
         fontWeight="bold"
       >
         Order request
