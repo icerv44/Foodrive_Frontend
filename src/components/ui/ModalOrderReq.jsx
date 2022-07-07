@@ -49,6 +49,8 @@ function ModalOrderReq({
     return name;
   };
 
+  console.log("modal custoemrID", customerId);
+
   const handleClose = () => {
     if (isOpen === true) {
       setIsOpen(false);
@@ -75,7 +77,7 @@ function ModalOrderReq({
       await addDoc(messagesRef, {
         text: "I am your driver. I will be communicating with you here.",
         createdAt: Timestamp.fromDate(new Date()),
-        senderId: driverId,
+        senderId: "driver" + driverId,
       });
       socket.emit("driverAcceptOrder", { restaurantId });
 

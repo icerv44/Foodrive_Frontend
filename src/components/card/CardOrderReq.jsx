@@ -21,6 +21,7 @@ function CardOrderReq({
 }) {
   const [isOpen, setIsOpen] = useState(false);
 
+  console.log("customerid: ", customerId);
   const cutLetter = 14;
   const cutOrder = 1;
   Modal.setAppElement("#root");

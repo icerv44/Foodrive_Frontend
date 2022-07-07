@@ -66,7 +66,6 @@ function Router() {
     (state) => state.user.isLoading
   );
   const socketCtx = useSocket();
-  console.log(socketCtx);
   const navigate = useNavigate();
   const { setSocket, socket } = socketCtx;
   const { loading } = useLoading();

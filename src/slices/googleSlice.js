@@ -40,6 +40,13 @@ const googleLoginSlice = createSlice({
     changeGoogleData: (state, action) => {
       state.googleData = action.payload;
     },
+    clearGoogleSlice: (state) => {
+      return {
+        googleLogin: "",
+        isLoading: false,
+        error: "",
+      };
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -64,7 +71,7 @@ const googleLoginSlice = createSlice({
 // const changeEmail =  loginSlice.actions.changeEmail;
 // const changePassword = loginSlice.actions.changePassword;
 
-export const { changeGoogleData } = googleLoginSlice.actions;
+export const { changeGoogleData, clearGoogleSlice } = googleLoginSlice.actions;
 export { googleLogin };
 const googleLoginReducer = googleLoginSlice.reducer;
 export default googleLoginReducer;
