@@ -4,7 +4,11 @@ import { useLocation } from "react-router-dom";
 import InputLogin from "../../../components/input/InputLogin";
 import { RiLockPasswordFill } from "react-icons/ri";
 import { MdEmail, MdDriveFileRenameOutline } from "react-icons/md";
-import { BsFillPhoneFill } from "react-icons/bs";
+import {
+  BsFillPhoneFill,
+  BsFillPeopleFill,
+  BsPeopleFill,
+} from "react-icons/bs";
 import {
   changeConfirmPassword,
   changeEmail,
@@ -14,6 +18,8 @@ import {
   changePassword,
   changePhoneNumber,
 } from "../../../slices/registerSlice";
+import { AiFillPhone } from "react-icons/ai";
+import { MdRestaurantMenu } from "react-icons/md";
 
 function SignupMid() {
   const dispatch = useDispatch();
@@ -54,13 +60,14 @@ function SignupMid() {
 
   return (
     <>
-      <div className="text-center pb-[60px] text-[25px] font-bold">
+      <div className="text-center text-[25px] font-bold mb-3">
         Sign Up For Free
       </div>
-      <Box className="flex flex-col gap-3">
+      <Box className="flex flex-col gap-1">
         {isRestaurant ? (
           <>
             <InputLogin
+              icon={<MdRestaurantMenu className="ml-4" />}
               placeholder="Restaurant Name"
               onChange={handleNameChange}
               value={name}
@@ -69,41 +76,42 @@ function SignupMid() {
         ) : (
           <>
             <InputLogin
+              icon={<BsPeopleFill className="ml-4" />}
               placeholder="First Name"
-              icon={<MdDriveFileRenameOutline />}
               onChange={handleFirstNameChange}
               value={firstName}
             />
             <InputLogin
+              icon={<BsPeopleFill className="ml-4" />}
               placeholder="Last Name"
-              icon={<MdDriveFileRenameOutline />}
+              // icon={<MdDriveFileRenameOutline />}
               onChange={handleLastNameChange}
               value={lastName}
             />
           </>
         )}
         <InputLogin
+          icon={<AiFillPhone className="ml-4" />}
           placeholder="Phone Number"
-          icon={<BsFillPhoneFill />}
           onChange={handlePhoneNumberChange}
           value={phoneNumber}
         />
         <InputLogin
+          icon={<MdEmail className="ml-4" />}
           placeholder="Email"
-          icon={<MdEmail />}
           onChange={handleEmailChange}
           value={email}
         />
         <InputLogin
+          icon={<RiLockPasswordFill className="ml-4" />}
           type="password"
-          icon={<RiLockPasswordFill />}
           placeholder="Password"
           onChange={handlePasswordChange}
           value={password}
         />
         <InputLogin
+          icon={<RiLockPasswordFill className="ml-4" />}
           type="password"
-          icon={<RiLockPasswordFill />}
           placeholder="Confirm Password"
           onChange={handleConfirmPasswordChange}
           value={confirmPassword}

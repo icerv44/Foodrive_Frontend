@@ -17,20 +17,20 @@ function HeaderBar({ status, setStatus }) {
     <div className="px-5 my-5 w-full">
       <div className="flex justify-center gap-2">
         <ButtonOnFocus
-          title="Delivery"
-          onClick={handleDelivery}
-          isFocused={status === "delivery"}
-        />
-        <ButtonOnFocus
           title="Pending"
           onClick={handleOrder}
           isFocused={status === "pending"}
         />
         <ButtonOnFocus
+          title="Delivery"
+          onClick={handleDelivery}
+          isFocused={status === "delivery"}
+        />
+        {/* <ButtonOnFocus
           title="History"
           onClick={handleHistory}
           isFocused={status === "history"}
-        />
+        /> */}
       </div>
     </div>
   );
