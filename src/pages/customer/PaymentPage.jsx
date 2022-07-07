@@ -14,11 +14,12 @@ import { useSelector } from "react-redux";
 import { TiArrowSortedDown } from "react-icons/ti";
 import { Typography } from "@mui/joy";
 import { getAddressFromLatLng } from "../../services/getAddress";
+import { useError } from "../../contexts/ErrorContext";
 
 const OmiseCard = window.OmiseCard;
 
 function PaymentPage() {
-  const { setError } = setError();
+  const { setError } = useError();
   const { socket } = useSocket();
   const navigate = useNavigate();
   const { cart } = useCustomer();
