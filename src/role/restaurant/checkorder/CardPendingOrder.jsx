@@ -8,6 +8,7 @@ import IconButton from "@mui/joy/IconButton";
 import Typography from "@mui/joy/Typography";
 import { GrFormClose } from "react-icons/gr";
 import { useError } from "../../../contexts/ErrorContext";
+import { useRestaurant } from "../../../contexts/RestaurantContext";
 
 function CardPendingOrder({
   orderId,
@@ -23,6 +24,7 @@ function CardPendingOrder({
   const { restaurantLatitude, restaurantLongitude } = useSelector(
     (state) => state.user.info
   );
+  const { fetchPendingOrder } = useRestaurant();
   const { setError } = useError();
   let customerName = firstName + " " + lastName;
   let orderPrice = totalPrice;
@@ -38,6 +40,8 @@ function CardPendingOrder({
         restaurantLatitude,
         restaurantLongitude,
       });
+
+      await fetchPendingOrder();
     } catch (err) {
       console.log(err);
       setError(err.response?.data?.message || err.message);
@@ -49,6 +53,7 @@ function CardPendingOrder({
       await axios.patch("restaurant/pendingOrders/" + orderId, {
         status: "CANCELLED",
       });
+      await fetchPendingOrder();
     } catch (err) {
       console.log(err);
       setError(err.response?.data?.message || err.message);

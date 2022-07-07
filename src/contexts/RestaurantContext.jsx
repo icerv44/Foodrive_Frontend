@@ -79,6 +79,7 @@ function RestaurantContextProvider({ children }) {
     <RestaurantContext.Provider
       value={{
         fetchCategory,
+        fetchPendingOrder,
         pendingOrderData,
         setPendingOrderData,
         handleDeleteCategory,

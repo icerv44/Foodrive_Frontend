@@ -5,7 +5,7 @@ function ButtonLocation({ onClick }) {
   return (
     <IconButton
       onClick={() => {
-        onClick();
+        if (onClick) onClick();
       }}
       sx={{ bgcolor: "#f9a94d22", p: "6px" }}
     >
