@@ -18,8 +18,6 @@ function LoginMid() {
     dispatch(changePassword(e.target.value));
   };
 
-  const inputLogin = [{}];
-
   return (
     <Box className="flex justify-center">
       <form>

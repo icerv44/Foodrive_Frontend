@@ -2,12 +2,15 @@ import React, { createContext, useContext, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import axios from "../config/axios";
 import { useError } from "./ErrorContext";
+import { useSocket } from "./SocketContext";
 
 const RestaurantContext = createContext();
 
 function RestaurantContextProvider({ children }) {
   const role = useSelector((state) => state.user.info.role);
   const { setError } = useError();
+
+  const { socket } = useSocket();
   const [categoryData, setCategoryData] = useState([]);
   const [pendingOrderData, setPendingOrderData] = useState([]);
   const [optionGroups, setOptionGroups] = useState([]);
@@ -49,6 +52,14 @@ function RestaurantContextProvider({ children }) {
       setError(err.response.data.message);
     }
   };
+
+  useEffect(() => {
+    console.log(socket);
+    socket?.on("restaurantReceiveOrder", () => {
+      fetchPendingOrder();
+      console.log("fetching pending order");
+    });
+  }, [socket]);
 
   useEffect(() => {
     fetchPendingOrder();

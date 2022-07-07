@@ -54,11 +54,11 @@ function GoogleMapInput({ address, setAddress, position, setPosition }) {
   return (
     <div
       className="driver-map-container"
-      style={{ width: "70%", height: "50vh" }}
+      style={{ width: "100%", height: "80%" }}
     >
       <GoogleMap
         mapContainerClassName="driver-map"
-        mapContainerStyle={{ width: "70%", height: "50vh" }}
+        mapContainerStyle={{ width: "100%", height: "50vh" }}
         zoom={16}
         center={center}
         onLoad={onLoad}

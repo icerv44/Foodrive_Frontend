@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { clearUserInfo } from "../slices/userSlice";
 import { useSocket } from "../contexts/SocketContext";
 import OnlineOfflineButton from "../components/restaurant/OnlineOfflineButton";
+import { clearGoogleSlice } from "../slices/googleSlice";
 
 function AccountPage() {
   const navigate = useNavigate();
@@ -45,6 +46,7 @@ function AccountPage() {
   const handleLogout = () => {
     removeToken();
     dispatch(clearUserInfo());
+    dispatch(clearGoogleSlice());
     socket?.emit("forceDisconnect");
     setSocket(null);
     navigate("/customer/login");

@@ -17,6 +17,7 @@ const INITIAL_STATE = {
     name: "",
     firstName: "",
     lastName: "",
+    email: "",
     latitude: null,
     longitude: null,
     role: "",
@@ -49,12 +50,12 @@ const userSlice = createSlice({
         state.error = "";
       })
       .addCase(fetchUser.fulfilled, (state, action) => {
-        console.log(action.payload.role, action.payload.status);
         state.info = {
           ...state.info,
           name: action.payload.name,
           firstName: action.payload.firstName,
           lastName: action.payload.lastName,
+          email: action.payload.email,
           role: action.payload.role,
           email: action.payload.email,
           id: action.payload.id,

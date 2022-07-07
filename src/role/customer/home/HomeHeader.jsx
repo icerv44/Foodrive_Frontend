@@ -4,9 +4,11 @@ import { MdLocationOn } from "react-icons/md";
 import { Box } from "@mui/material";
 import UserAvatar from "../../../components/imglogo/UserAvatar";
 import { useSelector } from "react-redux";
+import { useCustomerAddress } from "../../../contexts/CustomerAddressContext.jsx";
 
 function HomeHeader() {
   const user = useSelector((state) => state.user.info);
+  const { address } = useCustomerAddress();
   // console.log(user);
 
   // useEffect(() => {
@@ -23,7 +25,9 @@ function HomeHeader() {
           <div className="rounded-full bg-light-green w-7 h-7 flex items-center justify-center mr-4 ">
             <MdLocationOn className="" />
           </div>
-          <span className="">My Location</span>
+          <span className="" style={{ overflow: "auto", maxHeight: 50 }}>
+            {address || "no address selected"}
+          </span>
         </div>
       </Link>
 
