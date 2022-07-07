@@ -6,7 +6,7 @@ function ButtonLocation({ onClick }) {
   return (
     <Button
       onClick={() => {
-        onClick();
+        if (onClick) onClick();
       }}
       className="rounded-full p-2 bg-light-green"
     >
