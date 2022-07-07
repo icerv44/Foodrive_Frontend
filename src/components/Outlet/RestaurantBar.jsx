@@ -3,8 +3,11 @@ import { AiOutlineFileText } from "react-icons/ai";
 import { BsFillChatDotsFill, BsFillPeopleFill } from "react-icons/bs";
 import { MdOutlineRestaurantMenu } from "react-icons/md";
 import { Link } from "react-router-dom";
+import { useRestaurant } from "../../contexts/RestaurantContext";
 
 function RestaurantBar() {
+  const { pendingOrderData } = useRestaurant();
+
   return (
     <Box
       sx={{
@@ -28,7 +31,8 @@ function RestaurantBar() {
         }}
       >
         {/* Delivery */}
-        <Link to="/restaurant/checkorder">
+        <Link to="/restaurant/checkorder" style={{ position: "relative" }}>
+          <span className="badge">{pendingOrderData.length}</span>
           <Box
             role="button"
             sx={{
