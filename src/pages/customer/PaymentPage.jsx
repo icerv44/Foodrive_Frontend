@@ -25,7 +25,6 @@ function PaymentPage() {
   const { cart } = useCustomer();
 
   // const sum = cart?.cartItems?.totalPrice;
-  console.log(cart);
 
   const {
     address,
@@ -89,7 +88,6 @@ function PaymentPage() {
 
       onCreateTokenSuccess: async (token) => {
         try {
-          console.log(token);
           await axios.post("/customer/confirmCart/" + cart.id, {
             omiseToken: token,
             totalInBaht: cart.cartItems.totalPrice,

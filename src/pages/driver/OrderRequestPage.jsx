@@ -38,9 +38,16 @@ function OrderRequestPage() {
   const { setError } = useError();
 
   useEffect(() => {
+    if (latitude === null || longitude == null) return;
     fetchOrder();
-    // console.log("lat : ", latitude, "long : ", longitude);
   }, [latitude, longitude]);
+
+  useEffect(() => {
+    socket?.on("notifyDriverOrder", () => {
+      fetchOrder();
+      alert("received new order, fetching...");
+    });
+  }, [socket]);
 
   const fetchOrder = async () => {
     try {
@@ -51,7 +58,8 @@ function OrderRequestPage() {
 
       // console.log("Lat Long : ", latLong);
       const resOrder = await axios.post("/driver/searchOrder", latLong);
-      setOrder(resOrder.data.order);
+      setOrder([...resOrder.data.order]);
+      console.log(resOrder.data.order);
       // console.log("Fetch Order : " + JSON.stringify(resOrder));
     } catch (err) {
       console.log(err);
@@ -98,6 +106,7 @@ function OrderRequestPage() {
       ],
     },
   ];
+
   const clickOrderAccepted = async (id, customerId, restaurantId) => {
     const resOrder = await axios.patch(`driver/deliveringStatus/${id}`);
 
@@ -138,6 +147,8 @@ function OrderRequestPage() {
   //   const resOrder = await axios.post(`driver/deliveringStatus/${id}`);
   //   console.log("Click : ", resOrder);
   // };
+
+  console.log(order);
 
   return (
     <Box>
