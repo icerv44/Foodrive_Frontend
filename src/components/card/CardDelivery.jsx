@@ -15,6 +15,17 @@ function CardDelivery() {
   const { pathname } = useLocation();
   console.log("CardDetail order: ", order);
   const { orderId } = useParams();
+  const cutLetter = 18;
+  const [location, setLocation] = useState("");
+
+  const cutRestaurantName = (name = "") => {
+    if (name.length > cutLetter) {
+      const cutName = name.substring(0, cutLetter) + "...";
+      return cutName;
+    }
+    return name;
+  };
+
   // console.log("CardDetail orderId: ", orderId);
   let header = "";
   if (pathname.split("/")[3] === "orderSummary") {
@@ -25,29 +36,25 @@ function CardDelivery() {
 
   let name = "";
   if (header === "รับจาก") {
-    cutRestaurantName(order?.Restaurant?.name);
+    name = cutRestaurantName(order?.Restaurant?.name);
   } else {
     name = "Home";
   }
 
-  const cutLetter = 18;
-
-  const [location, setLocation] = useState("");
-  const cutRestaurantName = (name = "") => {
-    if (name.length > cutLetter) {
-      const cutName = name.substring(0, cutLetter) + "...";
-      return cutName;
-    }
-    return name;
+  const resAddress = async () => {
+    let resAd = await getAddressFromLatLng(
+      +order?.Restaurant?.latitude,
+      +order?.Restaurant?.longitude
+    );
+    setLocation(resAd);
   };
 
   useEffect(() => {
+    console.log("CardDelivery : ", order);
     try {
       if (order && header === "รับจาก") {
-        getAddressFromLatLng(
-          +order?.Restaurant?.latitude,
-          +order?.Restaurant?.longitude
-        );
+        resAddress();
+        console.log("CardDelivery resAdress: ", location);
       } else if (order && header === "ส่งที่") {
         setLocation(order.addressName);
       } else {
