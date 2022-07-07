@@ -35,7 +35,8 @@ function ChatPage() {
       } else if (role === "customer") {
         //fetch order with customer role
         const res = await axios.get("/customer/currentOrder");
-        if (res.data === null) return;
+        console.log(res.data);
+        if (res.data.order === null) return;
         setCustomerId(res.data.order.customerId);
         setDriverId(res.data.order.driverId);
         setCollocutorInfo({
@@ -45,7 +46,8 @@ function ChatPage() {
       }
     };
     getIds().catch((err) => {
-      setError(err.response.data.message);
+      console.log(err);
+      setError(err.response?.data?.message || err.message);
     });
   }, [role]);
 
