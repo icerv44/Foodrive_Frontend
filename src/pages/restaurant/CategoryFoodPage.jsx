@@ -9,10 +9,12 @@ import axios from "../../config/axios";
 import Modal from "react-modal";
 import { useRestaurant } from "../../contexts/RestaurantContext";
 import NoFoodForNow from "../../role/restaurant/categoryfoodlist/NoFoodForNow";
+import { useError } from "../../contexts/ErrorContext";
 
 function CategoryFoodPage() {
   const [categoryFoodData, setCategoryFoodData] = useState([]);
   const navigate = useNavigate();
+  const { setError } = useError();
   const categoryId = useParams();
 
   Modal.setAppElement("#root");
@@ -23,6 +25,7 @@ function CategoryFoodPage() {
       setCategoryFoodData(res.data.category);
     } catch (err) {
       console.log(error);
+      setError(error.response.data.message);
     }
   };
   useEffect(() => {

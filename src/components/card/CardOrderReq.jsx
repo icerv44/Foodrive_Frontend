@@ -16,6 +16,8 @@ function CardOrderReq({
   restaurantLongtitude,
   customerAddress,
   id,
+  customerId,
+  restaurantId,
 }) {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -124,6 +126,8 @@ function CardOrderReq({
           customerAddress={customerAddress}
           distance={distance}
           restaurantName={restaurantName}
+          customerId={customerId}
+          restaurantId={restaurantId}
         />
       )}
     </>

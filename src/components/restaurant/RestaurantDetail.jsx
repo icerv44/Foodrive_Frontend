@@ -12,9 +12,7 @@ import { Link } from "react-router-dom";
 function RestaurantDetail() {
   const { restaurant } = useCustomer();
 
-  console.log(restaurant);
-
-  const restaurantId = restaurant?.id;
+  const restaurantId = restaurant?.restaurant?.id;
 
   return (
     <Box

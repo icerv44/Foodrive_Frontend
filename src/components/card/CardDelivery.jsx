@@ -8,6 +8,8 @@ import { useParams } from "react-router-dom";
 import { GOOGLE_MAP_KEY } from "../../config/env";
 import axios from "../../config/axios";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { getAddressFromLatLng } from "../../services/getAddress";
+
 function CardDelivery() {
   const { getOrderDetailById, order, textColor } = useDelivery();
   const { pathname } = useLocation();
@@ -39,26 +41,19 @@ function CardDelivery() {
     return name;
   };
 
-  const getAddressFromLatLng = async (lat, lng) => {
-    const res = await axios.get(
-      `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${GOOGLE_MAP_KEY}`
-    );
-    // console.log("SET address : ", res.data.results[0].formatted_address);
-    setLocation(res.data.results[0].formatted_address);
-    return res.data.results[0].formatted_address;
-  };
-
   useEffect(() => {
-    if (order && header === "รับจาก") {
-      getAddressFromLatLng(
-        +order?.Restaurant?.latitude,
-        +order?.Restaurant?.longitude
-      );
-    } else if (order && header === "ส่งที่") {
-      setLocation(order.addressName);
-    } else {
-      getOrderDetailById(Number(orderId));
-    }
+    try {
+      if (order && header === "รับจาก") {
+        getAddressFromLatLng(
+          +order?.Restaurant?.latitude,
+          +order?.Restaurant?.longitude
+        );
+      } else if (order && header === "ส่งที่") {
+        setLocation(order.addressName);
+      } else {
+        getOrderDetailById(Number(orderId));
+      }
+    } catch (err) {}
 
     console.log("location : ", location);
   }, [order]);

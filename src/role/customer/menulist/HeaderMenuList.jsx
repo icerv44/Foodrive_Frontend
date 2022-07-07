@@ -1,13 +1,36 @@
+import { useState } from "react";
 import { Input } from "@mui/joy";
-import { Autocomplete, Box, TextField } from "@mui/material";
+import { Autocomplete, Box } from "@mui/material";
 import ButtonBackNew from "../../../components/button/ButtonBackNew";
 import ButtonLocation from "../../../components/button/ButtonLocation";
 import { BsSearch } from "react-icons/bs";
-import { useState } from "react";
 import { useCustomer } from "../../../contexts/CustomerContext";
+import { getAddressFromLatLng } from "../../../services/getAddress";
+import { useError } from "../../../contexts/ErrorContext";
+import Modal from "react-modal";
+import { ModalUi } from "../../../components/ui/ModalUi";
 
 function HeaderMenuList({ searchMenu, setSearchMenu }) {
   const { restaurant } = useCustomer();
+  const { setError } = useError();
+  const [isOpen, setIsOpen] = useState(false);
+  const [restaurantLocation, setRestaurantLocation] = useState("");
+
+  Modal.setAppElement("#root");
+
+  const latitude = restaurant?.restaurant?.latitude;
+  const longitude = restaurant?.restaurant?.longitude;
+
+  const getAddressRestaurant = async () => {
+    setIsOpen(true);
+    console.log(isOpen);
+    if (latitude !== null && longitude !== null) {
+      const res = await getAddressFromLatLng(latitude, longitude);
+      setRestaurantLocation(res);
+    } else {
+      setError("This restaurant not set address");
+    }
+  };
 
   return (
     <Box
@@ -19,9 +42,17 @@ function HeaderMenuList({ searchMenu, setSearchMenu }) {
       <Box className="w-full h-[76px] px-5 flex justify-between items-center">
         <ButtonBackNew />
         <Box className="text-[#53E88B] text-lg font-semibold">
-          {restaurant?.name}
+          {restaurant?.restaurant?.name}
         </Box>
-        <ButtonLocation />
+
+        <ButtonLocation onClick={getAddressRestaurant} />
+        <ModalUi
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
+          title={"Restaurant Location"}
+        >
+          {restaurantLocation}
+        </ModalUi>
       </Box>
       <Box
         sx={{

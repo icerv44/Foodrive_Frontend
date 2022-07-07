@@ -23,7 +23,7 @@ function ModalForCreate({ ref, fetch }) {
       setIsOpen(false);
       fetch();
     } catch (err) {
-      setError(err.response.data.error);
+      setError(err.response.data.message);
     }
   };
 

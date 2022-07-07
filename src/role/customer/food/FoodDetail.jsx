@@ -27,14 +27,14 @@ function FoodDetail() {
 
   // fetchAllCarts
   useEffect(() => {
-    try {
-      const fetchAllCarts = async () => {
+    const fetchAllCarts = async () => {
+      try {
         await getAllRestaurantsCart();
-      };
-      fetchAllCarts();
-    } catch (err) {
-      console.log(err);
-    }
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchAllCarts();
   }, []);
 
   // clone menu option groups

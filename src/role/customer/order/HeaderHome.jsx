@@ -1,8 +1,15 @@
 import { Box } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 import ButtonBackNew from "../../../components/button/ButtonBackNew";
 import ButtonLocation from "../../../components/button/ButtonLocation";
 
 function HeaderHome() {
+  const navigate = useNavigate();
+
+  const redirectToMyLocation = () => {
+    navigate("/customer/myLocation");
+  };
+
   return (
     <Box
       sx={{
@@ -12,8 +19,7 @@ function HeaderHome() {
       className="w-full h-[76px] px-5 flex justify-between items-center"
     >
       <ButtonBackNew />
-      <Box className="text-[#53E88B] text-lg font-semibold">Mint Tower 100</Box>
-      <ButtonLocation />
+      <ButtonLocation onClick={redirectToMyLocation} />
     </Box>
   );
 }

@@ -100,7 +100,7 @@ function ProfilePage() {
       }
       if (role === "customer") {
         setProfileImage(e.target.files[0]);
-      } else {
+      } else if (role === "driver") {
         setDriverImage(e.target.files[0]);
       }
     }
@@ -116,15 +116,22 @@ function ProfilePage() {
       return (
         (profileImage && URL.createObjectURL(profileImage)) || user.profileImage
       );
-    } else
+    } else if (role === "driver") {
       return (
         (driverImage && URL.createObjectURL(driverImage)) || user.driverImage
       );
+    }
   };
+
+  console.log(role);
 
   const handleUpdate = async () => {
     try {
       setLoading(true);
+
+      console.log("res", image);
+      console.log("driver", driverImage);
+      console.log("cus", profileImage);
 
       const formData = new FormData();
       formData.append("profileImage", profileImage);
