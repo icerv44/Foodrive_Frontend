@@ -21,7 +21,7 @@ function RestaurantBar() {
           width: 355,
           height: 74,
           display: "flex",
-          justifyContent: "space-between",
+          justifyContent: "space-around",
           alignItems: "center",
           padding: "0px 45px",
           borderRadius: "22px",
@@ -40,12 +40,12 @@ function RestaurantBar() {
               flexDirection: "column",
               alignItems: "center",
               justifyContent: "center",
-              color: "#3B3B3B",
+              color: "green",
               fontSize: "26px",
             }}
           >
             <AiOutlineFileText />
-            <Typography>delivery</Typography>
+            <Typography sx={{ color: "green" }}>delivery</Typography>
           </Box>
         </Link>
         {/* Menu */}
@@ -57,16 +57,16 @@ function RestaurantBar() {
               flexDirection: "column",
               alignItems: "center",
               justifyContent: "center",
-              color: "#3B3B3B",
+              color: "green",
               fontSize: "26px",
             }}
           >
             <MdOutlineRestaurantMenu />
-            <Typography>menu</Typography>
+            <Typography sx={{ color: "green" }}>menu</Typography>
           </Box>
         </Link>
         {/* Message */}
-        <Link to="">
+        {/* <Link to="">
           <Box
             role="button"
             sx={{
@@ -81,7 +81,7 @@ function RestaurantBar() {
             <BsFillChatDotsFill />
             <Typography>message</Typography>
           </Box>
-        </Link>
+        </Link> */}
         {/* Profile */}
         <Link to="/restaurant/profile">
           <Box
@@ -91,12 +91,12 @@ function RestaurantBar() {
               flexDirection: "column",
               alignItems: "center",
               justifyContent: "center",
-              color: "#3B3B3B",
+              color: "green",
               fontSize: "26px",
             }}
           >
             <BsFillPeopleFill />
-            <Typography>profile</Typography>
+            <Typography sx={{ color: "green" }}>profile</Typography>
           </Box>
         </Link>
       </Box>

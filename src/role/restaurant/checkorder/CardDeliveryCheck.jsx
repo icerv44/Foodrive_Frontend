@@ -42,42 +42,6 @@ function CardDeliveryCheck({
 
   return (
     <>
-      {/* <Box
-        onClick={() => setIsOpen(true)}
-        sx={{
-          width: "100%",
-          boxShadow: "12px 26px 50px rgba(90, 108, 234, 0.07)",
-          borderRadius: "20px",
-          px: "20px",
-          py: "12px",
-        }}
-      >
-      <Box
-        onClick={() => setIsOpen(true)}
-        sx={{
-          width: "100%",
-          boxShadow: "12px 26px 50px rgba(90, 108, 234, 0.07)",
-          borderRadius: "20px",
-          px: "20px",
-          py: "12px",
-        }}
-      >
-        <Box className="flex flex-col gap-1">
-          <Box className="flex justify-between">
-            <Box className="font-semibold text-xl">Driver : {driverName}</Box>
-          </Box>
-          <Box className="font-semibold">{customerName}</Box>
-          <Box>{address}</Box>
-          <Box className="flex justify-between font-semibold text-lg">
-            <Box>Order :</Box>
-            <Box>{amountOrder} list</Box>
-          </Box>
-          <Box className="flex justify-between font-semibold text-lg">
-            <Box>Total Price :</Box>
-            <Box>{orderPrice.toFixed(2)} ฿</Box>
-          </Box>
-        </Box>
-      </Box> */}
       <Card variant="outlined" sx={{ minWidth: "300px" }}>
         <Box sx={{ display: "flex", flexDirection: "column", gap: 0.5 }}>
           <Typography level="h2" fontSize="lg" sx={{ alignSelf: "flex-start" }}>
@@ -123,8 +87,9 @@ function CardDeliveryCheck({
       >
         {/* MODAL CONTENT */}
         <Box className="flex flex-col gap-4">
-          {orderMenus.map((el) => (
+          {orderMenus.map((el, idx) => (
             <CardMenuList
+              key={idx}
               src={el?.Menu?.menuImage}
               name={el.name}
               price={el.price}

@@ -4,7 +4,8 @@ import { useDispatch } from "react-redux";
 import { login } from "../../../slices/loginSlice";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { fetchUser } from "../../../slices/userSlice";
-import { Box, Button, Typography } from "@mui/joy";
+import { Box } from "@mui/joy";
+import ModalForgetPassword from "../../restaurant/modal/ModalForgetPassword";
 import GoogleLogin from "../../../components/GoogleLogin";
 
 function LoginBot() {
@@ -37,29 +38,24 @@ function LoginBot() {
 
   return (
     <div>
-      <div className="flex flex-col justify-center items-center gap-5">
-        <div className="">
-          <GoogleLogin />
+      <div className="flex flex-col justify-center items-center mt-10 gap-5">
+        <GoogleLogin />
+        <div className="underline text-green mt-3">
+          <ModalForgetPassword />
         </div>
-        <ButtonGoogle />
-
-        <div className="underline text-green">Forgot Your Password?</div>
       </div>
 
-      <div className="flex justify-center items-center mt-5">
-        <ButtonGreenGradiant onClick={onClick} title="Login" px="30px" />
+      <div className="flex justify-center items-center mt-8">
+        <ButtonGreenGradiant onClick={onClick} title="Login" px="36px" />
       </div>
 
       <Link to={`/${role}/register`}>
-        <Typography
-          sx={{ marginY: "20px" }}
-          className="text-center underline text-green"
-        >
+        <Box className="text-center mt-8 underline text-green">
           Don't have account?
-        </Typography>
+        </Box>
       </Link>
 
-      <Box className="flex flex-col items-center gap-5 my-5">
+      <Box className="flex flex-col items-center gap-5 mt-6">
         {roleLogin.map((el, idx) => (
           <Box key={idx}>
             <Link to={el.to} className={role === el.role ? "hidden" : ""}>

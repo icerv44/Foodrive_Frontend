@@ -1,15 +1,13 @@
 import { Box, Typography } from "@mui/material";
 import { MdOutlineNavigateNext } from "react-icons/md";
-import { IoTrashBin } from "react-icons/io5";
-import { useRestaurant } from "../../../contexts/RestaurantContext";
 import { useNavigate } from "react-router-dom";
 
 function CategoryList({ categoryName, categoryId }) {
-  const { handleDeleteCategory } = useRestaurant();
   const navigate = useNavigate();
 
   return (
     <Box
+      onClick={() => navigate("/restaurant/category/" + categoryId)}
       sx={{
         display: "flex",
         justifyContent: "space-between",
@@ -18,14 +16,7 @@ function CategoryList({ categoryName, categoryId }) {
     >
       <Typography variant="h6">{categoryName}</Typography>
       <Box sx={{ display: "flex", alignItems: "center", gap: "8px" }}>
-        {categoryName === "other" ? (
-          ""
-        ) : (
-          <IoTrashBin onClick={() => handleDeleteCategory(categoryId)} />
-        )}
-        <MdOutlineNavigateNext
-          onClick={() => navigate("/restaurant/category/" + categoryId)}
-        />
+        <MdOutlineNavigateNext />
       </Box>
     </Box>
   );
