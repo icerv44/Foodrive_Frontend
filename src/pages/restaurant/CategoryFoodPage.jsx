@@ -12,6 +12,7 @@ import { useError } from "../../contexts/ErrorContext";
 import ModalForDeleteCategory from "../../role/restaurant/modal/ModalForDeleteCategory";
 
 function CategoryFoodPage() {
+  const [isLoading, setIsLoading] = useState(false);
   const [categoryFoodData, setCategoryFoodData] = useState([]);
   const navigate = useNavigate();
   const { id } = useParams();
@@ -84,6 +85,8 @@ function CategoryFoodPage() {
         ) : (
           categoryFoodData?.Menus?.map((el) => (
             <FoodStatusList
+              isLoading={isLoading}
+              setIsLoading={setIsLoading}
               key={el?.id}
               title={el?.name}
               price={el?.price}
