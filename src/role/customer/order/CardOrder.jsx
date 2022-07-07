@@ -51,7 +51,7 @@ function CardOrder({ id, src, price, foodName, orderMenuOptionGroups }) {
               <div className="flex flex-col py-2">
                 {orderMenuOptionGroups.length >= 0 &&
                   orderMenuOptionGroups.map((el) => (
-                    <Typography color="gray">
+                    <Typography key={el.id} color="gray">
                       {el.name} : {el.options.map((el) => el.name)}
                     </Typography>
                   ))}

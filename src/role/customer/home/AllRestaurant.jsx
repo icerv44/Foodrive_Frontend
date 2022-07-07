@@ -9,25 +9,32 @@ import { Box } from "@mui/joy";
 import { Link, useLocation } from "react-router-dom";
 import axios from "../../../config/axios";
 import { useSelector } from "react-redux";
+import { useError } from "../../../contexts/ErrorContext";
 
 function AllRestaurant() {
   const [restaurants, setRestaurants] = useState([]);
   const { latitude, longitude, role } = useSelector((state) => state.user.info);
+  const { setError } = useError();
 
   useEffect(() => {
     const fetchRestaurants = async () => {
       try {
+        if (latitude === null || longitude === null) return;
         const res = await axios.post("/customer/allRestaurants", {
           latitude,
           longitude,
         });
+        console.log(res.data.restaurants);
         setRestaurants(res.data.restaurants);
       } catch (err) {
         console.log(err);
+        setError(err.response.data.message);
       }
     };
-    fetchRestaurants();
-  }, [role]);
+    fetchRestaurants().catch((err) => {
+      setError(err.response.data.message);
+    });
+  }, [role, latitude, longitude]);
 
   return (
     <Box sx={{}}>

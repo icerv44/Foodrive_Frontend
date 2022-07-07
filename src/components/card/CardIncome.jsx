@@ -4,7 +4,7 @@ import { CardContent } from "@mui/material";
 import React from "react";
 import { FaMoneyBillWaveAlt } from "react-icons/fa";
 
-function CardIncome() {
+function CardIncome({ deliveryFee }) {
   const income = 199;
 
   return (
@@ -25,7 +25,9 @@ function CardIncome() {
           <Typography>CASH</Typography>
         </Box>
 
-        <Typography className="text-yellow-600 text-2xl">{income} ฿</Typography>
+        <Typography className="text-yellow-600 text-2xl">
+          {deliveryFee} ฿
+        </Typography>
       </CardContent>
     </Card>
   );
