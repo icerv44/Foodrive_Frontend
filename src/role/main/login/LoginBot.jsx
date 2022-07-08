@@ -1,7 +1,7 @@
 import ButtonGoogle from "../../../components/button/ButtonGoogle";
 import ButtonGreenGradiant from "../../../components/button/ButtonGreenGradiant";
 import { useDispatch } from "react-redux";
-import { login } from "../../../slices/loginSlice";
+import { login, setLoginError } from "../../../slices/loginSlice";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { fetchUser } from "../../../slices/userSlice";
 import { Box } from "@mui/joy";
@@ -16,10 +16,14 @@ function LoginBot() {
 
   const onClick = async () => {
     const res = await dispatch(login({ role }));
+    console.log(res);
     if (res?.error?.message !== "Rejected") {
       navigate("/" + role);
       dispatch(fetchUser({ role }));
     }
+    setTimeout(() => {
+      dispatch(setLoginError(""));
+    }, 6000);
   };
 
   const roleLogin = [

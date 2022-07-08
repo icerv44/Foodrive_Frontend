@@ -54,15 +54,20 @@ function GoogleMapInput({ address, setAddress, position, setPosition }) {
   return (
     <div
       className="driver-map-container"
-      style={{ width: "100%", height: "80%" }}
+      style={{ width: "100%", height: "50vh" }}
     >
       <GoogleMap
         mapContainerClassName="driver-map"
-        mapContainerStyle={{ width: "100%", height: "50vh" }}
+        mapContainerStyle={{ width: "100%", height: "100%" }}
         zoom={16}
         center={center}
         onLoad={onLoad}
         onClick={handleClick}
+        options={{
+          fullscreenControl: false,
+          streetViewControl: false,
+          mapTypeControl: false,
+        }}
       >
         {position.lat && position.lng && (
           <Marker key={"marker1"} position={position} />

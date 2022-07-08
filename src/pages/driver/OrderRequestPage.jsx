@@ -46,7 +46,6 @@ function OrderRequestPage() {
   useEffect(() => {
     socket?.on("notifyDriverOrder", () => {
       fetchOrder();
-      alert("received new order, fetching...");
     });
   }, [socket]);
 

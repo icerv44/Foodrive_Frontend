@@ -16,11 +16,13 @@ import { Typography } from "@mui/joy";
 import { getAddressFromLatLng } from "../../services/getAddress";
 import { useError } from "../../contexts/ErrorContext";
 import getDistanceFromLatLonInKm from "../../services/getDistance";
+import { useSuccess } from "../../contexts/SuccessContext";
 
 const OmiseCard = window.OmiseCard;
 
 function PaymentPage() {
   const { setError } = useError();
+  const { setSuccess } = useSuccess();
   const { socket } = useSocket();
   const navigate = useNavigate();
   const { cart } = useCustomer();
@@ -112,6 +114,10 @@ function PaymentPage() {
             address,
           });
           notifyRestaurant();
+          setSuccess(
+            "You have successfully ordered a meal. Please wait for driver responses."
+          );
+          navigate("/");
         } catch (err) {
           console.log(err);
           setError(err.response.data.message);
@@ -150,7 +156,7 @@ function PaymentPage() {
             </Box>
           </Box>
 
-          <form>
+          <form style={{ width: "75vw" }}>
             <CreditPayment onClick={handleClick} />
           </form>
         </Box>

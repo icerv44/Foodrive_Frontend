@@ -24,7 +24,7 @@ const login = createAsyncThunk("customer/login", async (payload, thunkApi) => {
     return thunkApi.fulfillWithValue(null); // or just return normally
   } catch (err) {
     console.log(err);
-    return thunkApi.rejectWithValue(err?.message || err.response?.data.message);
+    return thunkApi.rejectWithValue(err.response?.data.message || err?.message);
   }
 });
 
@@ -43,6 +43,9 @@ const loginSlice = createSlice({
     },
     changePassword: (state, action) => {
       state.password = action.payload;
+    },
+    setError: (state, action) => {
+      state.error = action.payload;
     },
     // changeGoogleData: (state, action) => {
     //   state.googleData = action.payload;
@@ -78,6 +81,7 @@ const loginSlice = createSlice({
 export const {
   changeEmail,
   changePassword,
+  setError: setLoginError,
   //  changeGoogleData
 } = loginSlice.actions;
 export { login };

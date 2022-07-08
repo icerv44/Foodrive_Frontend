@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { useCustomer } from "../../contexts/CustomerContext";
 import { useLoading } from "../../contexts/LoadingContext";
@@ -10,9 +11,11 @@ function RestaurantContainer() {
   const { setLoading } = useLoading();
   const { getRestaurantById } = useCustomer();
   const { restaurantId } = useParams();
+  const { latitude, longitude } = useSelector((state) => state.user.info);
 
   useEffect(() => {
     const fetchRestaurant = async () => {
+      if (latitude === null || longitude === null) return;
       try {
         setLoading(true);
         await getRestaurantById(+restaurantId);
@@ -24,7 +27,7 @@ function RestaurantContainer() {
     };
 
     fetchRestaurant();
-  }, [restaurantId]);
+  }, [restaurantId, latitude, longitude]);
 
   return (
     <div>
