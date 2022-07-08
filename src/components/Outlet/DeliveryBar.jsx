@@ -16,7 +16,7 @@ const listMenu = [
     label: "Call",
     to: "/driver/delivery/direction",
   },
-  { icon: <BsFillChatDotsFill />, label: "Chat" },
+  { icon: <BsFillChatDotsFill />, label: "Chat", to: "/driver/chat" },
   {
     icon: <BsFillCartFill />,
     label: "Cart",
@@ -34,14 +34,17 @@ function DeliveryBar() {
   const { setError } = useError();
   const { setPlace, btnTitle, order } = useDelivery();
   const { pathname } = useLocation();
-  const path = pathname.split("/")[3] === "direction";
+  console.log(pathname);
+  const path = pathname?.split("/")[3] === "direction";
   const delivery = "/driver/delivery/";
   const confirmOrder = "/driver/delivery/confirmOrder";
   const title = "ถึงร้านแล้ว";
 
-  const handleBar = () => {
-    if (path) {
-    }
+  const handleBar = (to) => {
+    navigate(to);
+    // if (path) {
+
+    // }
   };
   const updateDriver = async () => {
     const updateStatus = await axios.patch(
@@ -52,10 +55,10 @@ function DeliveryBar() {
 
   const handleBtn = async () => {
     try {
-      if (pathname.split("/")[3] === "confirmOrder") {
+      if (pathname?.split("/")[3] === "confirmOrder") {
         setPlace("OrderSummary");
         navigate(`/driver/delivery/orderSummary/${order.id}`);
-      } else if (pathname.split("/")[3] === "orderSummary") {
+      } else if (pathname?.split("/")[3] === "orderSummary") {
         console.log("confirmOrder : ", Place);
         navigate(`/driver/delivery/completed/${order.id}`);
       } else {
@@ -86,22 +89,25 @@ function DeliveryBar() {
     >
       <Box className="flex flex-col items-center align-middle ">
         <List component="ol" row>
-          {listMenu.map((item) => (
-            <ListItem
-              key={item.label}
-              onClick={handleBar}
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-              }}
-            >
-              <Typography sx={{ color: "green" }}>{item.icon}</Typography>
-              <Typography
-                sx={{ fontSize: 14, fontWeight: "medium", color: "green" }}
+          {listMenu.map((item, idx) => (
+            <Box key={idx}>
+              {/* <Link to={item.to}> */}
+              <ListItem
+                onClick={() => handleBar(item.to)}
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                }}
               >
-                {item.label}
-              </Typography>
-            </ListItem>
+                <Typography sx={{ color: "green" }}>{item.icon}</Typography>
+                <Typography
+                  sx={{ fontSize: 14, fontWeight: "medium", color: "green" }}
+                >
+                  {item.label}
+                </Typography>
+              </ListItem>
+              {/* </Link> */}
+            </Box>
           ))}
         </List>
       </Box>
