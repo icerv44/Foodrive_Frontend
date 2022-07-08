@@ -1,17 +1,16 @@
-import { Button } from "@mui/joy";
+import IconButton from "@mui/joy/IconButton";
 import { TiLocation } from "react-icons/ti";
-import { Link } from "react-router-dom";
 
 function ButtonLocation({ onClick }) {
   return (
-    <Button
+    <IconButton
       onClick={() => {
         if (onClick) onClick();
       }}
-      className="rounded-full p-2 bg-light-green"
+      sx={{ bgcolor: "#f9a94d22", p: "6px" }}
     >
       <TiLocation className="text-green text-3xl" />
-    </Button>
+    </IconButton>
   );
 }
 

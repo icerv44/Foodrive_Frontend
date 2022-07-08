@@ -7,7 +7,7 @@ import AllRestaurant from "./AllRestaurant";
 
 function HomeContainer() {
   return (
-    <Box className="mb-24">
+    <Box className="mb-[116px]">
       <HomeHeader />
       <SearchHome />
       <Categories />

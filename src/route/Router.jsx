@@ -231,12 +231,16 @@ function Router() {
       </Route>
       <Route path="/driver/delivery" element={<DeliveryContainer />}>
         <Route path=":orderId" element={<DeliveryPage />} />
-        <Route path="confirmOrder" element={<ConfirmOrderPage />} />
-        <Route path="orderSummary" element={<OrderSummary />} />
+        <Route path="confirmOrder/:orderId" element={<ConfirmOrderPage />} />
+        <Route path="orderSummary/:orderId" element={<OrderSummary />} />
       </Route>
+      <Route
+        path="/driver/delivery/completed/:orderId"
+        element={<DeliveryCompleted />}
+      />
       <Route path="/driver/profile" element={<AccountPage />} />
       <Route path="/driver/editProfile" element={<ProfilePage />} />
-      <Route path="/driver/completed" element={<DeliveryCompleted />} />
+
       <Route path="/driver/orderRequest" element={<OrderRequestPage />} />
       <Route path="/driver/chat" element={<ChatPage />} />
       <Route path="*" element={<Navigate to="/driver/" />} />
