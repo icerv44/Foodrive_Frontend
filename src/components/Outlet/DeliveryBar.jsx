@@ -16,7 +16,7 @@ const listMenu = [
     label: "Call",
     to: "/driver/delivery/direction",
   },
-  { icon: <BsFillChatDotsFill />, label: "Chat" },
+  { icon: <BsFillChatDotsFill />, label: "Chat", to: "/driver/chat" },
   {
     icon: <BsFillCartFill />,
     label: "Cart",

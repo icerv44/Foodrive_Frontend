@@ -4,7 +4,13 @@ import { AiFillMessage } from "react-icons/ai";
 import { Box, Typography } from "@mui/joy";
 import { Link } from "react-router-dom";
 import CardContent from "@mui/joy/CardContent";
+import axios from "axios";
+import { useCollectionData } from "react-firebase-hooks/firestore";
 import Card from "@mui/joy/Card";
+import { db } from "../../config/firebaseConfig";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { collection, query, where } from "firebase/firestore";
 
 const customerFooterBar = [
   { title: "HOME", icon: <MdHomeFilled />, to: "/customer" },
@@ -17,6 +23,38 @@ const customerFooterBar = [
 ];
 
 export default function Footer() {
+  // const id = useSelector((state) => state.user.info.id);
+  // const [order, setOrder] = useState(null);
+
+  // const chatId = order
+  //   ? "driver" + order.Driver.id + "_" + "customer" + id
+  //   : "driver0_customer0";
+
+  // const messagesRef = collection(db, "chats", chatId, "messages");
+  // const q = query(messagesRef, where("senderId", "!=", "customer" + id));
+  // const [messages] = useCollectionData(q);
+
+  // console.log(messages);
+
+  // useEffect(() => {
+  //   const fetchOrder = async () => {
+  //     try {
+  //       if (!id) return;
+
+  //       const res = await axios.get("/customer/currentOrder");
+  //       console.log(res.data.order);
+  //       setOrder(res.data.order);
+  //     } catch (err) {
+  //       console.log(err);
+  //     }
+  //   };
+
+  //   fetchOrder();
+  // }, [id]);
+
+  // let number;
+  // console.log(order);
+
   return (
     <Box
       sx={{

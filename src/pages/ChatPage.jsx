@@ -5,9 +5,16 @@ import InputChat from "../role/main/privatechat/InputChat";
 import UserCard from "../role/main/privatechat/UserCard";
 import MyChat from "../role/main/privatechat/UserChat";
 import { useCollectionData } from "react-firebase-hooks/firestore";
-import { collection, limit, orderBy, query } from "firebase/firestore";
+import {
+  collection,
+  limit,
+  orderBy,
+  query,
+  where,
+  writeBatch,
+} from "firebase/firestore";
 import { db } from "../config/firebaseConfig";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import axios from "../config/axios";
 import { Typography } from "@mui/joy";
@@ -19,6 +26,7 @@ function ChatPage() {
   const [customerId, setCustomerId] = useState("");
   const [collocutorInfo, setCollocutorInfo] = useState(null);
   const { setError } = useError();
+  const messagesEndRef = useRef(null);
 
   useEffect(() => {
     const getIds = async () => {
@@ -51,6 +59,10 @@ function ChatPage() {
     });
   }, [role]);
 
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
   const chatId = `driver${driverId}_customer${customerId}`;
 
   const chatsRef = collection(db, "chats");
@@ -69,7 +81,16 @@ function ChatPage() {
     userId = "customer" + customerId;
   }
 
-  console.log(collocutorInfo);
+  const qr = query(messagesRef, where("senderId", "==", userId));
+
+  useEffect(() => {
+    const update = async () => {
+      scrollToBottom();
+      const batch = writeBatch(db);
+      await batch.update(qr, { isRead: true });
+    };
+    update();
+  }, [messages]);
 
   return (
     <Container className="bg-[#FEFEFF]">
@@ -85,9 +106,27 @@ function ChatPage() {
             {messages.map((message, idx) => {
               console.log(message.senderId, userId);
               if (message.senderId === userId) {
-                return <MyChat key={idx} title={message.text}></MyChat>;
+                return (
+                  <MyChat key={idx} title={message.text}>
+                    <div
+                      style={{ display: "hidden" }}
+                      ref={idx === messages.length - 1 ? messagesEndRef : null}
+                    ></div>
+                  </MyChat>
+                );
               } else {
-                return <HisChat key={idx} title={message.text}></HisChat>;
+                return (
+                  <HisChat
+                    key={idx}
+                    title={message.text}
+                    ref={idx === messages.length - 1 ? messagesEndRef : null}
+                  >
+                    <div
+                      style={{ display: "hidden" }}
+                      ref={idx === messages.length - 1 ? messagesEndRef : null}
+                    ></div>
+                  </HisChat>
+                );
               }
             })}
           </Box>
@@ -112,18 +151,10 @@ export default ChatPage;
 
 //   const messagesEndRef = useRef(null)
 
-//   const scrollToBottom = () => {
-//     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
-//   }
-
-//   useEffect(() => {
-//     scrollToBottom()
-//   }, [messages]);
-
-//   return (
-//     <div>
-//       {messages.map(message => <Message key={message.id} {...message} />)}
-//       <div ref={messagesEndRef} />
-//     </div>
-//   )
+// return (
+//   <div>
+//     {messages.map(message => <Message key={message.id} {...message} />)}
+//     <div ref={messagesEndRef} />
+//   </div>
+// )
 // }
