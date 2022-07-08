@@ -33,9 +33,7 @@ const register = createAsyncThunk("/register", async (payload, thunkApi) => {
     return thunkApi.fulfillWithValue(null);
   } catch (err) {
     console.log(err);
-    return thunkApi.rejectWithValue(
-      err?.message || err.responses?.data.message
-    );
+    return thunkApi.rejectWithValue(err.response?.data.message || err?.message);
   }
 });
 
@@ -51,6 +49,7 @@ const registerSlice = createSlice({
     confirmPassword: "",
     role: "",
     isLoading: false,
+    error: "",
   },
   reducers: {
     changeName: (state, action) => {
@@ -73,6 +72,9 @@ const registerSlice = createSlice({
     },
     changeConfirmPassword: (state, action) => {
       state.confirmPassword = action.payload;
+    },
+    setError: (state, action) => {
+      state.error = action.payload;
     },
   },
 
@@ -101,6 +103,7 @@ export const {
   changeEmail,
   changePhoneNumber,
   changePassword,
+  setError: setRegisterError,
   changeConfirmPassword,
 } = registerSlice.actions;
 const registerReducer = registerSlice.reducer;

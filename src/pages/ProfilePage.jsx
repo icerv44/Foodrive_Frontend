@@ -9,7 +9,7 @@ import { useSuccess } from "../contexts/SuccessContext";
 import ButtonBack from "../components/button/ButtonBack";
 import axios from "../config/axios";
 import ButtonGreenGradiant from "../components/button/ButtonGreenGradiant";
-import { Box, Typography } from "@mui/joy";
+import { Box, Button, Typography } from "@mui/joy";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUser } from "../slices/userSlice";
 import GoogleMapInputLoader from "../components/common/googleMapInput/GoogleMapInputLoader";
@@ -235,8 +235,15 @@ function ProfilePage() {
           ))}
         </div>
         {role === "restaurant" && (
-          <>
-            <button onClick={() => setIsOpen(true)}>Modal</button>
+          <div style={{ position: "relative" }}>
+            {!hasSelected && (
+              <button
+                onClick={() => setIsOpen(true)}
+                className="border-green border rounded-md block mx-auto p-2"
+              >
+                SELECT RESTAURANT LOCATION
+              </button>
+            )}
             <Modal
               style={{
                 overlay: { backgroundColor: "rgba(0,0,0,0.5)" },
@@ -270,7 +277,8 @@ function ProfilePage() {
                       setIsOpen(false);
                       setHasSelected(true);
                     }}
-                    style={{ border: "1px solid red" }}
+                    style={{ backgroundColor: "green", color: "white" }}
+                    className="block mx-auto rounded-md p-2"
                   >
                     SAVE LOCATION
                   </button>
@@ -292,15 +300,18 @@ function ProfilePage() {
             {/* <div onClick={() => setIsOpen(true)}>Open</div>
             <div>{address}</div> */}
             {hasSelected && (
-              <button
-                onClick={handleCancelLocation}
-                style={{ border: "1px solid red" }}
-              >
-                CANCEL SELECT LOCATION
-              </button>
+              <div className="relative ">
+                <button
+                  onClick={handleCancelLocation}
+                  style={{ border: "1px solid red" }}
+                  className="absolute right-0 top-0 bg-red text-white rounded-md px-2"
+                >
+                  CANCEL
+                </button>
+              </div>
             )}
-            <div>{address}</div>
-          </>
+            <div className="w-3/4 max-h-[100px] overflow-auto">{address}</div>
+          </div>
         )}
         <ButtonGreenGradiant onClick={handleUpdate} title={"Save"} />
       </Box>

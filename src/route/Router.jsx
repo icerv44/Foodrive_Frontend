@@ -57,6 +57,8 @@ import ConfirmFoodPage from "../pages/restaurant/ConfirmFoodPage";
 
 function Router() {
   const dispatch = useDispatch();
+  const loginError = useSelector((state) => state.login.error);
+  const registerError = useSelector((state) => state.register.error);
   const driverStatus = useSelector((state) => state.user.info.driverStatus);
   const { latitude, longitude, email } = useSelector(
     (state) => state.user.info
@@ -70,7 +72,7 @@ function Router() {
   const { setSocket, socket } = socketCtx;
   const { loading } = useLoading();
   const { error, setError } = useError();
-  const { success } = useSuccess();
+  const { success, setSuccess } = useSuccess();
 
   const { pathname } = useLocation();
 
@@ -103,15 +105,16 @@ function Router() {
     });
     if (userInfo.role === "restaurant") {
       socket?.on("restaurantReceiveOrder", ({ message }) => {
-        alert(message);
+        console.log(message);
+        setSuccess(message);
       });
       socket?.on("notifyAcceptOrder", ({ message }) => {
-        alert(message);
+        setSuccess(message);
       });
     }
     if (userInfo.role === "driver") {
       socket?.on("notifyDriverOrder", ({ message }) => {
-        alert(message);
+        setSuccess(message);
       });
     }
   }, [socket]);
@@ -154,6 +157,7 @@ function Router() {
     const updatePosition = async () => {
       console.log("updating position...");
       const pos = await getCurrentPosition();
+      console.log(userInfo);
       await updateDriver(pos.latitude, pos.longitude);
       dispatch(
         setPosition({ latitude: pos.latitude, longitude: pos.longitude })
@@ -164,7 +168,7 @@ function Router() {
 
     if (driverStatus === "AVAILABLE" || driverStatus === "BUSY") {
       updatePosition().then(() => {
-        recordingInterval = setInterval(updatePosition, 20000);
+        recordingInterval = setInterval(updatePosition, 10000);
       });
     }
 
@@ -255,7 +259,9 @@ function Router() {
     <>
       {(loading || userLoading) && <Spinner />}
       {success && <ToastSuccess>{success}</ToastSuccess>}
-      {error && <ToastError>{error}</ToastError>}
+      {(error || loginError || registerError) && (
+        <ToastError>{error || loginError || registerError}</ToastError>
+      )}
       {/* CUSTOMER */}
       <Routes>
         {userInfo.role === "restaurant" && email ? (
