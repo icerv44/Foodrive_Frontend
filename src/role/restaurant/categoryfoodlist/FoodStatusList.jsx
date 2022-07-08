@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import AspectRatio from "@mui/joy/AspectRatio";
 import Card from "@mui/joy/Card";
 import CardOverflow from "@mui/joy/CardOverflow";
@@ -11,6 +11,9 @@ import Spinner from "../../../components/ui/Spinner";
 import ButtonGreenGradiant from "../../../components/button/ButtonGreenGradiant";
 import ImageBox from "./ImageBox";
 import { AiOutlineClose } from "react-icons/ai";
+import { useRestaurant } from "../../../contexts/RestaurantContext";
+import { useError } from "../../../contexts/ErrorContext";
+import { useSuccess } from "../../../contexts/SuccessContext";
 
 export default function FoodStatusList({
   src,
@@ -21,10 +24,28 @@ export default function FoodStatusList({
   isLoading,
   setIsLoading,
 }) {
+  const { foodName, setFoodName, foodPrice, setFoodPrice } = useRestaurant();
+  const { setError } = useError();
+  const { setSuccess } = useSuccess();
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenPic, setIsOpenPic] = useState(false);
   const [image, setImage] = useState("");
   const imageRef = useRef(null);
+
+  const handleUpdateFood = async () => {
+    try {
+      const res = await axios.patch("/restaurant/update/menu", {
+        menuId: id,
+        name: foodName,
+        price: foodPrice,
+      });
+      setSuccess(res.data.message);
+      fetch();
+      setIsOpen(false);
+    } catch (err) {
+      setError(err.response.data.message);
+    }
+  };
 
   const handleUpdateFoodPicture = async () => {
     try {
@@ -35,6 +56,7 @@ export default function FoodStatusList({
       const res = await axios.patch("/restaurant/update/picture", formData);
       fetch();
       setImage("");
+      setSuccess(res.data.message);
     } catch (err) {
       setError(err.response.data.message);
     } finally {
@@ -45,6 +67,13 @@ export default function FoodStatusList({
   };
 
   let netPrice = price;
+
+  useEffect(() => {
+    setFoodName(title);
+    setFoodPrice(netPrice);
+  }, []);
+
+  const disbleEdit = foodName === "" || foodPrice === "";
 
   Modal.setAppElement("#root");
 
@@ -65,8 +94,7 @@ export default function FoodStatusList({
             <img src={src} alt="" />
           </AspectRatio>
         </CardOverflow>
-        {/* <Box onClick={() => setIsOpen(true)}> */}
-        <Box>
+        <Box onClick={() => setIsOpen(true)}>
           <Typography fontWeight="md" textColor="success.plainColor" mb={0.5}>
             {title}
           </Typography>
@@ -130,14 +158,61 @@ export default function FoodStatusList({
           content: {
             borderRadius: "18px",
             boxShadow: "12px 26px 50px rgba(90, 108, 234, 0.07)",
-            height: "26vh",
-            top: "32%",
+            height: "40vh",
+            top: "26%",
           },
         }}
         id="root"
         isOpen={isOpen}
         onRequestClose={() => setIsOpen(false)}
-      ></Modal>
+      >
+        <AiOutlineClose
+          onClick={() => {
+            setFoodName("");
+            setFoodPrice("");
+          }}
+          className="absolute right-2 top-2 text-xl"
+        />
+        <div className="text-center text-2xl font-bold">Edit Food</div>
+        {/* FoodName */}
+        <Box className="text-[#3B3B3B] opacity-[0.3] m-2">Foodname*</Box>
+        <Box
+          sx={{
+            boxShadow: "12px 26px 50px rgba(90, 108, 234, 0.07)",
+            mb: "16px",
+          }}
+        >
+          <input
+            value={foodName}
+            onChange={(e) => setFoodName(e.target.value)}
+            type="text"
+            className="rounded-xl w-full py-2 px-3 border border-teal-200"
+          />
+        </Box>
+        {/* Price */}
+        <Box className="text-[#3B3B3B] opacity-[0.3] m-2">Detail</Box>
+        <Box
+          sx={{
+            boxShadow: "12px 26px 50px rgba(90, 108, 234, 0.07)",
+            mb: "16px",
+          }}
+        >
+          <input
+            value={foodPrice}
+            onChange={(e) => setFoodPrice(e.target.value)}
+            type="text"
+            className="rounded-xl w-full py-2 px-3 border border-teal-200"
+          />
+        </Box>
+        <Box className="w-full flex justify-center items-center pt-1">
+          <ButtonGreenGradiant
+            onClick={handleUpdateFood}
+            disabled={disbleEdit ? true : false}
+            title="Submit"
+            px="95px"
+          />
+        </Box>
+      </Modal>
     </>
   );
 }
