@@ -28,6 +28,7 @@ export const DriverOrderContextProvider = ({ children }) => {
       value={{
         order,
         getOrderDetailById,
+        setOrder,
       }}
     >
       {children}

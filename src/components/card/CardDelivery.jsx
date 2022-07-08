@@ -13,7 +13,7 @@ import { getAddressFromLatLng } from "../../services/getAddress";
 function CardDelivery() {
   const { getOrderDetailById, order, textColor } = useDelivery();
   const { pathname } = useLocation();
-  console.log("CardDetail order: ", order);
+
   const { orderId } = useParams();
   const cutLetter = 18;
   const [location, setLocation] = useState("");
@@ -51,19 +51,24 @@ function CardDelivery() {
 
   useEffect(() => {
     console.log("CardDelivery : ", order);
+
     try {
       if (order && header === "รับจาก") {
+        getOrderDetailById(Number(orderId));
         resAddress();
-        console.log("CardDelivery resAdress: ", location);
+        console.log("CardDelivery resAdress: ", location, pathname);
       } else if (order && header === "ส่งที่") {
+        getOrderDetailById(Number(orderId));
         setLocation(order.addressName);
+        console.log("CardDelivery resAdress: ", location, pathname);
       } else {
         getOrderDetailById(Number(orderId));
+        console.log("CardDelivery resAdress: ", location, pathname);
       }
     } catch (err) {}
 
     console.log("location : ", location);
-  }, [order]);
+  }, [order?.id]);
 
   return (
     <Card

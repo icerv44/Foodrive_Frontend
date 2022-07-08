@@ -54,14 +54,14 @@ function DeliveryBar() {
     try {
       if (pathname.split("/")[3] === "confirmOrder") {
         setPlace("OrderSummary");
-        navigate(`/driver/delivery/orderSummary`);
+        navigate(`/driver/delivery/orderSummary/${order.id}`);
       } else if (pathname.split("/")[3] === "orderSummary") {
         console.log("confirmOrder : ", Place);
-        navigate(`/driver/completed`);
+        navigate(`/driver/delivery/completed/${order.id}`);
       } else {
         setPlace("customerLocation");
         updateDriver();
-        navigate(`/driver/delivery/confirmOrder`);
+        navigate(`/driver/delivery/confirmOrder/${order.id}`);
       }
     } catch (err) {
       setError(err.response.data.message);

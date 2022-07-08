@@ -1,6 +1,6 @@
 import { Box } from "@mui/joy";
 import { Typography } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
 import ButtonBack from "../../components/button/ButtonBack";
 import ButtonGreenGradiant from "../../components/button/ButtonGreenGradiant";
 import CardIncome from "../../components/card/CardIncome";
@@ -22,12 +22,13 @@ import { db } from "../../config/firebaseConfig";
 import { useError } from "../../contexts/ErrorContext";
 import { fetchUser } from "../../slices/userSlice";
 import { useDispatch, useSelector } from "react-redux";
-
+import { useParams } from "react-router-dom";
 function DeliveryCompleted() {
-  const { order, setOrder } = useDelivery();
+  const { order, setOrder, getOrderDetailById } = useDelivery();
   const { setError } = useError();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { orderId } = useParams();
 
   // const clickOrderAccepted = async (id, customerId) => {
   //   const resOrder = await axios.post(`driver/deliveredStatus/${id}`);
@@ -44,6 +45,13 @@ function DeliveryCompleted() {
   //     senderId: driverId,
   //   });
   // };
+  useEffect(() => {
+    try {
+      getOrderDetailById(Number(orderId));
+    } catch (err) {
+      setError("Cannot get Order Detail");
+    }
+  }, [order?.id]);
 
   //Test Function
   const confirmOrder = async () => {
@@ -91,7 +99,7 @@ function DeliveryCompleted() {
       </Box>
 
       <Box className="flex items-center flex-col">
-        <CardIncome deliveryFee={order.deliveryFee} />
+        <CardIncome deliveryFee={order?.deliveryFee} />
 
         <Box className="fixed bottom-5">
           <ButtonGreenGradiant

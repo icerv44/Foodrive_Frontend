@@ -14,6 +14,7 @@ import { db } from "../../config/firebaseConfig";
 import { useSocket } from "../../contexts/SocketContext";
 import { getAddressFromLatLng } from "../../services/getAddress";
 import { useError } from "../../contexts/ErrorContext";
+import { useDelivery } from "../../contexts/DeliveryContext";
 
 function ModalOrderReq({
   ref,
@@ -36,6 +37,7 @@ function ModalOrderReq({
   const driverId = useSelector((state) => state.user.info.id);
   const { socket } = useSocket();
   const navigate = useNavigate();
+  const { order, setPlace, getOrderDetailById } = useDelivery();
   useEffect(() => {
     if (restaurantLatitude === null || restaurantLongtitude === null) return;
     resAdd();
@@ -90,6 +92,7 @@ function ModalOrderReq({
       socket.emit("driverAcceptOrder", { restaurantId });
 
       console.log("updateStatus : ", updateStatus);
+      getOrderDetailById(id);
       navigate(`/driver/delivery/${id}`);
     } catch (err) {
       setError(err.response?.data?.message || err.message);
