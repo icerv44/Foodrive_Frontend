@@ -29,15 +29,18 @@ function GoogleLogin() {
   };
 
   useEffect(() => {
-    google.accounts.id.initialize({
+    window.google?.accounts?.id?.initialize({
       client_id: GOOGLE_CLIENT_ID,
       callback: handleCallbackResponse,
     });
 
-    google.accounts.id.renderButton(document.getElementById("signInDiv"), {
-      theme: "outline",
-      size: "large",
-    });
+    window.google?.accounts.id.renderButton(
+      document.getElementById("signInDiv"),
+      {
+        theme: "outline",
+        size: "large",
+      }
+    );
   }, []);
 
   return (
