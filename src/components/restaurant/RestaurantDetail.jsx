@@ -71,7 +71,7 @@ function RestaurantDetail() {
           <Box sx={{ display: "flex", marginRight: 3, alignItems: "center" }}>
             <MdOutlineLocationOn className="text-green mr-1" />
             <Typography>
-              {restaurant?.distance
+              {restaurant?.restaurant?.distance
                 ?.toFixed(2)
                 .replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " "}
               km

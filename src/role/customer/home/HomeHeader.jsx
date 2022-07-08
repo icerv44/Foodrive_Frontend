@@ -4,14 +4,14 @@ import { MdLocationOn } from "react-icons/md";
 import { Box } from "@mui/material";
 import UserAvatar from "../../../components/imglogo/UserAvatar";
 import { useSelector } from "react-redux";
+import { useCustomerAddress } from "../../../contexts/CustomerAddressContext.jsx";
+import { cutLetter } from "../../../services/cutName";
 
 function HomeHeader() {
   const user = useSelector((state) => state.user.info);
-  // console.log(user);
+  const { address } = useCustomerAddress();
 
-  // useEffect(() => {
-  //   const searchMenus = async () => {};
-  // }, []);
+  const cutNumber = 25;
 
   return (
     <Box
@@ -23,7 +23,9 @@ function HomeHeader() {
           <div className="rounded-full bg-light-green w-7 h-7 flex items-center justify-center mr-4 ">
             <MdLocationOn className="" />
           </div>
-          <span className="">My Location</span>
+          <span className="" style={{ overflow: "auto", maxHeight: 50 }}>
+            {cutLetter(address, cutNumber) || "no address selected"}
+          </span>
         </div>
       </Link>
 

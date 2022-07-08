@@ -1,19 +1,22 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Box, Typography } from "@mui/material";
-import ModalForDelete from "../../role/restaurant/modal/ModalForDelete";
 import FoodStatusList from "../../role/restaurant/categoryfoodlist/FoodStatusList";
 import ButtonBackNewPlus from "../../components/button/ButtonBackNewPlus";
 import { Button } from "@mui/joy";
 import axios from "../../config/axios";
 import Modal from "react-modal";
-import { useRestaurant } from "../../contexts/RestaurantContext";
 import NoFoodForNow from "../../role/restaurant/categoryfoodlist/NoFoodForNow";
+import { useRestaurant } from "../../contexts/RestaurantContext";
 import { useError } from "../../contexts/ErrorContext";
+import ModalForDeleteCategory from "../../role/restaurant/modal/ModalForDeleteCategory";
 
 function CategoryFoodPage() {
+  const [isLoading, setIsLoading] = useState(false);
   const [categoryFoodData, setCategoryFoodData] = useState([]);
   const navigate = useNavigate();
+  const { id } = useParams();
+  const { handleDeleteCategory } = useRestaurant();
   const { setError } = useError();
   const categoryId = useParams();
 
@@ -21,7 +24,7 @@ function CategoryFoodPage() {
 
   const fetchCategoryById = async () => {
     try {
-      const res = await axios.get("restaurant/getCategory/" + categoryId.id);
+      const res = await axios.get("restaurant/getCategory/" + id);
       setCategoryFoodData(res.data.category);
     } catch (err) {
       console.log(error);
@@ -35,6 +38,17 @@ function CategoryFoodPage() {
   return (
     <>
       <ButtonBackNewPlus onClick={() => navigate("/restaurant/category")} />{" "}
+      {categoryFoodData?.name !== "other" ? (
+        <ModalForDeleteCategory
+          onClick={() => {
+            handleDeleteCategory(categoryId.id);
+            navigate("/restaurant/category");
+          }}
+          itemName={categoryFoodData?.name}
+        />
+      ) : (
+        ""
+      )}
       <Box
         sx={{
           display: "flex",
@@ -49,7 +63,6 @@ function CategoryFoodPage() {
           <Typography sx={{ fontWeight: 700, fontSize: "25px" }}>
             {categoryFoodData?.name}
           </Typography>
-          {/* {categoryFoodData?.name === "other" ? "" : <ModalForDelete />} */}
         </Box>
       </Box>
       {/* MAP CARD */}
@@ -72,6 +85,8 @@ function CategoryFoodPage() {
         ) : (
           categoryFoodData?.Menus?.map((el) => (
             <FoodStatusList
+              isLoading={isLoading}
+              setIsLoading={setIsLoading}
               key={el?.id}
               title={el?.name}
               price={el?.price}

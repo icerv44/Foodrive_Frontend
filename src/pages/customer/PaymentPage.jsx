@@ -15,23 +15,38 @@ import { TiArrowSortedDown } from "react-icons/ti";
 import { Typography } from "@mui/joy";
 import { getAddressFromLatLng } from "../../services/getAddress";
 import { useError } from "../../contexts/ErrorContext";
+import getDistanceFromLatLonInKm from "../../services/getDistance";
+import { useSuccess } from "../../contexts/SuccessContext";
 
 const OmiseCard = window.OmiseCard;
 
 function PaymentPage() {
   const { setError } = useError();
+  const { setSuccess } = useSuccess();
   const { socket } = useSocket();
   const navigate = useNavigate();
   const { cart } = useCustomer();
 
   // const sum = cart?.cartItems?.totalPrice;
-  console.log(cart);
 
   const {
     address,
     latitude: customerLatitude,
     longitude: customerLongitude,
   } = useCustomerAddress();
+
+  const restaurantLatitude = cart?.Restaurant?.latitude;
+  const restaurantLongitude = cart?.Restaurant?.longitude;
+  const distance = getDistanceFromLatLonInKm(
+    restaurantLatitude,
+    restaurantLongitude,
+    customerLatitude,
+    customerLongitude
+  );
+  const deliveryFee = distance * 5;
+  console.log(deliveryFee);
+
+  const totalPrice = cart.cartItems.totalPrice + deliveryFee;
 
   const { latitude, longitude } = useSelector((state) => state.user.info);
   const { setAddress, setLatitude, setLongitude } = useCustomerAddress();
@@ -69,7 +84,7 @@ function PaymentPage() {
   useEffect(() => {
     OmiseCard.configure({
       publicKey: OMISE_PUBLIC_KEY,
-      amount: cart.cartItems.totalPrice * 100,
+      amount: totalPrice * 100,
       currency: "thb",
       frameLabel: "Foodrive",
       submitLabel: "Pay With Credit Card",
@@ -85,19 +100,24 @@ function PaymentPage() {
 
   const omiseHandler = () => {
     OmiseCard.open({
-      amount: cart.cartItems.totalPrice * 100,
+      amount: totalPrice * 100,
 
       onCreateTokenSuccess: async (token) => {
         try {
-          console.log(token);
           await axios.post("/customer/confirmCart/" + cart.id, {
             omiseToken: token,
-            totalInBaht: cart.cartItems.totalPrice,
+            totalInBaht: totalPrice,
+            deliveryFee,
             latitude: customerLatitude,
             longitude: customerLongitude,
+            distance,
             address,
           });
           notifyRestaurant();
+          setSuccess(
+            "You have successfully ordered a meal. Please wait for driver responses."
+          );
+          navigate("/");
         } catch (err) {
           console.log(err);
           setError(err.response.data.message);
@@ -107,7 +127,8 @@ function PaymentPage() {
   };
 
   const handleClick = async (e) => {
-    if (!address) return alert("please select you address before checking out");
+    if (!address)
+      return alert("please select your address before checking out");
     omiseHandler();
   };
 
@@ -118,13 +139,13 @@ function PaymentPage() {
         <Box className="flex flex-col justify-center">
           <Box className=" py-5 font-bold text-3xl ">Payment</Box>
 
-          <button
+          {/* <button
             onClick={() => selectCurrentAddress()}
             className="font-semibold text-green pt-4 pb-2 flex items-center gap-2"
           >
             <TiArrowSortedDown />
             Select Address
-          </button>
+          </button> */}
 
           <Box className="w-[300px] p-5  rounded-lg shadow-md shadow-blue-100 mb-5">
             <Box className="text-l">
@@ -135,14 +156,14 @@ function PaymentPage() {
             </Box>
           </Box>
 
-          <form>
+          <form style={{ width: "75vw" }}>
             <CreditPayment onClick={handleClick} />
           </form>
         </Box>
 
         <Box className="absolute bottom-28 flex justify-between bg-green text-white px-5 py-2 rounded-lg w-[300px] text-lg">
           <p>Total Amount:</p>
-          <p>{cart.cartItems.totalPrice + " ฿"}</p>
+          <p>{totalPrice.toFixed(2) + " ฿"}</p>
         </Box>
       </Box>
     </Container>

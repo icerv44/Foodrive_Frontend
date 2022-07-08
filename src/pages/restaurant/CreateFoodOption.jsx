@@ -2,6 +2,8 @@ import { Box, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import ButtonBackNew from "../../components/button/ButtonBackNew";
 import { useRestaurant } from "../../contexts/RestaurantContext";
+import { useError } from "../../contexts/ErrorContext";
+import { useSuccess } from "../../contexts/SuccessContext";
 import CreateOptionInput from "../../role/restaurant/createfoodoption/CreateOptionInput";
 
 function CreateFoodOption() {
@@ -18,6 +20,9 @@ function CreateFoodOption() {
     optionGroups,
     setOptionGroups,
   } = useRestaurant();
+
+  const { setError } = useError();
+  const { setSuccess } = useSuccess();
 
   const disabledButton = optionTitle === "" || optionCart.length === 0;
 
@@ -39,6 +44,8 @@ function CreateFoodOption() {
       </Typography>
       {/* Form */}
       <CreateOptionInput
+        setError={setError}
+        setSuccess={setSuccess}
         optionTitle={optionTitle}
         setOptionTitle={setOptionTitle}
         optionCart={optionCart}

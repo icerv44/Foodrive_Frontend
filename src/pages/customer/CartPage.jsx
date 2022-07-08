@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Box } from "@mui/joy";
 import ButtonBackNew from "../../components/button/ButtonBackNew";
 import CardCartRes from "../../components/card/CardCartRes";
@@ -6,7 +6,7 @@ import { useCustomer } from "../../contexts/CustomerContext";
 import { Link, useLocation } from "react-router-dom";
 
 function CartPage() {
-  const { allCart, getAllCart, getAllRestaurantsCart } = useCustomer();
+  const { allCart, getAllCart } = useCustomer();
   const { pathname } = useLocation();
 
   useEffect(() => {

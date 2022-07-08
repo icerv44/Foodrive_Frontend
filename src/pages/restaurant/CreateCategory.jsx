@@ -64,7 +64,7 @@ function CreateCategory() {
           borderRadius: "16px",
           p: "16px",
           display: "flex",
-          flexDirection: "column-reverse",
+          flexDirection: "column",
           gap: "20px",
           overflow: "scroll",
           maxHeight: "40vh",

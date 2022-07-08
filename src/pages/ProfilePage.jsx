@@ -1,5 +1,5 @@
 // import { Box } from "@mui/material";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
 import InputBox from "../components/input/InputBox";
 import ProfileImg from "../components/imglogo/ProfileImg";
@@ -9,9 +9,12 @@ import { useSuccess } from "../contexts/SuccessContext";
 import ButtonBack from "../components/button/ButtonBack";
 import axios from "../config/axios";
 import ButtonGreenGradiant from "../components/button/ButtonGreenGradiant";
-import { Box, Typography } from "@mui/joy";
+import { Box, Button, Typography } from "@mui/joy";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUser } from "../slices/userSlice";
+import GoogleMapInputLoader from "../components/common/googleMapInput/GoogleMapInputLoader";
+import ModalMapRestaurant from "../components/ui/ModalMapRestaurant";
+import Modal from "react-modal";
 
 function ProfilePage() {
   const user = useSelector((state) => state.user.info);
@@ -29,12 +32,27 @@ function ProfilePage() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [name, setName] = useState("");
-
+  const [position, setPosition] = useState(null);
+  const [address, setAddress] = useState("");
+  const [isOpen, setIsOpen] = useState(false);
+  const { latitude, longitude } = useSelector((state) => state.user.info);
+  const [hasSelected, setHasSelected] = useState(false);
   const profileRef = useRef(null);
 
   // update customer : firstName, lastName, req.imageFile: profileImage
   // update driver : firstName, lastName, driverImage
   // update restaurant : image, name
+
+  useEffect(() => {
+    if (latitude !== null && longitude !== null) {
+      setPosition({ lat: +latitude, lng: +longitude });
+    }
+  }, [latitude, longitude]);
+  const handleCancelLocation = () => {
+    setHasSelected(false);
+    setAddress("");
+    setPosition({ lat: latitude, lng: longitude });
+  };
 
   const inputData = [
     {
@@ -124,15 +142,9 @@ function ProfilePage() {
     }
   };
 
-  console.log(role);
-
   const handleUpdate = async () => {
     try {
       setLoading(true);
-
-      console.log("res", image);
-      console.log("driver", driverImage);
-      console.log("cus", profileImage);
 
       const formData = new FormData();
       formData.append("profileImage", profileImage);
@@ -144,7 +156,15 @@ function ProfilePage() {
 
       const res = await axios.put(`/${role}/update`, formData);
 
-      setSuccess(res.data.message);
+      let addressRes;
+      if (hasSelected) {
+        addressRes = await axios.patch("/restaurant/updateAddress", {
+          latitude: position.lat,
+          longitude: position.lng,
+        });
+      }
+
+      setSuccess(res.data.message || addressRes.data.message);
 
       if (res.data.message) {
         setProfileImage("");
@@ -214,6 +234,85 @@ function ProfilePage() {
             />
           ))}
         </div>
+        {role === "restaurant" && (
+          <div style={{ position: "relative" }}>
+            {!hasSelected && (
+              <button
+                onClick={() => setIsOpen(true)}
+                className="border-green border rounded-md block mx-auto p-2"
+              >
+                SELECT RESTAURANT LOCATION
+              </button>
+            )}
+            <Modal
+              style={{
+                overlay: { backgroundColor: "rgba(0,0,0,0.5)" },
+                content: {
+                  borderRadius: "18px",
+                  boxShadow: "12px 26px 50px rgba(90, 108, 234, 0.07)",
+                  height: "80vh",
+                  top: "10%",
+                },
+              }}
+              id="root"
+              isOpen={isOpen}
+              onRequestClose={() => {
+                setIsOpen(false);
+                setAddress("");
+                setPosition({ lat: latitude, lng: longitude });
+                setHasSelected(false);
+              }}
+            >
+              {position && (
+                <>
+                  <GoogleMapInputLoader
+                    position={position}
+                    setPosition={setPosition}
+                    address={address}
+                    setAddress={setAddress}
+                  />
+                  <div>{address}</div>
+                  <button
+                    onClick={() => {
+                      setIsOpen(false);
+                      setHasSelected(true);
+                    }}
+                    style={{ backgroundColor: "green", color: "white" }}
+                    className="block mx-auto rounded-md p-2"
+                  >
+                    SAVE LOCATION
+                  </button>
+                </>
+              )}
+            </Modal>
+            {/* <ModalMapRestaurant
+              title={"Select Restaurant Location"}
+              isOpen={isOpen}
+              setIsOpen={setIsOpen}
+            > */}
+            {/* <GoogleMapInputLoader
+              position={position}
+              setPosition={setPosition}
+              address={address}
+              setAddress={setAddress}
+            /> */}
+            {/* </ModalMapRestaurant> */}
+            {/* <div onClick={() => setIsOpen(true)}>Open</div>
+            <div>{address}</div> */}
+            {hasSelected && (
+              <div className="relative ">
+                <button
+                  onClick={handleCancelLocation}
+                  style={{ border: "1px solid red" }}
+                  className="absolute right-0 top-0 bg-red text-white rounded-md px-2"
+                >
+                  CANCEL
+                </button>
+              </div>
+            )}
+            <div className="w-3/4 max-h-[100px] overflow-auto">{address}</div>
+          </div>
+        )}
         <ButtonGreenGradiant onClick={handleUpdate} title={"Save"} />
       </Box>
     </Box>

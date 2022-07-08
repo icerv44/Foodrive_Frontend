@@ -1,10 +1,16 @@
+import { Typography } from "@mui/joy";
 import { Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import ButtonBackNew from "../../../components/button/ButtonBackNew";
 import ButtonLocation from "../../../components/button/ButtonLocation";
+import { useCustomerAddress } from "../../../contexts/CustomerAddressContext.jsx";
+import { cutLetter } from "../../../services/cutName";
 
 function HeaderHome() {
   const navigate = useNavigate();
+  const { address } = useCustomerAddress();
+
+  const cutNumber = 28;
 
   const redirectToMyLocation = () => {
     navigate("/customer/myLocation");
@@ -19,6 +25,9 @@ function HeaderHome() {
       className="w-full h-[76px] px-5 flex justify-between items-center"
     >
       <ButtonBackNew />
+      <Typography sx={{ maxHeight: 50, overflow: "auto" }}>
+        {cutLetter(address, cutNumber)}
+      </Typography>
       <ButtonLocation onClick={redirectToMyLocation} />
     </Box>
   );

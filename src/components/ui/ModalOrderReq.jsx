@@ -38,8 +38,16 @@ function ModalOrderReq({
   const navigate = useNavigate();
   useEffect(() => {
     if (restaurantLatitude === null || restaurantLongtitude === null) return;
-    getAddressFromLatLng(restaurantLatitude, restaurantLongtitude);
+    resAdd();
   }, [restaurantLatitude, restaurantLongtitude]);
+
+  const resAdd = async () => {
+    let resAd = await getAddressFromLatLng(
+      restaurantLatitude,
+      restaurantLongtitude
+    );
+    setResAddress(resAd);
+  };
 
   const cutRestaurantName = (name) => {
     if (name.length > cutLetter) {
@@ -48,6 +56,8 @@ function ModalOrderReq({
     }
     return name;
   };
+
+  console.log("modal custoemrID", customerId);
 
   const handleClose = () => {
     if (isOpen === true) {
@@ -75,7 +85,7 @@ function ModalOrderReq({
       await addDoc(messagesRef, {
         text: "I am your driver. I will be communicating with you here.",
         createdAt: Timestamp.fromDate(new Date()),
-        senderId: driverId,
+        senderId: "driver" + driverId,
       });
       socket.emit("driverAcceptOrder", { restaurantId });
 
@@ -98,7 +108,7 @@ function ModalOrderReq({
           content: {
             borderRadius: "18px",
             boxShadow: "12px 26px 50px rgba(90, 108, 234, 0.07)",
-            height: "56vh",
+            height: "45vh",
             width: "320px",
             position: "absolute",
             marginRight: "20px",
@@ -146,6 +156,7 @@ function ModalOrderReq({
                     {`${resAddress} `}
                     {/* {`113 ซอย จรัสเมือง Khwaeng Rong Muang, Khet Pathum Wan, Krung Thep Maha Nakhon 10330, Thailand`} */}
                   </Typography>
+                  <Typography></Typography>
                 </Box>
                 {/* Customer address */}
                 <Box className="flex items-center">
@@ -155,9 +166,9 @@ function ModalOrderReq({
                     fontSize={15}
                     fontWeight="bold"
                   >
-                    {`Customer Address`} <br />
-                    {`113 ซอย จรัสเมือง Khwaeng Rong Muang, Khet Pathum Wan, Krung Thep Maha Nakhon 10330, Thailand`}
-                    {/* {customerAddress} */}
+                    {/* {`Customer Address`} <br /> */}
+                    {/* {`113 ซอย จรัสเมือง Khwaeng Rong Muang, Khet Pathum Wan, Krung Thep Maha Nakhon 10330, Thailand`} */}
+                    {customerAddress}
                   </Typography>
                 </Box>
               </Box>

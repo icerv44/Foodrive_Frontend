@@ -45,25 +45,19 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <SocketContextProvider>
-        {/* <StyledEngineProvider injectFirst> */}
-        <CssVarsProvider>
-          <ErrorContextProvider>
-            <SuccessContextProvider>
-              <LoadingContextProvider>
-                <CustomerContextProvider>
-                  <DeliveryContextProvider>
-                    <CustomerAddressContextProvider>
-                      <Router />
-                    </CustomerAddressContextProvider>
-                  </DeliveryContextProvider>
-                </CustomerContextProvider>
-              </LoadingContextProvider>
-            </SuccessContextProvider>
-          </ErrorContextProvider>
-        </CssVarsProvider>
-        {/* </StyledEngineProvider> */}
-      </SocketContextProvider>
+      <CssVarsProvider>
+        <SuccessContextProvider>
+          <LoadingContextProvider>
+            <CustomerContextProvider>
+              <DeliveryContextProvider>
+                <CustomerAddressContextProvider>
+                  <Router />
+                </CustomerAddressContextProvider>
+              </DeliveryContextProvider>
+            </CustomerContextProvider>
+          </LoadingContextProvider>
+        </SuccessContextProvider>
+      </CssVarsProvider>
     </ThemeProvider>
   );
 }

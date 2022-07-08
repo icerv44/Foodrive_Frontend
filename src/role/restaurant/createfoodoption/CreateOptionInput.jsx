@@ -5,6 +5,8 @@ import ModalForCreateFoodOption from "../modal/ModalForCreateFoodOption";
 import OptionalFood from "./OptionalFood";
 
 function CreateOptionInput({
+  setError,
+  setSuccess,
   optionTitle,
   setOptionTitle,
   optionCart,
@@ -44,6 +46,7 @@ function CreateOptionInput({
       menuOptions: optionCartFormatted,
     };
     setOptionGroups((prevState) => [...prevState, newOptionGroup]);
+    setSuccess("Option created successfully");
     setOptionTitle("");
     setOptionCart([]);
     setOptionName("");

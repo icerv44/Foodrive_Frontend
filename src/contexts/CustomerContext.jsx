@@ -111,9 +111,7 @@ export function CustomerContextProvider({ children }) {
 
   const getCartById = async (cartId) => {
     try {
-      console.log("get cart");
       const res = await axios.get("/customer/cart/" + cartId);
-      console.log(res.data);
       setCart(res.data);
     } catch (err) {
       console.log(err);
@@ -148,7 +146,6 @@ export function CustomerContextProvider({ children }) {
 
   const deleteMenu = async (orderMenuId) => {
     try {
-      console.log("orderMenuId", orderMenuId);
       await axios.delete("/customer/deleteMenu/" + orderMenuId);
     } catch (err) {
       console.log(err);
@@ -175,9 +172,9 @@ export function CustomerContextProvider({ children }) {
     return price;
   };
 
-  useEffect(() => {
-    console.log(addToCart);
-  }, [addToCart]);
+  // useEffect(() => {
+  //   console.log(addToCart);
+  // }, [addToCart]);
 
   return (
     <CustomerContext.Provider

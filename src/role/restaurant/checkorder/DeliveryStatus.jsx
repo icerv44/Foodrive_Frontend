@@ -1,9 +1,13 @@
+import axios from "axios";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { useSocket } from "../../../contexts/SocketContext";
 import CardDeliveryCheck from "./CardDeliveryCheck";
 
 function DeliveryStatus() {
   const [getDeliveryOrder, setDeliveryOrder] = useState([]);
   const email = useSelector((state) => state.user.info.email);
+  const { socket } = useSocket();
 
   const fetchDeliveryOrder = async () => {
     try {
@@ -19,9 +23,15 @@ function DeliveryStatus() {
     fetchDeliveryOrder();
   }, [email]);
 
+  useEffect(() => {
+    socket?.on("acceptOrder", () => {
+      fetchDeliveryOrder();
+    });
+  }, [socket]);
+
   return (
     <div className="px-7 flex flex-col gap-3 h-[70vh] overflow-auto">
-      {getDeliveryOrder.map((el) => (
+      {getDeliveryOrder.map((el, idx) => (
         <CardDeliveryCheck
           key={el?.id}
           customerFirstName={el?.Customer?.firstName}

@@ -33,7 +33,7 @@ export default function Footer() {
           width: 355,
           height: 80,
           display: "flex",
-          justifyContent: "space-between",
+          justifyContent: "space-around",
           alignItems: "center",
           padding: "10px 45px",
           borderRadius: "22px",
@@ -55,6 +55,7 @@ export default function Footer() {
                     justifyContent: "center",
                     color: "#3B3B3B",
                     fontSize: "26px",
+                    fontWeight: "500",
                     "&:hover": {
                       color: "#15BE77",
                     },
