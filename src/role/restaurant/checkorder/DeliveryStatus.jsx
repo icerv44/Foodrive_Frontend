@@ -18,7 +18,7 @@ function DeliveryStatus({ socket }) {
     }
   };
 
-  socket.on("notifyAcceptOrder", async ({ message }) => {
+  socket?.on("notifyAcceptOrder", async ({ message }) => {
     await fetchDeliveryOrder();
   });
 
