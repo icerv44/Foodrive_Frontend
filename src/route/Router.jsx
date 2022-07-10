@@ -90,6 +90,7 @@ function Router() {
           removeToken();
           return navigate("/customer/login");
         }
+        if (!email) return;
         const newSocket = io(SOCKET_ENDPOINT_URL);
         setSocket(newSocket);
       }

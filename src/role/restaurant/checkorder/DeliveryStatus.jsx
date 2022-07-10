@@ -19,6 +19,7 @@ function DeliveryStatus({ socket }) {
   };
 
   socket?.on("notifyAcceptOrder", async ({ message }) => {
+    console.log("fetch delivery");
     await fetchDeliveryOrder();
   });
 
