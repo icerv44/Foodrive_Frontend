@@ -81,16 +81,16 @@ function ChatPage() {
     userId = "customer" + customerId;
   }
 
-  const qr = query(messagesRef, where("senderId", "==", userId));
+  // const qr = query(messagesRef, where("senderId", "==", userId));
 
-  useEffect(() => {
-    const update = async () => {
-      scrollToBottom();
-      const batch = writeBatch(db);
-      await batch.update(qr, { isRead: true });
-    };
-    update();
-  }, [messages]);
+  // useEffect(() => {
+  //   const update = async () => {
+  //     scrollToBottom();
+  //     const batch = writeBatch(db);
+  //     await batch.update(qr, { isRead: true });
+  //   };
+  //   update();
+  // }, [messages]);
 
   return (
     <Container className="bg-[#FEFEFF]">
@@ -106,27 +106,9 @@ function ChatPage() {
             {messages.map((message, idx) => {
               console.log(message.senderId, userId);
               if (message.senderId === userId) {
-                return (
-                  <MyChat key={idx} title={message.text}>
-                    <div
-                      style={{ display: "hidden" }}
-                      ref={idx === messages.length - 1 ? messagesEndRef : null}
-                    ></div>
-                  </MyChat>
-                );
+                return <MyChat key={idx} title={message.text}></MyChat>;
               } else {
-                return (
-                  <HisChat
-                    key={idx}
-                    title={message.text}
-                    ref={idx === messages.length - 1 ? messagesEndRef : null}
-                  >
-                    <div
-                      style={{ display: "hidden" }}
-                      ref={idx === messages.length - 1 ? messagesEndRef : null}
-                    ></div>
-                  </HisChat>
-                );
+                return <HisChat key={idx} title={message.text}></HisChat>;
               }
             })}
           </Box>

@@ -59,7 +59,6 @@ function DeliveryCompleted() {
       const updateStatus = await axios.patch("/driver/updateStatus", {
         status: "AVAILABLE",
       });
-      await axios.patch(`/driver/deliveredStatus/${order.id}`);
 
       const res = await axios.get("/driver/currentOrder");
       const customerId = res.data.order.customerId;
@@ -80,7 +79,7 @@ function DeliveryCompleted() {
       setOrder(null);
 
       deleteDoc(docRef);
-
+      await axios.patch(`/driver/deliveredStatus/${order.id}`);
       navigate(`/driver`);
     } catch (err) {
       setError(err.response?.data?.message || err.message);

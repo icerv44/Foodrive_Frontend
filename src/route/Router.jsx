@@ -153,15 +153,21 @@ function Router() {
 
   useEffect(() => {
     let recordingInterval;
+    console.log(userInfo.latitude);
+    console.log(!!(socket === null));
 
     const updatePosition = async () => {
       console.log("updating position...");
       const pos = await getCurrentPosition();
-      console.log(userInfo);
+
       await updateDriver(pos.latitude, pos.longitude);
+
       dispatch(
         setPosition({ latitude: pos.latitude, longitude: pos.longitude })
       );
+
+      if (userInfo.latitude === null || userInfo.longitude === null) return;
+      if (socket === null) return;
 
       socket?.emit("updateDriverPosition", userInfo);
     };

@@ -25,7 +25,7 @@ function DeliveryContextProvider({ children }) {
 
   const getOrderDetailById = async (orderId) => {
     try {
-      console.log("getOrderDetailById : ", orderId);
+      // console.log("getOrderDetailById : ", orderId);
       setLoading(true);
       const res = await axios.get(`/driver/orderDetail/${orderId}`);
       setOrder(res.data.order);

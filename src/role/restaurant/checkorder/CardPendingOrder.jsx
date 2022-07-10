@@ -9,6 +9,7 @@ import Typography from "@mui/joy/Typography";
 import { GrFormClose } from "react-icons/gr";
 import { useError } from "../../../contexts/ErrorContext";
 import { useRestaurant } from "../../../contexts/RestaurantContext";
+import { useEffect } from "react";
 
 function CardPendingOrder({
   orderId,
@@ -59,6 +60,12 @@ function CardPendingOrder({
       setError(err.response?.data?.message || err.message);
     }
   };
+
+  // useEffect(() => {
+  //   socket?.on("notifyAcceptOrder", () => {
+  //     fetchPendingOrder();
+  //   });
+  // }, [socket]);
 
   const localDate = dateTime.split("GMT")[0];
   const localTime = localDate.slice(4);

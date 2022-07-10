@@ -50,24 +50,24 @@ function CardDelivery() {
   };
 
   useEffect(() => {
-    console.log("CardDelivery : ", order);
+    // console.log("CardDelivery : ", order);
 
     try {
       if (order && header === "รับจาก") {
         getOrderDetailById(Number(orderId));
         resAddress();
-        console.log("CardDelivery resAdress: ", location, pathname);
+        // console.log("CardDelivery resAdress: ", location, pathname);
       } else if (order && header === "ส่งที่") {
         getOrderDetailById(Number(orderId));
         setLocation(order.addressName);
-        console.log("CardDelivery resAdress: ", location, pathname);
+        // console.log("CardDelivery resAdress: ", location, pathname);
       } else {
         getOrderDetailById(Number(orderId));
-        console.log("CardDelivery resAdress: ", location, pathname);
+        // console.log("CardDelivery resAdress: ", location, pathname);
       }
     } catch (err) {}
 
-    console.log("location : ", location);
+    // console.log("location : ", location);
   }, [order?.id]);
 
   return (
@@ -77,6 +77,8 @@ function CardDelivery() {
         zIndex: "99",
         position: "absolute",
         width: "320px",
+        maxHeight: "150px",
+        overflow: "auto",
         // height: "150px",
         background: "#fafdff",
         "&:hover": {

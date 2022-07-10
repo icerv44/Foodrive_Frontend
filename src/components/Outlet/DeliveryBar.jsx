@@ -34,7 +34,6 @@ function DeliveryBar() {
   const { setError } = useError();
   const { setPlace, btnTitle, order } = useDelivery();
   const { pathname } = useLocation();
-  console.log(pathname);
   const path = pathname?.split("/")[3] === "direction";
   const delivery = "/driver/delivery/";
   const confirmOrder = "/driver/delivery/confirmOrder";
@@ -50,7 +49,7 @@ function DeliveryBar() {
     const updateStatus = await axios.patch(
       `/driver/deliveringStatus/${order.id}`
     );
-    console.log("updateDriver customerLocation: ", updateStatus);
+    // console.log("updateDriver customerLocation: ", updateStatus);
   };
 
   const handleBtn = async () => {
@@ -59,7 +58,7 @@ function DeliveryBar() {
         setPlace("OrderSummary");
         navigate(`/driver/delivery/orderSummary/${order.id}`);
       } else if (pathname?.split("/")[3] === "orderSummary") {
-        console.log("confirmOrder : ", Place);
+        // console.log("confirmOrder : ", Place);
         navigate(`/driver/delivery/completed/${order.id}`);
       } else {
         setPlace("customerLocation");
@@ -70,7 +69,7 @@ function DeliveryBar() {
       setError(err.response.data.message);
     }
 
-    console.log("DeliveryBar 1 : ", pathname);
+    // console.log("DeliveryBar 1 : ", pathname);
     // // console.log("DeliveryBar 2 : ", pathname.includes(delivery));
     // console.log("DeliveryBar 2 : ", pathname.split("/")[3] === "confirmOrder");
     // console.log("DeliveryBar 3", pathname.includes(confirmOrder));

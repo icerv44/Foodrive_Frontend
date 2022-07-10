@@ -18,6 +18,7 @@ function GoogleMapDriver() {
   const mapRef = useRef(null);
   const { latitude, longitude, role } = useSelector((state) => state.user.info);
   const { setError } = useError();
+  const [isLoaded, setIsLoaded] = useState(false);
 
   const onLoad = useCallback((map) => (mapRef.current = map));
 
@@ -59,6 +60,7 @@ function GoogleMapDriver() {
         setDriverPosition(driverLocation);
         setCustomerPosition(customerLocation);
         setCenter({ lat: latitude, lng: longitude });
+        setIsLoaded(true);
 
         const service = new window.google.maps.DirectionsService();
         if (
@@ -87,19 +89,45 @@ function GoogleMapDriver() {
     }
   };
 
-  useEffect(() => {
-    initMap();
-  }, [latitude, longitude, role]);
-  useEffect(() => {
-    console.log(
-      Boolean(
-        driverPosition.lng &&
-          driverPosition.lat &&
-          customerPosition.lat &&
-          customerPosition.lng
+  const updatePosition = async () => {
+    if (role === "driver") {
+      setDriverPosition({
+        lat: +latitude,
+        lng: +longitude,
+      });
+
+      const service = new window.google.maps.DirectionsService();
+      if (
+        !longitude ||
+        !latitude ||
+        !customerPosition.lat ||
+        !customerPosition.lng
       )
-    );
-  });
+        return;
+      service.route(
+        {
+          origin: { lat: +latitude, lng: +longitude },
+          destination: customerPosition,
+          travelMode: window.google.maps.TravelMode.DRIVING,
+        },
+        (result, status) => {
+          if (status === "OK" && result) {
+            setDirection(result);
+          }
+        }
+      );
+    }
+  };
+
+  useEffect(() => {
+    if (isLoaded) {
+      console.log("updating map");
+      console.log(latitude, longitude);
+      updatePosition();
+    } else {
+      initMap();
+    }
+  }, [latitude, longitude, role]);
 
   return (
     <div className="driver-map-container">
