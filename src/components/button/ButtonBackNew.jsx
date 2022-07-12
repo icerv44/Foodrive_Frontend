@@ -2,9 +2,16 @@ import { BiChevronLeft } from "react-icons/bi";
 import IconButton from "@mui/joy/IconButton";
 
 function ButtonBackNew({ onClick }) {
+  const handleBack = () => {
+    window.history.back();
+  };
+
   return (
     <>
-      <IconButton onClick={onClick} sx={{ bgcolor: "#f9a94d22" }}>
+      <IconButton
+        onClick={onClick || handleBack}
+        sx={{ bgcolor: "#f9a94d22", "&:hover": { bgcolor: "#f5d8b8" } }}
+      >
         <BiChevronLeft className="text-[#DA6317] text-3xl " />
       </IconButton>
     </>

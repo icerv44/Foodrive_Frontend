@@ -12,7 +12,7 @@ import { Link } from "react-router-dom";
 function RestaurantDetail() {
   const { restaurant } = useCustomer();
 
-  const restaurantId = restaurant?.id;
+  const restaurantId = restaurant?.restaurant?.id;
 
   return (
     <Box
@@ -32,7 +32,7 @@ function RestaurantDetail() {
           <div
             className={
               "flex items-center text-green text-20 font-bold align-middle" +
-                restaurant?.status ===
+                restaurant?.restaurant?.status ===
               "open"
                 ? " text-green "
                 : " text-brown "
@@ -40,16 +40,18 @@ function RestaurantDetail() {
           >
             <div
               className={
-                "rounded-2xl h-7 p-4 items-center flex" + restaurant?.status ===
+                "rounded-2xl h-7 p-4 items-center flex" +
+                  restaurant?.restaurant?.status ===
                 "open"
                   ? " bg-light-green "
                   : " bg-light-brown "
               }
             >
-              <span className="text-sm font-light ">{restaurant?.status}</span>
+              <span className="text-sm font-light ">
+                {restaurant?.restaurant?.status}
+              </span>
             </div>
           </div>
-          <ButtonFavorite />
         </div>
 
         <Box>
@@ -61,14 +63,19 @@ function RestaurantDetail() {
               marginY: 2,
             }}
           >
-            {restaurant?.name}
+            {restaurant?.restaurant?.name}
           </Typography>
         </Box>
 
         <Box sx={{ display: "flex" }} color="gray">
           <Box sx={{ display: "flex", marginRight: 3, alignItems: "center" }}>
             <MdOutlineLocationOn className="text-green mr-1" />
-            <Typography>19 km.</Typography>
+            <Typography>
+              {restaurant?.restaurant?.distance
+                ?.toFixed(2)
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " "}
+              km
+            </Typography>
           </Box>
           <Box sx={{ display: "flex", alignItems: "center" }}>
             <BsStarHalf className="text-green mr-1" />

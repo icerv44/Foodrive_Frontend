@@ -1,10 +1,12 @@
 import ButtonGoogle from "../../../components/button/ButtonGoogle";
 import ButtonGreenGradiant from "../../../components/button/ButtonGreenGradiant";
 import { useDispatch } from "react-redux";
-import { login } from "../../../slices/loginSlice";
+import { login, setLoginError } from "../../../slices/loginSlice";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { fetchUser } from "../../../slices/userSlice";
-import { Box, Button, Typography } from "@mui/joy";
+import { Box } from "@mui/joy";
+import ModalForgetPassword from "../../restaurant/modal/ModalForgetPassword";
+import GoogleLogin from "../../../components/GoogleLogin";
 
 function LoginBot() {
   const navigate = useNavigate();
@@ -19,6 +21,9 @@ function LoginBot() {
       navigate("/" + role);
       dispatch(fetchUser({ role }));
     }
+    setTimeout(() => {
+      dispatch(setLoginError(""));
+    }, 6000);
   };
 
   const roleLogin = [
@@ -37,31 +42,32 @@ function LoginBot() {
 
   return (
     <div>
-      <div className="flex flex-col justify-center items-center gap-5">
-        <ButtonGoogle />
-        <div className="underline text-green">Forgot Your Password?</div>
+      <div className="flex flex-col justify-center items-center mt-10 gap-5">
+        <GoogleLogin />
+        <div className="underline text-green mt-3">
+          <ModalForgetPassword />
+        </div>
       </div>
 
-      <div className="flex justify-center items-center mt-5">
-        <ButtonGreenGradiant onClick={onClick} title="Login" px="30px" />
+      <div className="flex justify-center items-center mt-8">
+        <ButtonGreenGradiant onClick={onClick} title="Login" px="36px" />
       </div>
 
       <Link to={`/${role}/register`}>
-        <Typography
-          sx={{ marginY: "20px" }}
-          className="text-center underline text-green"
-        >
+        <Box className="text-center mt-8 underline text-green">
           Don't have account?
-        </Typography>
+        </Box>
       </Link>
 
-      <Box className="flex flex-col items-center gap-5 my-5">
-        {roleLogin.map((el) => (
-          <Link to={el.to} className={role === el.role ? "hidden" : ""}>
-            <button className="text-brown bg-light-brown px-5 py-2 hover:bg-brown hover:text-light-brown">
-              {el.btnName}
-            </button>
-          </Link>
+      <Box className="flex flex-col items-center gap-5 mt-6">
+        {roleLogin.map((el, idx) => (
+          <Box key={idx}>
+            <Link to={el.to} className={role === el.role ? "hidden" : ""}>
+              <button className="text-brown bg-light-brown px-5 py-2 hover:bg-brown hover:text-light-brown">
+                {el.btnName}
+              </button>
+            </Link>
+          </Box>
         ))}
       </Box>
     </div>

@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { useCustomer } from "../../contexts/CustomerContext";
 import { useLoading } from "../../contexts/LoadingContext";
@@ -8,23 +9,25 @@ import RestaurantTop from "./RestaurantTop";
 
 function RestaurantContainer() {
   const { setLoading } = useLoading();
-  const { getRestaurantById, restaurant } = useCustomer();
+  const { getRestaurantById } = useCustomer();
   const { restaurantId } = useParams();
+  const { latitude, longitude } = useSelector((state) => state.user.info);
 
   useEffect(() => {
-    try {
-      const fetchRestaurant = async () => {
+    const fetchRestaurant = async () => {
+      if (latitude === null || longitude === null) return;
+      try {
         setLoading(true);
         await getRestaurantById(+restaurantId);
-      };
+      } catch (err) {
+        console.log(err);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-      return fetchRestaurant;
-    } catch (err) {
-      console.log(err);
-    } finally {
-      setLoading(false);
-    }
-  }, [restaurantId]);
+    fetchRestaurant();
+  }, [restaurantId, latitude, longitude]);
 
   return (
     <div>

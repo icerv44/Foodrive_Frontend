@@ -4,8 +4,12 @@ import { CssVarsProvider } from "@mui/joy/styles";
 import { DeliveryContextProvider } from "./contexts/DeliveryContext";
 import { CustomerContextProvider } from "./contexts/CustomerContext";
 import { LoadingContextProvider } from "./contexts/LoadingContext";
-import { StyledEngineProvider } from "@mui/styled-engine-sc";
+//import { StyledEngineProvider } from "@mui/styled-engine-sc";
 import { ErrorContextProvider } from "./contexts/ErrorContext";
+import { SuccessContextProvider } from "./contexts/SuccessContext";
+import GoogleMapDriverLoader from "./components/common/googleMapDriver/GoogleMapDriverLoader";
+import { SocketContextProvider } from "./contexts/SocketContext";
+import { CustomerAddressContextProvider } from "./contexts/CustomerAddressContext.jsx";
 
 function App() {
   const theme = createTheme({
@@ -38,21 +42,24 @@ function App() {
       },
     },
   });
+
   return (
     <ThemeProvider theme={theme}>
-      <StyledEngineProvider injectFirst>
-        <CssVarsProvider>
-          <ErrorContextProvider>
-            <LoadingContextProvider>
-              <CustomerContextProvider>
-                <DeliveryContextProvider>
+      {/* <StyledEngineProvider injectFirst> */}
+      <CssVarsProvider>
+        <SuccessContextProvider>
+          <LoadingContextProvider>
+            <CustomerContextProvider>
+              <DeliveryContextProvider>
+                <CustomerAddressContextProvider>
                   <Router />
-                </DeliveryContextProvider>
-              </CustomerContextProvider>
-            </LoadingContextProvider>
-          </ErrorContextProvider>
-        </CssVarsProvider>
-      </StyledEngineProvider>
+                </CustomerAddressContextProvider>
+              </DeliveryContextProvider>
+            </CustomerContextProvider>
+          </LoadingContextProvider>
+        </SuccessContextProvider>
+      </CssVarsProvider>
+      {/* </StyledEngineProvider> */}
     </ThemeProvider>
   );
 }

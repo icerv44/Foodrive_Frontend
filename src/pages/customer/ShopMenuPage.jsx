@@ -1,5 +1,6 @@
+import { ElevenMpTwoTone } from "@mui/icons-material";
 import { Box } from "@mui/material";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useCustomer } from "../../contexts/CustomerContext";
 import { useLoading } from "../../contexts/LoadingContext";
@@ -10,31 +11,34 @@ function ShopMenuPage() {
   const { setLoading } = useLoading();
   const { getRestaurantById, restaurant } = useCustomer();
   const { restaurantId } = useParams();
+  const [searchMenu, setSearchMenu] = useState("");
+  const [showMenus, setShowMenus] = useState([]);
 
   useEffect(() => {
-    try {
-      const fetchRestaurant = async () => {
+    const fetchRestaurant = async () => {
+      try {
         setLoading(true);
         await getRestaurantById(+restaurantId);
-      };
+      } catch (err) {
+        console.log(err);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-      return fetchRestaurant;
-    } catch (err) {
-      console.log(err);
-    } finally {
-      setLoading(false);
-    }
+    fetchRestaurant();
   }, [restaurantId]);
 
   return (
     <>
-      <HeaderMenuList />
+      <HeaderMenuList setSearchMenu={setSearchMenu} searchMenu={searchMenu} />
       <Box className="overflow-auto h-[74vh]">
-        {restaurant?.Categories?.map((el) => (
+        {restaurant?.restaurant?.Categories?.map((el) => (
           <FoodList
             key={el?.id}
             categoriesName={el?.name}
             categoriesMenu={el?.Menus}
+            searchMenu={searchMenu}
           />
         ))}
       </Box>

@@ -1,11 +1,12 @@
+import { Box } from "@mui/joy";
 import React from "react";
 import { Outlet } from "react-router-dom";
 
 function CartContainer() {
   return (
-    <div>
+    <Box>
       <Outlet />
-    </div>
+    </Box>
   );
 }
 

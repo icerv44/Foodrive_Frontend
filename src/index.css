@@ -14,3 +14,22 @@ body {
   padding: 0;
   box-sizing: border-box;
 }
+
+.css-46bh2p-MuiCardContent-root:last-child {
+  padding-bottom: 0px !important;
+}
+
+.css-46bh2p-MuiCardContent-root {
+  padding: 0px !important;
+}
+
+.badge {
+  position: absolute;
+  background-color: red;
+  color: white;
+  padding: 0px 2px;
+  text-align: center;
+  border-radius: 5px;
+  top: -10px;
+  right: 0;
+}

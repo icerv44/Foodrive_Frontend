@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Modal from "react-modal";
-import { AiOutlineClose } from "react-icons/ai";
+import { MdDeleteForever } from "react-icons/md";
 
 // Modal.setAppElement("#ใส่ไอดีของโมดัลอันนี้ในหน้าที่เอาไปใช้");
 // Import Modal ไปในไฟล์ที่จะใช้ด้วย
@@ -11,9 +11,14 @@ function ModalForDelete({ ref, itemName }) {
   return (
     <>
       {/* BUTTON FOR OPEN */}
-      <button className="" ref={ref} onClick={() => setIsOpen(true)}>
-        <AiOutlineClose className="font-semibold text-xl" />
+      <button
+        className="bg-[#f9a94d22] p-2 rounded-xl border border-red-700"
+        ref={ref}
+        onClick={() => setIsOpen(true)}
+      >
+        <MdDeleteForever className="font-semibold text-red-700 text-2xl" />
       </button>
+
       <Modal
         style={{
           overlay: { backgroundColor: "rgba(0,0,0,0.5)" },

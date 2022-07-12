@@ -1,11 +1,30 @@
 import { Box, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import ButtonBackNew from "../../components/button/ButtonBackNew";
-import CreateFoodInput from "../../role/restaurant/createfood/CreateFoodInput";
+import { useRestaurant } from "../../contexts/RestaurantContext";
+import { useError } from "../../contexts/ErrorContext";
+import { useSuccess } from "../../contexts/SuccessContext";
 import CreateOptionInput from "../../role/restaurant/createfoodoption/CreateOptionInput";
 
 function CreateFoodOption() {
   const navigate = useNavigate();
+  const {
+    optionTitle,
+    setOptionTitle,
+    optionCart,
+    setOptionCart,
+    optionName,
+    setOptionName,
+    optionPrice,
+    setOptionPrice,
+    optionGroups,
+    setOptionGroups,
+  } = useRestaurant();
+
+  const { setError } = useError();
+  const { setSuccess } = useSuccess();
+
+  const disabledButton = optionTitle === "" || optionCart.length === 0;
 
   return (
     <Box
@@ -24,7 +43,21 @@ function CreateFoodOption() {
         Create Option
       </Typography>
       {/* Form */}
-      <CreateOptionInput />
+      <CreateOptionInput
+        setError={setError}
+        setSuccess={setSuccess}
+        optionTitle={optionTitle}
+        setOptionTitle={setOptionTitle}
+        optionCart={optionCart}
+        setOptionCart={setOptionCart}
+        optionName={optionName}
+        setOptionName={setOptionName}
+        optionPrice={optionPrice}
+        setOptionPrice={setOptionPrice}
+        optionGroups={optionGroups}
+        setOptionGroups={setOptionGroups}
+        disabled={disabledButton ? true : false}
+      />
     </Box>
   );
 }

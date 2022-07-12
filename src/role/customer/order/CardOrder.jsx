@@ -1,63 +1,79 @@
 import { Box, Typography } from "@mui/material";
-import IconButton from "@mui/joy/IconButton";
-import { AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
 import { useState } from "react";
+import CardOverflow from "@mui/joy/CardOverflow";
+import { useCustomer } from "../../../contexts/CustomerContext";
+import { useParams } from "react-router-dom";
+import ModalVertical from "../../../components/ui/ModalVertical";
+import Modal from "react-modal";
+import AspectRatio from "@mui/joy/AspectRatio";
 
-function CardOrder({ src, price, foodName, foodDetail }) {
+function CardOrder({ id, src, price, foodName, orderMenuOptionGroups }) {
+  const { deleteMenu, getCartById } = useCustomer();
   const [count, setCount] = useState(1);
+  const { cartId } = useParams();
+  Modal.setAppElement("#root");
 
-  const handleClickIncreaseAmount = () => {
-    if (count <= 8) {
-      setCount(count + 1);
-    }
-  };
-  const handleClickDecreaseAmount = () => {
-    if (count > 0) {
-      setCount(count - 1);
+  const handleRemove = async () => {
+    try {
+      await deleteMenu(id);
+      await getCartById(cartId);
+    } catch (err) {
+      console.log(err);
     }
   };
 
   return (
-    <Box
-      sx={{
-        borderRadius: "28px",
-        width: "348px",
-        height: "100px",
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
-        px: "14px",
-        boxShadow: "12px 26px 50px rgba(90, 108, 234, 0.07)",
-      }}
-    >
-      <img src={src} className="w-[66px]" alt="" />
-      <Box sx={{ flexGrow: "1" }} className="flex flex-col px-4">
-        <Typography sx={{ fontWeight: 700 }}>{foodName}</Typography>
-        <Typography sx={{ color: "#3B3B3B" }}>{foodDetail}</Typography>
-        <Typography
-          sx={{ fontWeight: 800, color: "#15BE77", fontSize: "20px" }}
-        >
-          {price * count} ฿
-        </Typography>
-      </Box>
-      <Box className="flex justify-center items-center gap-3">
-        <IconButton
-          sx={{ bgcolor: "#f9a94d22", color: "green" }}
-          onClick={handleClickDecreaseAmount}
-        >
-          <AiOutlineMinus />
-        </IconButton>
-        <Box className="font-semibold">{count}</Box>
-        <IconButton
-          sx={{
-            background:
-              "linear-gradient(98.81deg, #53E88B -0.82%, #15BE77 101.53%)",
-            color: "white",
-          }}
-          onClick={handleClickIncreaseAmount}
-        >
-          <AiOutlinePlus className="font-semibold text-lg" />
-        </IconButton>
+    <Box>
+      <Box
+        sx={{
+          borderRadius: "28px",
+          width: "348px",
+          display: "flex",
+          justifyContent: "space-between",
+          // alignItems: "center",
+          px: "14px",
+          py: "14px",
+          boxShadow: "12px 26px 50px rgba(90, 108, 234, 0.07)",
+        }}
+      >
+        <CardOverflow sx={{ width: "100px" }}>
+          <AspectRatio ratio="1">
+            <img src={src} className="w-[66px] rounded-lg" alt="" />
+          </AspectRatio>
+        </CardOverflow>
+
+        <Box sx={{ flexGrow: "1" }} className="flex px-4 items-center">
+          <Box sx={{ flexGrow: "1" }} className="flex flex-col px-4">
+            <Box className="flex justify-end"></Box>
+
+            <Box>
+              <Typography sx={{ fontWeight: 700 }}>{foodName}</Typography>
+              <div className="flex flex-col py-2">
+                {orderMenuOptionGroups.length >= 0 &&
+                  orderMenuOptionGroups.map((el) => (
+                    <Typography key={el.id} color="gray">
+                      {el.name} : {el.options.map((el) => el.name)}
+                    </Typography>
+                  ))}
+              </div>
+            </Box>
+            <Typography
+              sx={{ fontWeight: 800, color: "#15BE77", fontSize: "20px" }}
+            >
+              {price} ฿
+            </Typography>
+          </Box>
+
+          <ModalVertical
+            onAction={handleRemove}
+            id={id}
+            title={"REMOVE MENU"}
+            content={"This menu will be remove from cart."}
+            btnName={"REMOVE"}
+          >
+            Remove
+          </ModalVertical>
+        </Box>
       </Box>
     </Box>
   );

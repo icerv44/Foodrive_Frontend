@@ -1,8 +1,13 @@
 import { Box, Typography } from "@mui/joy";
 import { AiOutlineFileText } from "react-icons/ai";
-import { BsFillChatDotsFill, BsCartDashFill } from "react-icons/bs";
+import { BsFillChatDotsFill, BsFillPeopleFill } from "react-icons/bs";
+import { MdOutlineRestaurantMenu } from "react-icons/md";
+import { Link } from "react-router-dom";
+import { useRestaurant } from "../../contexts/RestaurantContext";
 
 function RestaurantBar() {
+  const { pendingOrderData } = useRestaurant();
+
   return (
     <Box
       sx={{
@@ -16,7 +21,7 @@ function RestaurantBar() {
           width: 355,
           height: 74,
           display: "flex",
-          justifyContent: "space-between",
+          justifyContent: "space-around",
           alignItems: "center",
           padding: "0px 45px",
           borderRadius: "22px",
@@ -25,48 +30,75 @@ function RestaurantBar() {
           zIndex: 20,
         }}
       >
-        <Box
-          role="button"
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            color: "#3B3B3B",
-            fontSize: "26px",
-          }}
-        >
-          <AiOutlineFileText />
-          <Typography>delivery</Typography>
-        </Box>
-        <Box
-          role="button"
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            color: "#3B3B3B",
-            fontSize: "26px",
-          }}
-        >
-          <BsFillChatDotsFill />
-          <Typography>message</Typography>
-        </Box>
-        <Box
-          role="button"
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            color: "#3B3B3B",
-            fontSize: "26px",
-          }}
-        >
-          <BsCartDashFill />
-          <Typography>order</Typography>
-        </Box>
+        {/* Delivery */}
+        <Link to="/restaurant/checkorder" style={{ position: "relative" }}>
+          <span className="badge">{pendingOrderData.length}</span>
+          <Box
+            role="button"
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              color: "green",
+              fontSize: "26px",
+            }}
+          >
+            <AiOutlineFileText />
+            <Typography sx={{ color: "green" }}>delivery</Typography>
+          </Box>
+        </Link>
+        {/* Menu */}
+        <Link to="/restaurant/category">
+          <Box
+            role="button"
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              color: "green",
+              fontSize: "26px",
+            }}
+          >
+            <MdOutlineRestaurantMenu />
+            <Typography sx={{ color: "green" }}>menu</Typography>
+          </Box>
+        </Link>
+        {/* Message */}
+        {/* <Link to="">
+          <Box
+            role="button"
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              color: "#3B3B3B",
+              fontSize: "26px",
+            }}
+          >
+            <BsFillChatDotsFill />
+            <Typography>message</Typography>
+          </Box>
+        </Link> */}
+        {/* Profile */}
+        <Link to="/restaurant/profile">
+          <Box
+            role="button"
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              color: "green",
+              fontSize: "26px",
+            }}
+          >
+            <BsFillPeopleFill />
+            <Typography sx={{ color: "green" }}>profile</Typography>
+          </Box>
+        </Link>
       </Box>
     </Box>
   );

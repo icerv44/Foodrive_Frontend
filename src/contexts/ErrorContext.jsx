@@ -1,17 +1,25 @@
-import React, { createContext, useContext, useState } from "react";
-import { Provider } from "react-redux";
+import { createContext, useContext, useState } from "react";
 
-export const ErrorContext = createContext();
+const ErrorContext = createContext();
 
-export function ErrorContextProvider({ children }) {
-  const [error, setError] = useState("");
+function ErrorContextProvider({ children }) {
+  const [error, setError] = useState(null);
 
-  console.log(error);
+  if (error) {
+    setTimeout(() => {
+      setError(false);
+    }, 5000);
+  }
 
-  return <ErrorContext.Provider value={{}}>{children}</ErrorContext.Provider>;
+  return (
+    <ErrorContext.Provider value={{ error, setError }}>
+      {children}
+    </ErrorContext.Provider>
+  );
 }
-
-export const useError = () => {
+const useError = () => {
   const ctx = useContext(ErrorContext);
   return ctx;
 };
+
+export { ErrorContextProvider, useError };

@@ -1,10 +1,16 @@
+import IconButton from "@mui/joy/IconButton";
 import { TiLocation } from "react-icons/ti";
 
 function ButtonLocation({ onClick }) {
   return (
-    <button onClick={onClick} className="rounded-full p-2 bg-light-green">
+    <IconButton
+      onClick={() => {
+        if (onClick) onClick();
+      }}
+      sx={{ bgcolor: "#f9a94d22", p: "6px" }}
+    >
       <TiLocation className="text-green text-3xl" />
-    </button>
+    </IconButton>
   );
 }
 

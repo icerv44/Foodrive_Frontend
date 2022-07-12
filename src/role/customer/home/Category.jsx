@@ -1,9 +1,12 @@
 import { Box, Card, Typography } from "@mui/material";
 import React from "react";
+import { Link } from "react-router-dom";
 import CardHome from "../../../components/card/CardHome";
 import { useCustomer } from "../../../contexts/CustomerContext";
 
 function Category() {
+  const { menus } = useCustomer();
+
   return (
     <Box>
       <Typography
@@ -25,7 +28,7 @@ function Category() {
           gap: 1,
           py: 1,
           overflow: "auto",
-          width: 370,
+          minWidth: 370,
           scrollSnapType: "x mandatory",
           "& > *": {
             scrollSnapAlign: "center",
@@ -33,7 +36,7 @@ function Category() {
           "::-webkit-scrollbar": { display: "none" },
         }}
       >
-        <CardHome />
+        {menus && menus?.map((el) => <CardHome el={el} key={el.id} />)}
       </Box>
     </Box>
   );

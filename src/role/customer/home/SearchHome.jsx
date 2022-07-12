@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { useCustomer } from "../../../contexts/CustomerContext";
 
 function SearchHome() {
-  const { search, setSearch, getMenus } = useCustomer();
+  const { search, setSearch, getMenus, menus } = useCustomer();
   const userInfo = useSelector((state) => state.user.info);
   const { latitude, longitude } = userInfo;
 
@@ -24,14 +24,19 @@ function SearchHome() {
       >
         <RiSearch2Line className="text-2xl " />
       </div>
+
       <input
         type="text"
         placeholder="กินอะไรดี?"
         className="flex grow appearance-none bg-light-brown placeholder-brown placeholder-opacity-25 outline-0"
         value={search}
         onChange={handleSearchChange}
+        list="search"
       />
-      {/* <span className="text-sm font-light">กินอะไรดี?</span> */}
+      <datalist id="search" className="">
+        {menus &&
+          menus?.map((el, idx) => <option key={idx} value={el?.name} />)}
+      </datalist>
     </div>
   );
 }

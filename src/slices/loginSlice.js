@@ -18,10 +18,13 @@ const login = createAsyncThunk("customer/login", async (payload, thunkApi) => {
     const token = res.data.token;
     setAccessToken(token);
 
+    // const tokenGoogle = resGoogle.data.token;
+    // setAccessToken(tokenGoogle);
+
     return thunkApi.fulfillWithValue(null); // or just return normally
   } catch (err) {
     console.log(err);
-    return thunkApi.rejectWithValue(err?.message || err.response?.data.message);
+    return thunkApi.rejectWithValue(err.response?.data.message || err?.message);
   }
 });
 
@@ -32,6 +35,7 @@ const loginSlice = createSlice({
     password: "",
     isLoading: false,
     error: "",
+    // googleData: "",
   },
   reducers: {
     changeEmail: (state, action) => {
@@ -40,6 +44,12 @@ const loginSlice = createSlice({
     changePassword: (state, action) => {
       state.password = action.payload;
     },
+    setError: (state, action) => {
+      state.error = action.payload;
+    },
+    // changeGoogleData: (state, action) => {
+    //   state.googleData = action.payload;
+    // },
   },
   extraReducers: (builder) => {
     builder
@@ -50,10 +60,16 @@ const loginSlice = createSlice({
       .addCase(login.fulfilled, (state, action) => {
         state.isLoading = false;
         state.error = "";
+        state.email = "";
+        state.password = "";
+        // state.googleData = "";
       })
       .addCase(login.rejected, (state, action) => {
         state.error = action.payload;
         state.isLoading = false;
+        state.email = "";
+        state.password = "";
+        // state.googleData = "";
       });
   },
 });
@@ -62,7 +78,12 @@ const loginSlice = createSlice({
 // const changeEmail =  loginSlice.actions.changeEmail;
 // const changePassword = loginSlice.actions.changePassword;
 
-export const { changeEmail, changePassword } = loginSlice.actions;
+export const {
+  changeEmail,
+  changePassword,
+  setError: setLoginError,
+  //  changeGoogleData
+} = loginSlice.actions;
 export { login };
 const loginReducer = loginSlice.reducer;
 

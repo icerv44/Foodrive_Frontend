@@ -1,9 +1,57 @@
+import { Button } from "@mui/joy";
 import { Box } from "@mui/material";
 import Modal from "react-modal";
 import ModalForCreateFoodOption from "../modal/ModalForCreateFoodOption";
+import OptionalFood from "./OptionalFood";
 
-function CreateOptionInput() {
+function CreateOptionInput({
+  setError,
+  setSuccess,
+  optionTitle,
+  setOptionTitle,
+  optionCart,
+  setOptionCart,
+  optionName,
+  setOptionName,
+  optionPrice,
+  setOptionPrice,
+  setOptionGroups,
+  disabled,
+}) {
   Modal.setAppElement("#root");
+
+  const handleDeleteOption = (idx) => {
+    let cloneOptionCart = [...optionCart];
+    cloneOptionCart.splice(idx, 1);
+    setOptionCart(cloneOptionCart);
+  };
+
+  const formatOptinCart = (optionCart) => {
+    let cloneOptionCart = [...optionCart];
+    let optionCartFormatted = [];
+    cloneOptionCart.forEach((option) => {
+      optionCartFormatted.push({
+        name: option.optionName,
+        price: option.optionPrice,
+      });
+    });
+    return optionCartFormatted;
+  };
+
+  const handleSubmitCreateOption = (e) => {
+    e.preventDefault();
+    let optionCartFormatted = formatOptinCart(optionCart);
+    const newOptionGroup = {
+      name: optionTitle,
+      menuOptions: optionCartFormatted,
+    };
+    setOptionGroups((prevState) => [...prevState, newOptionGroup]);
+    setSuccess("Option created successfully");
+    setOptionTitle("");
+    setOptionCart([]);
+    setOptionName("");
+    setOptionPrice("");
+  };
 
   return (
     <form onSubmit={(e) => e.preventDefault()}>
@@ -17,37 +65,58 @@ function CreateOptionInput() {
           }}
         >
           <input
+            value={optionTitle}
+            onChange={(e) => setOptionTitle(e.target.value)}
             type="text"
             className="rounded-xl w-full py-2 px-3 border border-teal-200"
           />
         </Box>
       </Box>
-      {/* Option Detail */}
-      <Box className="mb-4">
-        <Box className="text-[#37C989] opacity-[0.7] text-xl font-semibold">
-          Option detail
-        </Box>
-        <Box
-          sx={{
-            boxShadow: "12px 26px 50px rgba(90, 108, 234, 0.07)",
-            border: "1px solid #F4F4F4",
-            borderRadius: "15px",
-            p: "12px",
-          }}
-        >
-          <Box sx={{ fontSize: "13px" }}>
-            Does the customer have to choose this option?
-          </Box>
-          <Box>1</Box>
-          <Box>1</Box>
-        </Box>
-      </Box>
       {/* More Option */}
       <Box>
-        <Box className="opacity-[0.7] text-xl font-semibold">Mini Option</Box>
+        <Box className="opacity-[0.7] text-xl font-semibold m-2">Optional</Box>
         <Box>
-          <ModalForCreateFoodOption />
+          <ModalForCreateFoodOption
+            optionCart={optionCart}
+            setOptionCart={setOptionCart}
+            optionName={optionName}
+            setOptionName={setOptionName}
+            optionPrice={optionPrice}
+            setOptionPrice={setOptionPrice}
+          />
         </Box>
+        <Box sx={{ height: "50vh" }}>
+          <Box
+            sx={{
+              borderColor: "1px solid #F4F4F4",
+              boxShadow: "12px 26px 50px rgba(90, 108, 234, 0.07)",
+              borderRadius: "16px",
+              p: "12px",
+              display: "flex",
+              flexDirection: "column",
+              gap: "16px",
+              my: "16px",
+            }}
+          >
+            {optionCart.map((el, idx) => (
+              <OptionalFood
+                key={idx}
+                optionName={el.optionName}
+                optionPrice={el.optionPrice}
+                index={idx}
+                onDelete={handleDeleteOption}
+              />
+            ))}
+          </Box>
+        </Box>
+        <Button
+          disabled={disabled}
+          color="success"
+          sx={{ width: "100%" }}
+          onClick={handleSubmitCreateOption}
+        >
+          Submit
+        </Button>
       </Box>
     </form>
   );
